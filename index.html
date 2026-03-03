@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yasser El-Alfy — Software Engineer</title>
-  <meta name="description" content="Personal website of Yasser El-Alfy — software engineer, builder, and designer." />
+  <title>Yasser El-Alfy — Researcher</title>
+  <meta name="description" content="Personal website of Yasser El-Alfy — researcher." />
   <meta property="og:title" content="Yasser El-Alfy" />
-  <meta property="og:description" content="Software engineer, builder, and designer." />
+  <meta property="og:description" content="Researcher — publications, thesis, and research profiles." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   <style>
@@ -15,24 +15,27 @@
     html,body{height:100%}
     body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;line-height:1.5;background:linear-gradient(180deg,#051025 0%,#071827 60%);color:#ecf0f6;padding:24px}
     .container{max-width:980px;margin:0 auto}
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;gap:16px}
     .brand{display:flex;gap:14px;align-items:center}
     .avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#05202a}
     nav a{color:var(--muted);text-decoration:none;margin-left:18px}
+    nav a:hover{color:#fff}
     .hero{display:grid;grid-template-columns:1fr;gap:18px;padding:28px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 6px 24px rgba(2,6,23,0.6)}
     h1{margin:0;font-size:28px}
     p.lead{color:var(--muted);margin:6px 0 0}
-    .cta{margin-top:12px}
+    .cta{margin-top:12px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
     .button{display:inline-block;padding:10px 14px;border-radius:10px;background:var(--accent);color:#05202a;text-decoration:none;font-weight:600}
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
     .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px}
     .muted{color:var(--muted);font-size:14px}
     footer{margin-top:28px;color:var(--muted);font-size:14px}
-    @media (max-width:780px){.grid{grid-template-columns:1fr}.avatar{width:52px;height:52px}}
+    @media (max-width:780px){.grid{grid-template-columns:1fr}.avatar{width:52px;height:52px} header{flex-direction:column;align-items:flex-start}}
     a.social{margin-right:12px;color:var(--muted);text-decoration:none}
+    a.social:hover{color:#fff}
     .proj-list{display:flex;flex-direction:column;gap:12px}
     .proj{padding:12px;border-radius:10px;background:rgba(255,255,255,0.01)}
     code{background:#081424;padding:4px 6px;border-radius:6px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace}
+    .tag{display:inline-block;margin:6px 8px 0 0;padding:6px 10px;border-radius:999px;background:rgba(110,231,183,0.12);color:#bff6df;font-size:12px}
   </style>
 </head>
 <body>
@@ -42,32 +45,47 @@
         <div class="avatar">YE</div>
         <div>
           <div style="font-weight:700">Yasser El-Alfy</div>
-          <div class="muted">Software engineer — web &amp; full‑stack</div>
+          <div class="muted">Researcher</div>
         </div>
       </div>
       <nav>
         <a href="#about">About</a>
-        <a href="#projects">Projects</a>
+        <a href="#outputs">Research output</a>
+        <a href="#profiles">Profiles</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
 
     <section class="hero">
       <div>
-        <h1>Hi — I’m <span style="color:var(--accent)">Yasser El‑Alfy</span>.</h1>
-        <p class="lead">I build web apps and tools that save time and delight users. I work across frontend, backend, and developer workflows.</p>
+        <h1>Hi — I’m <span style="color:var(--accent)">Yasser El-Alfy</span>.</h1>
+        <p class="lead">
+          I conduct applied research and build reproducible prototypes. My work spans computer vision and learning-based
+          perception for robotics/autonomy, with a focus on robust evaluation and real-world deployment.
+        </p>
+
         <div class="cta">
           <a class="button" href="#contact">Get in touch</a>
-          <a class="muted" style="margin-left:12px;" href="mailto:hello@yasseralalfy.com">hello@yasseralalfy.com</a>
+          <a class="muted" href="mailto:hello@yasseralalfy.com">hello@yasseralalfy.com</a>
+        </div>
+
+        <div>
+          <span class="tag">Depth Estimation</span>
+          <span class="tag">3D SLAM</span>
+          <span class="tag">Autonomous Navigation</span>
+          <span class="tag">Computer Vision</span>
+          <span class="tag">Machine Learning</span>
         </div>
       </div>
 
       <div class="card" style="align-self:center">
-        <div class="muted">Quick facts</div>
+        <div class="muted">Quick links</div>
         <ul style="padding-left:18px;margin:8px 0 0">
-          <li>Location: Riyadh / KSA</li>
-          <li>Works with: JavaScript, Node.js, React</li>
-          <li>Open to: freelance &amp; collaboration</li>
+          <li><a class="social" href="https://scholar.google.com/citations?hl=en&user=tnF56TUAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener">Google Scholar</a></li>
+          <li><a class="social" href="https://orcid.org/0000-0002-3668-6804" target="_blank" rel="noopener">ORCID: 0000-0002-3668-6804</a></li>
+          <li><a class="social" href="https://www.linkedin.com/in/yasser-elalfy-465b571a8/?originalSubdomain=sa" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a class="social" href="https://www.researchgate.net/scientific-contributions/Yasser-El-Alfy-2258819693" target="_blank" rel="noopener">ResearchGate</a></li>
+          <li><a class="social" href="https://pure.kfupm.edu.sa/en/searchAll/?search=Yasser%20Elalfy&searchBy=PartOfNameOrTitle" target="_blank" rel="noopener">KFUPM Pure (search)</a></li>
         </ul>
       </div>
     </section>
@@ -75,42 +93,96 @@
     <section id="about" class="grid">
       <div class="card">
         <h2 style="margin-top:0">About</h2>
-        <p class="muted">I'm a software engineer focused on shipping reliable, maintainable web apps. I enjoy simplifying complex systems, mentoring teammates, and building delightful UX.</p>
-        <p>Skills: <code>JavaScript</code>, <code>React</code>, <code>Node.js</code>, <code>TypeScript</code>, <code>HTML/CSS</code></p>
+        <p class="muted">
+          I’m a researcher focused on rigorous empirical work: experiment design, measurement, and reproducible pipelines.
+          I enjoy translating research into practical systems and tools.
+        </p>
+        <p>
+          Skills: <code>Python</code>, <code>Deep Learning</code>, <code>Computer Vision</code>, <code>Evaluation</code>, <code>Reproducibility</code>
+        </p>
       </div>
 
       <div class="card">
-        <h3 style="margin-top:0">Social</h3>
+        <h3 style="margin-top:0">Academic profiles</h3>
         <div style="margin-top:8px">
-          <a class="social" href="#">GitHub</a>
-          <a class="social" href="#">LinkedIn</a>
-          <a class="social" href="#">Twitter</a>
+          <a class="social" href="https://scholar.google.com/citations?hl=en&user=tnF56TUAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener">Google Scholar</a>
+          <a class="social" href="https://orcid.org/0000-0002-3668-6804" target="_blank" rel="noopener">ORCID</a>
+          <a class="social" href="https://pure.kfupm.edu.sa/en/searchAll/?search=Yasser%20Elalfy&searchBy=PartOfNameOrTitle" target="_blank" rel="noopener">KFUPM Pure</a>
+          <a class="social" href="https://www.researchgate.net/scientific-contributions/Yasser-El-Alfy-2258819693" target="_blank" rel="noopener">ResearchGate</a>
         </div>
-        <h3 style="margin-top:12px">Resume</h3>
-        <p class="muted">Download: <a href="#" style="color:var(--accent)">PDF</a></p>
+        <h3 style="margin-top:12px">CV</h3>
+        <p class="muted">Add your CV PDF and link it here: <a href="assets/Yasser_El-Alfy_CV.pdf" style="color:var(--accent)">Download</a></p>
       </div>
     </section>
 
-    <section id="projects" style="margin-top:18px">
-      <h2>Projects</h2>
+    <section id="outputs" style="margin-top:18px">
+      <h2>Research output (KFUPM Pure)</h2>
       <div class="proj-list">
         <div class="proj">
-          <strong>Project A</strong> — a short description of a project that shows what you built and why it matters. <span class="muted">(link)</span>
+          <strong>Patent</strong><br />
+          <strong>SYSTEM AND METHOD FOR DETECTING AND COUNTING ROAD ANOMALIES</strong><br />
+          <span class="muted">
+            Inventors: Yasser Elalfy; Uthman Baroudi — Patent No. <strong>US12445815</strong> — Published <strong>Oct 2025</strong>.
+          </span><br />
+          <span class="muted">
+            Record: <a href="https://pure.kfupm.edu.sa/en/publications/system-and-method-for-detecting-and-counting-road-anomalies/" target="_blank" rel="noopener" style="color:var(--accent)">KFUPM Pure</a>
+          </span>
+        </div>
+
+        <div class="proj">
+          <strong>Master’s thesis</strong><br />
+          <strong>Monocular Depth Estimation using Deep Learning for 3D SLAM Mapping in Autonomous Navigation</strong><br />
+          <span class="muted">
+            Department of Computer Engineering — Date of Award: <strong>5 Dec 2022</strong> — Supervisor: <strong>Uthman Baroudi</strong>.
+          </span><br />
+          <span class="muted">
+            Record: <a href="https://pure.kfupm.edu.sa/en/studentTheses/monocular-depth-estimation-using-deep-learning-for-3d-slam-mappin/" target="_blank" rel="noopener" style="color:var(--accent)">KFUPM Pure</a>
+          </span>
+        </div>
+      </div>
+
+      <p class="muted" style="margin-top:10px">
+        Source index: <a href="https://pure.kfupm.edu.sa/en/searchAll/?search=Yasser%20Elalfy&searchBy=PartOfNameOrTitle" target="_blank" rel="noopener" style="color:var(--accent)">KFUPM Pure search results</a>
+      </p>
+    </section>
+
+    <section id="profiles" style="margin-top:18px">
+      <h2>Profiles</h2>
+      <div class="proj-list">
+        <div class="proj">
+          <strong>Google Scholar</strong><br />
+          <span class="muted">Publications & citations.</span><br />
+          <a href="https://scholar.google.com/citations?hl=en&user=tnF56TUAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener" style="color:var(--accent)">Open profile</a>
         </div>
         <div class="proj">
-          <strong>Project B</strong> — another project entry. Include links to repos or live sites.
+          <strong>ORCID</strong><br />
+          <span class="muted">Persistent identifier: <code>0000-0002-3668-6804</code></span><br />
+          <a href="https://orcid.org/0000-0002-3668-6804" target="_blank" rel="noopener" style="color:var(--accent)">Open record</a>
+        </div>
+        <div class="proj">
+          <strong>ResearchGate</strong><br />
+          <a href="https://www.researchgate.net/scientific-contributions/Yasser-El-Alfy-2258819693" target="_blank" rel="noopener" style="color:var(--accent)">Open profile</a>
+        </div>
+        <div class="proj">
+          <strong>LinkedIn</strong><br />
+          <a href="https://www.linkedin.com/in/yasser-elalfy-465b571a8/?originalSubdomain=sa" target="_blank" rel="noopener" style="color:var(--accent)">Open profile</a>
         </div>
       </div>
     </section>
 
     <section id="contact" style="margin-top:18px" class="card">
       <h2 style="margin-top:0">Contact</h2>
-      <p class="muted">Want to work together or just say hi? Email me at <a href="mailto:hello@yasseralalfy.com" style="color:var(--accent)">hello@yasseralalfy.com</a> or use the details below.</p>
-      <p style="margin:6px 0" class="muted">Or add a contact form here — GitHub Pages supports static forms through third-party services.</p>
+      <p class="muted">
+        For research collaboration inquiries, please include a short summary of the idea, relevant links (paper/repo/dataset),
+        and your timeline.
+      </p>
+      <p class="muted" style="margin:6px 0">
+        Email: <a href="mailto:hello@yasseralalfy.com" style="color:var(--accent)">hello@yasseralalfy.com</a>
+      </p>
     </section>
 
     <footer>
-      © <span id="year"></span> Yasser El‑Alfy — Built with ❤️ • Hosted on GitHub Pages
+      © <span id="year"></span> Yasser El-Alfy • Hosted on GitHub Pages
     </footer>
   </div>
 
