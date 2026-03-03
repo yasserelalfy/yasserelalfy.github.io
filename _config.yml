@@ -1,8 +1,0 @@
-baseurl: ""
-title: "Yasser El-Alfy"
-description: "Personal website of Yasser El-Alfy — software engineer"
-markdown: kramdown
-theme: minima
-
-essentials:
-  github_repo: yasser-el-alfy.github.io
