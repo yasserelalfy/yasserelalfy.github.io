@@ -1,165 +1,121 @@
-=== _config.yml ===
-baseurl: ""
-title: "Yasser El-Alfy"
-description: "Personal website of Yasser El-Alfy — software engineer"
-markdown: kramdown
-theme: minima
-
-essentials:
-  github_repo: yasser-el-alfy.github.io
-
-=== index.md ===
----
-layout: default
-title: Home
-permalink: /
----
-
-# Yasser El‑Alfy
-
-I build web apps and tools that save time and delight users. I work across frontend, backend, and developer workflows.
-
-- **Location:** Riyadh, KSA
-- **Skills:** JavaScript, React, Node.js, TypeScript, HTML/CSS
-- **Open to:** freelance & collaboration
-
-[Download my resume](/assets/resume.pdf){: .button }
-
-
-=== about.md ===
----
-layout: default
-title: About
-permalink: /about/
----
-
-## About
-
-I'm a software engineer focused on shipping reliable, maintainable web apps. I enjoy simplifying complex systems, mentoring teammates, and building delightful UX.
-
-### Experience & Interests
-
-- Frontend engineering (React, TypeScript)
-- Backend services (Node.js, APIs)
-- Developer tooling and productivity
-
-=== projects.md ===
----
-layout: default
-title: Projects
-permalink: /projects/
----
-
-## Projects
-
-### Project A
-A short description of a project that shows what I built and why it matters. Link: [repo](#)
-
-### Project B
-Another project entry with a short blurb. Link: [live site](#)
-
-Add more project entries here. For each project include: 1) short summary, 2) link to repo or live demo, 3) tech stack used.
-
-=== contact.md ===
----
-layout: default
-title: Contact
-permalink: /contact/
----
-
-## Contact
-
-Want to work together or just say hi? Email me at **hello@yasseralalfy.com**.
-
-You can also add a static contact form using services like Formspree, Netlify Forms, or getform.io.
-
-=== _layouts/default.html ===
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{{ page.title }} — {{ site.title }}</title>
-  <meta name="description" content="{{ site.description }}">
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yasser El-Alfy — Software Engineer</title>
+  <meta name="description" content="Personal website of Yasser El-Alfy — software engineer, builder, and designer." />
+  <meta property="og:title" content="Yasser El-Alfy" />
+  <meta property="og:description" content="Software engineer, builder, and designer." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#6ee7b7}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;line-height:1.5;background:linear-gradient(180deg,#051025 0%,#071827 60%);color:#ecf0f6;padding:24px}
+    .container{max-width:980px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#05202a}
+    nav a{color:var(--muted);text-decoration:none;margin-left:18px}
+    .hero{display:grid;grid-template-columns:1fr;gap:18px;padding:28px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 6px 24px rgba(2,6,23,0.6)}
+    h1{margin:0;font-size:28px}
+    p.lead{color:var(--muted);margin:6px 0 0}
+    .cta{margin-top:12px}
+    .button{display:inline-block;padding:10px 14px;border-radius:10px;background:var(--accent);color:#05202a;text-decoration:none;font-weight:600}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px}
+    .muted{color:var(--muted);font-size:14px}
+    footer{margin-top:28px;color:var(--muted);font-size:14px}
+    @media (max-width:780px){.grid{grid-template-columns:1fr}.avatar{width:52px;height:52px}}
+    a.social{margin-right:12px;color:var(--muted);text-decoration:none}
+    .proj-list{display:flex;flex-direction:column;gap:12px}
+    .proj{padding:12px;border-radius:10px;background:rgba(255,255,255,0.01)}
+    code{background:#081424;padding:4px 6px;border-radius:6px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace}
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <a class="brand" href="{{ '/' | relative_url }}">Yasser El‑Alfy</a>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="avatar">YE</div>
+        <div>
+          <div style="font-weight:700">Yasser El-Alfy</div>
+          <div class="muted">Software engineer — web &amp; full‑stack</div>
+        </div>
+      </div>
       <nav>
-        <a href="{{ '/' | relative_url }}">Home</a>
-        <a href="{{ '/about/' | relative_url }}">About</a>
-        <a href="{{ '/projects/' | relative_url }}">Projects</a>
-        <a href="{{ '/contact/' | relative_url }}">Contact</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
       </nav>
-    </div>
-  </header>
+    </header>
 
-  <main class="container">
-    {{ content }}
-  </main>
+    <section class="hero">
+      <div>
+        <h1>Hi — I’m <span style="color:var(--accent)">Yasser El‑Alfy</span>.</h1>
+        <p class="lead">I build web apps and tools that save time and delight users. I work across frontend, backend, and developer workflows.</p>
+        <div class="cta">
+          <a class="button" href="#contact">Get in touch</a>
+          <a class="muted" style="margin-left:12px;" href="mailto:hello@yasseralalfy.com">hello@yasseralalfy.com</a>
+        </div>
+      </div>
 
-  <footer class="site-footer container">
-    <p>© {{ site.time | date: '%Y' }} Yasser El‑Alfy — Hosted on GitHub Pages</p>
-  </footer>
+      <div class="card" style="align-self:center">
+        <div class="muted">Quick facts</div>
+        <ul style="padding-left:18px;margin:8px 0 0">
+          <li>Location: Riyadh / KSA</li>
+          <li>Works with: JavaScript, Node.js, React</li>
+          <li>Open to: freelance &amp; collaboration</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="about" class="grid">
+      <div class="card">
+        <h2 style="margin-top:0">About</h2>
+        <p class="muted">I'm a software engineer focused on shipping reliable, maintainable web apps. I enjoy simplifying complex systems, mentoring teammates, and building delightful UX.</p>
+        <p>Skills: <code>JavaScript</code>, <code>React</code>, <code>Node.js</code>, <code>TypeScript</code>, <code>HTML/CSS</code></p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Social</h3>
+        <div style="margin-top:8px">
+          <a class="social" href="#">GitHub</a>
+          <a class="social" href="#">LinkedIn</a>
+          <a class="social" href="#">Twitter</a>
+        </div>
+        <h3 style="margin-top:12px">Resume</h3>
+        <p class="muted">Download: <a href="#" style="color:var(--accent)">PDF</a></p>
+      </div>
+    </section>
+
+    <section id="projects" style="margin-top:18px">
+      <h2>Projects</h2>
+      <div class="proj-list">
+        <div class="proj">
+          <strong>Project A</strong> — a short description of a project that shows what you built and why it matters. <span class="muted">(link)</span>
+        </div>
+        <div class="proj">
+          <strong>Project B</strong> — another project entry. Include links to repos or live sites.
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" style="margin-top:18px" class="card">
+      <h2 style="margin-top:0">Contact</h2>
+      <p class="muted">Want to work together or just say hi? Email me at <a href="mailto:hello@yasseralalfy.com" style="color:var(--accent)">hello@yasseralalfy.com</a> or use the details below.</p>
+      <p style="margin:6px 0" class="muted">Or add a contact form here — GitHub Pages supports static forms through third-party services.</p>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Yasser El‑Alfy — Built with ❤️ • Hosted on GitHub Pages
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
-=== assets/css/style.css ===
-:root{--bg:#0f1724;--muted:#9aa4b2;--accent:#6ee7b7}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#051025,#071827);color:#ecf0f6}
-.container{max-width:980px;margin:0 auto;padding:28px}
-.site-header{padding:18px 0}
-.brand{font-weight:700;color:var(--accent);text-decoration:none}
-nav a{margin-left:16px;color:var(--muted);text-decoration:none}
-h1{font-size:28px}
-.button{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:#05202a;text-decoration:none}
-.site-footer{margin-top:40px;color:var(--muted)}
-
-=== assets/resume.pdf ===
-(PLACEHOLDER) -> Upload your resume to assets/resume.pdf in the repo. The above link on the homepage points to this file so visitors can download it.
-
-=== README.md ===
-# Yasser El-Alfy — Website
-
-This repository is a Jekyll-powered personal website for **Yasser El‑Alfy**. It uses the simple structure below:
-
-```
-/_config.yml
-/index.md
-/about.md
-/projects.md
-/contact.md
-/_layouts/default.html
-/assets/css/style.css
-/assets/resume.pdf  # upload your PDF here
-```
-
-## How to publish on GitHub Pages
-1. Create a new public repository named `yasser-el-alfy.github.io`.
-2. Add these files and commit.
-3. Push to the `main` branch.
-4. In the repository settings → Pages, ensure the site is served from the `main` branch (/).
-
-Git commands example:
-```bash
-git init
-git add .
-git commit -m "Initial Jekyll site"
-git branch -M main
-git remote add origin https://github.com/your-username/yasser-el-alfy.github.io.git
-git push -u origin main
-```
-
-## Adding your resume
-Replace `assets/resume.pdf` with your PDF file. It will then be downloadable from the home page.
-
-## Customization
-- Edit the Markdown files (`index.md`, `about.md`, `projects.md`, `contact.md`) to change copy.
-- Replace links to GitHub, LinkedIn, Twitter in the layout or pages.
-
----
-
-(End of site files)
