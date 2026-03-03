@@ -3,116 +3,119 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yasser El-Alfy — Researcher</title>
-  <meta name="description" content="Yasser El-Alfy — Researcher working on data, systems, and human-centered technology." />
+  <title>Yasser El-Alfy — Software Engineer</title>
+  <meta name="description" content="Personal website of Yasser El-Alfy — software engineer, builder, and designer." />
+  <meta property="og:title" content="Yasser El-Alfy" />
+  <meta property="og:description" content="Software engineer, builder, and designer." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   <style>
-    :root{--bg:#0f172a;--card:#111827;--accent:#38bdf8;--muted:#94a3b8}
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#6ee7b7}
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:#e5e7eb;line-height:1.6}
-    .container{max-width:1000px;margin:auto;padding:24px}
-    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px}
-    nav a{color:var(--muted);text-decoration:none;margin-left:20px;font-size:14px}
-    nav a:hover{color:white}
-    h1,h2,h3{margin-top:0}
-    .hero{margin-bottom:50px}
-    .hero h1{font-size:32px}
-    .accent{color:var(--accent)}
-    .section{margin-bottom:50px}
-    .card{background:var(--card);padding:20px;border-radius:12px;margin-top:15px}
-    .muted{color:var(--muted)}
-    ul{padding-left:20px}
-    .pub{margin-bottom:15px}
-    footer{border-top:1px solid #1f2937;padding-top:20px;margin-top:40px;color:var(--muted);font-size:14px}
-    .button{display:inline-block;margin-top:15px;padding:10px 16px;background:var(--accent);color:#0f172a;text-decoration:none;border-radius:8px;font-weight:600}
-    @media(max-width:768px){header{flex-direction:column;align-items:flex-start}nav{margin-top:10px}}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;line-height:1.5;background:linear-gradient(180deg,#051025 0%,#071827 60%);color:#ecf0f6;padding:24px}
+    .container{max-width:980px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#05202a}
+    nav a{color:var(--muted);text-decoration:none;margin-left:18px}
+    .hero{display:grid;grid-template-columns:1fr;gap:18px;padding:28px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 6px 24px rgba(2,6,23,0.6)}
+    h1{margin:0;font-size:28px}
+    p.lead{color:var(--muted);margin:6px 0 0}
+    .cta{margin-top:12px}
+    .button{display:inline-block;padding:10px 14px;border-radius:10px;background:var(--accent);color:#05202a;text-decoration:none;font-weight:600}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px}
+    .muted{color:var(--muted);font-size:14px}
+    footer{margin-top:28px;color:var(--muted);font-size:14px}
+    @media (max-width:780px){.grid{grid-template-columns:1fr}.avatar{width:52px;height:52px}}
+    a.social{margin-right:12px;color:var(--muted);text-decoration:none}
+    .proj-list{display:flex;flex-direction:column;gap:12px}
+    .proj{padding:12px;border-radius:10px;background:rgba(255,255,255,0.01)}
+    code{background:#081424;padding:4px 6px;border-radius:6px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace}
   </style>
 </head>
 <body>
   <div class="container">
-
     <header>
-      <div>
-        <h2>Yasser El-Alfy</h2>
-        <div class="muted">Researcher</div>
+      <div class="brand">
+        <div class="avatar">YE</div>
+        <div>
+          <div style="font-weight:700">Yasser El-Alfy</div>
+          <div class="muted">Software engineer — web &amp; full‑stack</div>
+        </div>
       </div>
       <nav>
         <a href="#about">About</a>
-        <a href="#research">Research</a>
-        <a href="#publications">Publications</a>
+        <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
 
     <section class="hero">
-      <h1>Hello, I’m <span class="accent">Yasser El-Alfy</span>.</h1>
-      <p class="muted">
-        I conduct research at the intersection of data, systems, and human-centered technology. My work focuses on designing rigorous experiments, building reproducible systems, and translating research into real-world impact.
-      </p>
-      <a class="button" href="#contact">Get in Touch</a>
-    </section>
+      <div>
+        <h1>Hi — I’m <span style="color:var(--accent)">Yasser El‑Alfy</span>.</h1>
+        <p class="lead">I build web apps and tools that save time and delight users. I work across frontend, backend, and developer workflows.</p>
+        <div class="cta">
+          <a class="button" href="#contact">Get in touch</a>
+          <a class="muted" style="margin-left:12px;" href="mailto:hello@yasseralalfy.com">hello@yasseralalfy.com</a>
+        </div>
+      </div>
 
-    <section id="about" class="section">
-      <h2>About</h2>
-      <div class="card">
-        <p>
-          I am a researcher interested in applied and empirical studies that bridge theory and practice. My work involves experimental design, quantitative analysis, and prototype development.
-        </p>
-        <h3>Research Interests</h3>
-        <ul>
-          <li>Machine Learning & Data-Driven Systems</li>
-          <li>Information Retrieval & Evaluation</li>
-          <li>Human-Computer Interaction</li>
-          <li>Reproducible & Open Research Practices</li>
-        </ul>
-        <h3>Methods & Tools</h3>
-        <ul>
-          <li>Python, R, Statistical Modeling</li>
-          <li>Experimental Design & A/B Testing</li>
-          <li>Data Analysis & Visualization</li>
+      <div class="card" style="align-self:center">
+        <div class="muted">Quick facts</div>
+        <ul style="padding-left:18px;margin:8px 0 0">
+          <li>Location: Riyadh / KSA</li>
+          <li>Works with: JavaScript, Node.js, React</li>
+          <li>Open to: freelance &amp; collaboration</li>
         </ul>
       </div>
     </section>
 
-    <section id="research" class="section">
-      <h2>Research Projects</h2>
+    <section id="about" class="grid">
       <div class="card">
-        <h3>Project Title One</h3>
-        <p class="muted">Brief description of the research goal, methodology, and outcomes.</p>
+        <h2 style="margin-top:0">About</h2>
+        <p class="muted">I'm a software engineer focused on shipping reliable, maintainable web apps. I enjoy simplifying complex systems, mentoring teammates, and building delightful UX.</p>
+        <p>Skills: <code>JavaScript</code>, <code>React</code>, <code>Node.js</code>, <code>TypeScript</code>, <code>HTML/CSS</code></p>
       </div>
+
       <div class="card">
-        <h3>Project Title Two</h3>
-        <p class="muted">Brief description of the research contribution and impact.</p>
+        <h3 style="margin-top:0">Social</h3>
+        <div style="margin-top:8px">
+          <a class="social" href="#">GitHub</a>
+          <a class="social" href="#">LinkedIn</a>
+          <a class="social" href="#">Twitter</a>
+        </div>
+        <h3 style="margin-top:12px">Resume</h3>
+        <p class="muted">Download: <a href="#" style="color:var(--accent)">PDF</a></p>
       </div>
     </section>
 
-    <section id="publications" class="section">
-      <h2>Publications</h2>
-      <div class="card">
-        <div class="pub">
-          <strong>Paper Title.</strong> Author(s). <em>Venue</em>, Year. [PDF] [DOI]
+    <section id="projects" style="margin-top:18px">
+      <h2>Projects</h2>
+      <div class="proj-list">
+        <div class="proj">
+          <strong>Project A</strong> — a short description of a project that shows what you built and why it matters. <span class="muted">(link)</span>
         </div>
-        <div class="pub">
-          <strong>Another Paper Title.</strong> Author(s). <em>Venue</em>, Year. [PDF]
+        <div class="proj">
+          <strong>Project B</strong> — another project entry. Include links to repos or live sites.
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section">
-      <h2>Contact</h2>
-      <div class="card">
-        <p>Email: <strong>hello@yasseralalfy.com</strong></p>
-        <p class="muted">For collaboration inquiries, please include a short description of your project, relevant links, and timeline.</p>
-      </div>
+    <section id="contact" style="margin-top:18px" class="card">
+      <h2 style="margin-top:0">Contact</h2>
+      <p class="muted">Want to work together or just say hi? Email me at <a href="mailto:hello@yasseralalfy.com" style="color:var(--accent)">hello@yasseralalfy.com</a> or use the details below.</p>
+      <p style="margin:6px 0" class="muted">Or add a contact form here — GitHub Pages supports static forms through third-party services.</p>
     </section>
 
     <footer>
-      © <span id="year"></span> Yasser El-Alfy — Hosted on GitHub Pages
+      © <span id="year"></span> Yasser El‑Alfy — Built with ❤️ • Hosted on GitHub Pages
     </footer>
-
   </div>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
