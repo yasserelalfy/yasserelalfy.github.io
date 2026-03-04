@@ -72,7 +72,7 @@
       font-weight:600;
     }
 
-    /* ===== NAV (modeled after the reference site’s structure: dropdown + hamburger) ===== */
+    /* NAV */
     .topbar{
       position:sticky;top:0;z-index:1000;
       background:rgba(5,16,37,0.75);
@@ -82,10 +82,12 @@
     .navwrap{
       display:flex;align-items:center;justify-content:space-between;
       height:64px;
+      gap:12px;
     }
     .brand{
       display:flex;align-items:center;gap:12px;
       text-decoration:none;
+      min-width:220px;
     }
     .avatar{
       width:42px;height:42px;border-radius:12px;
@@ -97,23 +99,21 @@
     .brand .name{font-weight:800;letter-spacing:0.2px}
     .brand .role{font-size:12px;color:var(--muted);margin-top:2px}
 
-    .nav{
-      display:flex;align-items:center;gap:16px;
-    }
+    .nav{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
     .nav a, .nav button{
       font-size:14px;
       color:var(--muted);
       text-decoration:none;
       background:transparent;border:0;cursor:pointer;
       padding:10px 10px;border-radius:10px;
+      white-space:nowrap;
     }
     .nav a:hover, .nav button:hover{color:#fff;background:rgba(255,255,255,0.04)}
-    .nav .active{color:#fff}
 
     .dropdown{position:relative}
     .menu{
       position:absolute;top:46px;right:0;
-      min-width:240px;
+      min-width:260px;
       padding:10px;
       border-radius:14px;
       background:rgba(10,18,34,0.96);
@@ -156,24 +156,20 @@
       font-size:14px;
     }
     .drawer a:hover, .drawer button:hover{color:#fff;background:rgba(255,255,255,0.04)}
-    .drawer .submenu{
-      display:none;
-      padding-left:10px;
-    }
+    .drawer .submenu{display:none;padding-left:10px}
     .drawer .submenu a{padding:10px 12px}
     .drawer .expand.open + .submenu{display:block}
 
-    @media (max-width:860px){
+    @media (max-width:960px){
       .nav{display:none}
       .hamburger{display:inline-flex;align-items:center;justify-content:center}
       .drawer{display:block}
       .drawer.hidden{display:none}
+      .brand{min-width:auto}
     }
 
-    /* ===== HERO ===== */
-    .hero{
-      padding:44px 0 10px;
-    }
+    /* HERO */
+    .hero{padding:44px 0 10px}
     .heroGrid{
       display:grid;grid-template-columns:1.2fr 0.8fr;
       gap:18px;
@@ -195,15 +191,14 @@
     }
     .kpi .num{font-weight:900;font-size:18px}
     .kpi .lbl{font-size:12px;color:var(--muted)}
-    @media (max-width:860px){
+    @media (max-width:960px){
       .heroGrid{grid-template-columns:1fr}
       h1{font-size:30px}
     }
 
-    /* ===== CONTENT LAYOUT ===== */
+    /* CONTENT */
     .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-    @media (max-width:860px){.grid2{grid-template-columns:1fr}}
-
+    @media (max-width:960px){.grid2{grid-template-columns:1fr}}
     .block{padding:18px}
     .block h2{margin:0 0 10px;font-size:20px}
     .block h3{margin:14px 0 8px;font-size:16px}
@@ -216,7 +211,6 @@
     }
     .stack{display:flex;flex-direction:column;gap:12px}
 
-    /* ===== FOOTER ===== */
     footer{
       border-top:1px solid var(--border);
       padding:22px 0;
@@ -227,7 +221,6 @@
 </head>
 
 <body>
-  <!-- Top navigation (dropdown + hamburger, like the reference site) -->
   <div class="topbar">
     <div class="container">
       <div class="navwrap">
@@ -239,14 +232,12 @@
           </div>
         </a>
 
-        <!-- Desktop nav -->
+        <!-- Desktop nav (matches ref: Research ▾ + Publications + Teaching ▾ + Service ▾ + ☰) -->
         <nav class="nav" aria-label="Primary navigation">
           <a href="#home">Home</a>
 
           <div class="dropdown" id="researchDropdown">
-            <button type="button" id="researchBtn" aria-haspopup="true" aria-expanded="false">
-              Research ▾
-            </button>
+            <button type="button" id="researchBtn" aria-haspopup="true" aria-expanded="false">Research ▾</button>
             <div class="menu" role="menu" aria-label="Research submenu">
               <a href="#research-overview" role="menuitem">Overview <span class="muted">↗</span></a>
               <a href="#research-themes" role="menuitem">Themes <span class="muted">↗</span></a>
@@ -256,17 +247,36 @@
           </div>
 
           <a href="#publications">Publications</a>
+
+          <div class="dropdown" id="teachingDropdown">
+            <button type="button" id="teachingBtn" aria-haspopup="true" aria-expanded="false">Teaching ▾</button>
+            <div class="menu" role="menu" aria-label="Teaching submenu">
+              <a href="#teaching-courses" role="menuitem">Courses <span class="muted">↗</span></a>
+              <a href="#teaching-supervision" role="menuitem">Supervision <span class="muted">↗</span></a>
+              <a href="#teaching-resources" role="menuitem">Resources <span class="muted">↗</span></a>
+            </div>
+          </div>
+
+          <div class="dropdown" id="serviceDropdown">
+            <button type="button" id="serviceBtn" aria-haspopup="true" aria-expanded="false">Service ▾</button>
+            <div class="menu" role="menu" aria-label="Service submenu">
+              <a href="#service-overview" role="menuitem">Overview <span class="muted">↗</span></a>
+              <a href="#service-editorial" role="menuitem">Editorial Committees <span class="muted">↗</span></a>
+              <a href="#service-talks" role="menuitem">Talks & Events <span class="muted">↗</span></a>
+            </div>
+          </div>
+
           <a href="#profiles">Profiles</a>
           <a href="#contact">Contact</a>
         </nav>
 
-        <!-- Mobile hamburger -->
         <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
       </div>
 
       <!-- Mobile drawer -->
       <div class="drawer hidden" id="drawer" aria-label="Mobile navigation">
         <a href="#home">Home</a>
+
         <button class="expand" id="mResearch">Research ▾</button>
         <div class="submenu">
           <a href="#research-overview">Overview</a>
@@ -274,7 +284,23 @@
           <a href="#research-projects">Projects</a>
           <a href="#research-collab">Collaboration</a>
         </div>
+
         <a href="#publications">Publications</a>
+
+        <button class="expand" id="mTeaching">Teaching ▾</button>
+        <div class="submenu">
+          <a href="#teaching-courses">Courses</a>
+          <a href="#teaching-supervision">Supervision</a>
+          <a href="#teaching-resources">Resources</a>
+        </div>
+
+        <button class="expand" id="mService">Service ▾</button>
+        <div class="submenu">
+          <a href="#service-overview">Overview</a>
+          <a href="#service-editorial">Editorial Committees</a>
+          <a href="#service-talks">Talks & Events</a>
+        </div>
+
         <a href="#profiles">Profiles</a>
         <a href="#contact">Contact</a>
       </div>
@@ -295,7 +321,7 @@
           <div class="actions">
             <a class="btn" href="#contact">Get in touch</a>
             <a class="btn secondary" href="assets/Yasser_El-Alfy_CV.pdf">Download CV</a>
-            <a class="btn secondary" href="https://scholar.google.com/citations?hl=en&user=tnF56TUAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener">Google Scholar</a>
+            <a class="btn secondary" href="#profiles">Profiles</a>
           </div>
 
           <div>
@@ -324,7 +350,7 @@
             </div>
           </div>
           <p class="muted" style="margin:10px 0 0;">
-            Links to official records are in the Research section.
+            Official records are linked in <a href="#research-projects" style="color:var(--accent)">Research → Projects</a>.
           </p>
         </div>
       </div>
@@ -350,14 +376,12 @@
         </div>
 
         <div class="card block">
-          <h2>Quick links</h2>
-          <ul class="list">
-            <li><a href="https://scholar.google.com/citations?hl=en&user=tnF56TUAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener">Google Scholar</a></li>
-            <li><a href="https://orcid.org/0000-0002-3668-6804" target="_blank" rel="noopener">ORCID: 0000-0002-3668-6804</a></li>
-            <li><a href="https://www.researchgate.net/scientific-contributions/Yasser-El-Alfy-2258819693" target="_blank" rel="noopener">ResearchGate</a></li>
-            <li><a href="https://www.linkedin.com/in/yasser-elalfy-465b571a8/?originalSubdomain=sa" target="_blank" rel="noopener">LinkedIn</a></li>
-            <li><a href="https://pure.kfupm.edu.sa/en/searchAll/?search=Yasser%20Elalfy&searchBy=PartOfNameOrTitle" target="_blank" rel="noopener">KFUPM Pure (search)</a></li>
-          </ul>
+          <h2>About</h2>
+          <p class="muted">
+            I’m a researcher focused on rigorous empirical work: experiment design, measurement, and reproducible pipelines.
+            I enjoy translating research into practical systems and tools.
+          </p>
+          <p>Skills: <code>Python</code>, <code>Deep Learning</code>, <code>Computer Vision</code>, <code>Evaluation</code>, <code>Reproducibility</code></p>
         </div>
       </div>
     </div>
@@ -386,7 +410,7 @@
     </div>
   </section>
 
-  <!-- RESEARCH: Projects (includes KFUPM Pure items) -->
+  <!-- RESEARCH: Projects -->
   <section id="research-projects" class="section">
     <div class="container">
       <div class="card block">
@@ -405,9 +429,9 @@
           </div>
 
           <div class="item">
-            <strong>More outputs</strong><br />
-            <span class="muted">Browse indexed results via the official Pure search page.</span><br />
-            <span class="muted"><a href="https://pure.kfupm.edu.sa/en/searchAll/?search=Yasser%20Elalfy&searchBy=PartOfNameOrTitle" target="_blank" rel="noopener" style="color:var(--accent)">Open KFUPM Pure search</a></span>
+            <strong>KFUPM Pure index</strong><br />
+            <span class="muted">Browse indexed results under your name.</span><br />
+            <span class="muted"><a href="https://pure.kfupm.edu.sa/en/searchAll/?search=Yasser%20Elalfy&searchBy=PartOfNameOrTitle" target="_blank" rel="noopener" style="color:var(--accent)">Open search</a></span>
           </div>
         </div>
       </div>
@@ -443,21 +467,113 @@
       <div class="card block">
         <h2>Publications</h2>
         <p class="muted">
-          For the authoritative list and citation metrics, see Google Scholar.
+          This section is kept concise on purpose. The authoritative list is in <a href="#profiles" style="color:var(--accent)">Profiles</a>.
         </p>
         <div class="stack">
-          <!-- Replace these placeholders with your preferred/selected publications -->
           <div class="item">
             <strong>Selected / Recent publications</strong><br />
-            <span class="muted">Tip: export BibTeX from Google Scholar and paste here for clean formatting.</span><br />
-            <a href="https://scholar.google.com/citations?hl=en&user=tnF56TUAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener" style="color:var(--accent)">Open Google Scholar profile</a>
+            <span class="muted">If you paste BibTeX (from Scholar), I’ll format a clean list here.</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROFILES -->
+  <!-- TEACHING: Courses -->
+  <section id="teaching-courses" class="section">
+    <div class="container">
+      <div class="card block">
+        <h2>Teaching — Courses</h2>
+        <div class="stack">
+          <div class="item">
+            <strong>Course Title (Year)</strong><br />
+            <span class="muted">One-line description, topics, or role (Instructor/TA).</span>
+          </div>
+          <div class="item">
+            <strong>Course Title (Year)</strong><br />
+            <span class="muted">Add syllabus link if applicable.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEACHING: Supervision -->
+  <section id="teaching-supervision" class="section">
+    <div class="container">
+      <div class="card block">
+        <h2>Teaching — Supervision</h2>
+        <div class="stack">
+          <div class="item">
+            <strong>Graduate / Undergraduate projects</strong><br />
+            <span class="muted">List thesis titles, student names (optional), and years.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEACHING: Resources -->
+  <section id="teaching-resources" class="section">
+    <div class="container">
+      <div class="card block">
+        <h2>Teaching — Resources</h2>
+        <div class="stack">
+          <div class="item">
+            <strong>Notes / slides / reading lists</strong><br />
+            <span class="muted">Add links to GitHub repos, PDFs, or course pages.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE: Overview -->
+  <section id="service-overview" class="section">
+    <div class="container">
+      <div class="card block">
+        <h2>Service — Overview</h2>
+        <div class="stack">
+          <div class="item">
+            <strong>Professional service</strong><br />
+            <span class="muted">Program committees, reviewing, organizing roles, etc.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE: Editorial -->
+  <section id="service-editorial" class="section">
+    <div class="container">
+      <div class="card block">
+        <h2>Service — Editorial Committees</h2>
+        <div class="stack">
+          <div class="item">
+            <strong>Journal / conference editorial roles</strong><br />
+            <span class="muted">Add position + years.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE: Talks -->
+  <section id="service-talks" class="section">
+    <div class="container">
+      <div class="card block">
+        <h2>Service — Talks & Events</h2>
+        <div class="stack">
+          <div class="item">
+            <strong>Talk title (Venue, Year)</strong><br />
+            <span class="muted">One line on topic + link to slides/video if available.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFILES (external links only here) -->
   <section id="profiles" class="section">
     <div class="container">
       <div class="card block">
@@ -505,7 +621,7 @@
 
   <footer>
     <div class="container">
-      © <span id="year"></span> Yasser El-Alfy • Hosted on GitHub Pages
+      © <span id="year"></span> Yasser El-Alfy — KFUPM
     </div>
   </footer>
 
@@ -513,36 +629,50 @@
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Desktop dropdown
-    const dd = document.getElementById('researchDropdown');
-    const btn = document.getElementById('researchBtn');
-    function closeDropdown(){ dd.classList.remove('open'); btn?.setAttribute('aria-expanded','false'); }
-    btn?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const open = dd.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    document.addEventListener('click', closeDropdown);
-    window.addEventListener('scroll', closeDropdown);
+    // Generic dropdown helper (desktop)
+    function wireDropdown(dropdownId, buttonId){
+      const dd = document.getElementById(dropdownId);
+      const btn = document.getElementById(buttonId);
+      if(!dd || !btn) return;
+
+      function close(){
+        dd.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+      }
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = dd.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', close);
+      window.addEventListener('scroll', close);
+    }
+
+    wireDropdown('researchDropdown','researchBtn');
+    wireDropdown('teachingDropdown','teachingBtn');
+    wireDropdown('serviceDropdown','serviceBtn');
 
     // Mobile drawer
     const hamburger = document.getElementById('hamburger');
     const drawer = document.getElementById('drawer');
     hamburger?.addEventListener('click', () => {
-      const isHidden = drawer.classList.toggle('hidden') === false;
-      hamburger.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+      const nowHidden = drawer.classList.toggle('hidden');
+      hamburger.setAttribute('aria-expanded', nowHidden ? 'false' : 'true');
     });
 
-    // Mobile submenu
-    const mResearch = document.getElementById('mResearch');
-    mResearch?.addEventListener('click', () => {
-      mResearch.classList.toggle('open');
-    });
+    // Mobile submenus
+    function wireMobileExpand(btnId){
+      const b = document.getElementById(btnId);
+      b?.addEventListener('click', () => b.classList.toggle('open'));
+    }
+    wireMobileExpand('mResearch');
+    wireMobileExpand('mTeaching');
+    wireMobileExpand('mService');
 
     // Close drawer after navigation on mobile
     drawer?.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
-        if (window.matchMedia('(max-width: 860px)').matches) {
+        if (window.matchMedia('(max-width: 960px)').matches) {
           drawer.classList.add('hidden');
           hamburger.setAttribute('aria-expanded','false');
         }
