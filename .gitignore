@@ -1,0 +1,19 @@
+# Ignore system files
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Ignore temporary/backup files
+*.tmp
+*.bak
+
+# Ignore old versions if you only want the latest on GitHub
+Version 01/
+Version 02/
+Version 03/
+Version 04/
+Version 05/
+Version 06/
+Version 07/
+Version 08/
+# (The contents of Version 08 have been moved to the root for deployment)

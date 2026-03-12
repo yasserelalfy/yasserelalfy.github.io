@@ -1,0 +1,567 @@
+{
+  "ui": {
+    "nav": {
+      "home": "Home",
+      "research": "Research",
+      "researchOverview": "Overview",
+      "researchThemes": "Themes",
+      "researchProjects": "Projects",
+      "researchDemos": "Demos",
+      "publications": "Publications",
+      "teaching": "Teaching",
+      "teachingCourses": "Courses",
+      "education": "Education",
+      "educationDegrees": "Degrees",
+      "educationCertificates": "Certificates",
+      "connect": "Connect"
+    },
+    "hero": {
+      "welcomeBadge": "Welcome to my Research Portfolio",
+      "headlinePre": "The science of ",
+      "headlineAccent": "3D understanding",
+      "headlinePost": ".",
+      "ctaPrimary": "Download CV",
+      "ctaGenerate": "Generate CV from website",
+      "ctaSecondary": "Publications",
+      "ctaSamples": "Research Demo Samples",
+      "photoCaption": "PhD Candidate at KFUPM. Focused on {totalPubs}+ published contributions in AI perception."
+    },
+    "quickFacts": {
+      "title": "Quick Facts",
+      "labels": {
+        "citations": "CITATIONS",
+        "hIndex": "H-INDEX",
+        "hIndex5y": "H5-INDEX",
+        "publications": "PUBLICATIONS",
+        "i10Index": "i10-INDEX",
+        "i10Index5y": "i10-5y INDEX",
+        "phdStatus": "Candidate",
+        "phdLabel": "PhD",
+        "affiliation": "AFFILIATION"
+      }
+    },
+    "sections": {
+      "education": "Education",
+      "technicalSkills": "Technical Skills",
+      "languagesFrameworks": "Languages & Frameworks",
+      "softwareTools": "Software & Tools",
+      "researchStrategy": "Research Strategy",
+      "researchAreas": "Research Areas",
+      "technicalStack": "Technical Stack",
+      "researchThemes": "Research Themes",
+      "activeProjects": "Active Projects",
+      "allProjects": "All Projects",
+      "spatialPerceptionDemo": "Research Demos",
+      "demoDescription": "Browse interactive 3D demos and video demonstrations of research projects.",
+      "professionalInternships": "Professional Internships",
+      "scientificContributions": "Scientific Contributions",
+      "pubSummaryTemplate": "Full publication list synced from Google Scholar. Total {totalPubs} items indexed.",
+      "teachingProfile": "Teaching Academic Profile",
+      "certificates": "Certificates",
+      "scholarlyProfiles": "Scholarly Profiles",
+      "communication": "Communication",
+      "communicationText": "For collaboration or graduate research inquiries:",
+      "cvTitle": "Curriculum Vitae",
+      "cvContact": "Contact",
+      "cvMetrics": "Metrics",
+      "cvFocusAreas": "Key Focus Areas:",
+      "cvLanguages": "Languages:",
+      "cvSoftware": "Software:"
+    },
+    "filters": {
+      "all": "All",
+      "articles": "Articles",
+      "datasets": "Datasets",
+      "patents": "Patents",
+      "allTopics": "All Topics"
+    },
+    "links": {
+      "googleScholar": "Google Scholar",
+      "orcid": "ORCID",
+      "researchGate": "ResearchGate",
+      "linkedin": "LinkedIn",
+      "university": "University:",
+      "personal": "Personal:",
+      "fullText": "Full Text ↗",
+      "reference": "Reference ↗"
+    },
+    "footer": {
+      "version": "VERSION 08 — THE SCIENTIFIC GLASS EDITION"
+    },
+    "errors": {
+      "loadFailed": "System failure.",
+      "loadFailedDetail": "Check content.json integrity."
+    },
+    "fallbacks": {
+      "noMedia": "No media available",
+      "patentOffice": "Patent Office",
+      "noDescription": "No description available",
+      "noLink": "Link ↗",
+      "interactiveNotSupported": "Interactive demo not supported in this view"
+    },
+    "meta": {
+      "title": "Yasser El-Sayed El-Alfy — Researcher",
+      "description": "Researcher specializing in 3D SLAM, Depth Estimation, and Road Anomaly Detection."
+    },
+    "loading": "Initializing Experience..."
+  },
+  "basics": {
+    "name": "Yasser El-Sayed El-Alfy",
+    "role": "Researcher",
+    "affiliation": "KFUPM",
+    "affiliationRole": "PhD Student",
+    "shortBio": "Yasser El-Alfy is a researcher at KFUPM working on learning-based perception and 3D SLAM. His work focuses on integrating deep learning with traditional robotics to build robust navigation systems for autonomous vehicles and drones.",
+    "lead": "Pushing the boundaries of 3D Perception and Autonomous Systems.",
+    "avatar": "YE",
+    "photoUrl": "assets/profile.jpeg",
+    "cvUrl": "assets/Resume_Yasser El-Alfy_Latest.pdf",
+    "emailUni": "g201406850@kfupm.edu.sa",
+    "emailPersonal": "yas.alfy@gmail.com",
+    "scholarUrl": "https://scholar.google.com/citations?user=tnF56TUAAAAJ",
+    "orcidUrl": "https://orcid.org/0000-0002-3642-132X",
+    "linkedinUrl": "https://www.linkedin.com/in/yasser-elalfy-465b571a8/",
+    "researchGateUrl": "https://www.researchgate.net/profile/Yasser-El-Alfy",
+    "kfupmPureUrl": "https://pure.kfupm.edu.sa/en/persons/yasser-el-alfy",
+    "pills": [
+      "Anomaly Detection",
+      "Autonomous Navigation",
+      "Robotics",
+      "Edge AI",
+      "3D SLAM",
+      "3D Mapping",
+      "Scene Understanding",
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Neural Networks",
+      "Computer Vision",
+      "Deep Learning",
+      "Reinforcement Learning",
+      "Federated Learning"
+    ],
+    "metrics": {
+      "citations": "21",
+      "hIndex": "2",
+      "hIndex5y": "2",
+      "i10Index": "1",
+      "i10Index5y": "1"
+    }
+  },
+  "education": [
+    {
+      "degree": "Doctor of Philosophy in Computer Engineering",
+      "institution": "King Fahd University of Petroleum and Minerals, Saudi Arabia",
+      "period": "2023-present"
+    },
+    {
+      "degree": "Master of Science in Computer Engineering",
+      "institution": "King Fahd University of Petroleum and Minerals, Saudi Arabia",
+      "period": "2021-2022",
+      "details": "CGPA: 3.688"
+    },
+    {
+      "degree": "Bachelor of Science in Computer & Communication Engineering (BSCCE)",
+      "institution": "Ahlia University, College of Engineering, Bahrain",
+      "period": "2018-2020",
+      "details": "CGPA: 3.99"
+    },
+    {
+      "degree": "High School",
+      "institution": "Ahlia Schools, King Fahd University of Petroleum and Minerals, Saudi Arabia",
+      "period": "2012-2014",
+      "details": "Cumulative Grade: 99.92%"
+    }
+  ],
+  "technicalSkills": {
+    "languages": [
+      "Java",
+      "JavaScript",
+      "Visual Basic",
+      "Python",
+      "TensorFlow",
+      "Pytorch",
+      "HTML",
+      "Assembly",
+      "Arduino",
+      "VHDL",
+      "Verilog"
+    ],
+    "os": [
+      "Windows",
+      "Linux"
+    ],
+    "software": [
+      "Matlab & Simulink",
+      "Sumo Simulator",
+      "Cooja/Contiki Simulator",
+      "Xilinx",
+      "Modelsim",
+      "Cisco Packet Tracer",
+      "Arduino IDE",
+      "mikroc pro",
+      "ISIS 7 Professional",
+      "Eclipse",
+      "Visual Studio",
+      "Visual Studio Code",
+      "Google Colab",
+      "Jupyter Notebook",
+      "Microsoft office programs",
+      "Latex",
+      "Overleaf",
+      "Adobe Photoshop",
+      "GIMP",
+      "Adobe Indesign",
+      "DaVinci Resolve",
+      "PowerDirector",
+      "Kdenlive",
+      "Microsoft Teams",
+      "Zoom",
+      "Google Meet",
+      "Cisco Webex",
+      "Blackboard",
+      "Moodle"
+    ]
+  },
+  "research": {
+    "overview": {
+      "text": "My research focuses on bridging the gap between raw sensor data and high-level spatial understanding. I develop monocular depth estimation models and integrate them into SLAM pipelines to enable 3D mapping without expensive LiDAR hardware.",
+      "researchAreas": [
+        "Monocular Depth Estimation",
+        "Visual SLAM & Navigation",
+        "Road Anomaly Characterization",
+        "Edge AI for Robotics",
+        "3D Mapping",
+        "Scene Understanding"
+      ]
+    },
+    "themes": [
+      {
+        "title": "3D SLAM",
+        "description": "Spatial localization and mapping using monocular vision and deep learning."
+      },
+      {
+        "title": "Road Anomaly Detection",
+        "description": "Real-time identification and characterization of potholes and road hazards."
+      },
+      {
+        "title": "Learning-Based Perception",
+        "description": "Improving robustness of perception models in challenging environmental conditions."
+      }
+    ],
+    "projects": [
+      {
+        "title": "Road Anomaly Detection System",
+        "details": "A real-time edge system that identifies road hazards and estimates their depth using a single camera.",
+        "linkText": "View Thesis",
+        "linkUrl": "https://pure.kfupm.edu.sa/en/studentTheses/monocular-depth-estimation-using-deep-learning-for-3d-slam-mappin/",
+        "category": "Anomaly Detection"
+      },
+      {
+        "title": "3D SLAM Integration",
+        "details": "Coupling monocular depth estimators with ORB-SLAM3 for dense volumetric mapping.",
+        "linkText": "View Paper",
+        "linkUrl": "https://cdnsciencepub.com/doi/10.1139/dsa-2024-0025",
+        "category": "3D SLAM"
+      }
+    ],
+    "demos": [
+      {
+        "title": "3D SLAM Point Cloud",
+        "description": "Interactive 3D visualization of SLAM-generated point clouds from monocular depth estimation.",
+        "media": [
+          "demos/thumbnails/slam_pointcloud.jpg"
+        ]
+      },
+      {
+        "title": "Drone Obstacle Avoidance",
+        "description": "Obstacle detection and avoidance using monocular depth estimation with a drone",
+        "media": [
+          "demos/videos/drone_obstacle_avoidance.mp4"
+        ]
+      },
+      {
+        "title": "Pothole Detection and Classification Under Various Weather Conditions",
+        "description": "Pothole detection and classification under various weather conditions using still images",
+        "media": [
+          "demos/images/pothole_detection_under_various_weather_conditions.jpg",
+          "demos/images/pothole_detection_under_various_weather_conditions1.jpg",
+          "demos/images/pothole_detection_under_various_weather_conditions2.jpg"
+        ]
+      },
+      {
+        "title": "Pothole Detection, Classification, and Counting",
+        "description": "Pothole detection, classification, and counting using a car dashcam video",
+        "media": [
+          "demos/videos/pothole_detection_classification_and_counting.mp4"
+        ]
+      },
+      {
+        "title": "Road Anomaly Detection and Characterization",
+        "description": "Collecting a dataset for road anomaly detection and characterization using monocular depth estimation",
+        "media": [
+          "demos/images/RoadAnomalyDetectionAndCharacterization.jpg",
+          "demos/images/RoadAnomalyDetectionAndCharacterization1.jpg",
+          "demos/images/RoadAnomalyDetectionAndCharacterization2.jpg"
+        ]
+      },
+      {
+        "title": "RSU Communication Testing",
+        "description": "RSU Testing using wifi and a moving vehicle (C-V2X)",
+        "media": [
+          "demos/images/RSUTesting.jpg"
+        ]
+      }
+    ],
+    "internships": [
+      {
+        "title": "Research Intern",
+        "institution": "Center for Communication and Information Technology Research (CCITR), Research Institute, KFUPM",
+        "period": "2020"
+      }
+    ]
+  },
+  "publications": {
+    "summary": "Full publication list from Google Scholar is shown below. Total 13 items indexed.",
+    "articles": [
+      {
+        "title": "Enhancing pothole detection and characterization: integrated segmentation and depth estimation in road anomaly systems",
+        "venue": "Systems and Soft Computing (2025)",
+        "year": "2025",
+        "linkText": "Full Text",
+        "linkUrl": "https://arxiv.org/abs/2504.13648",
+        "type": "article",
+        "category": "Anomaly Detection"
+      },
+      {
+        "title": "A federated learning approach to banking loan decisions",
+        "venue": "ISNCC (2023)",
+        "year": "2023",
+        "linkText": "Full Text",
+        "linkUrl": "https://ieeexplore.ieee.org/abstract/document/10323875/",
+        "type": "article",
+        "category": "Federated Learning"
+      },
+      {
+        "title": "Monocular based 3D depth estimation and SLAM integration",
+        "venue": "Drone Systems and Applications (2025)",
+        "year": "2025",
+        "doi": "10.1139/dsa-2024-0025",
+        "linkText": "Full Text",
+        "linkUrl": "https://cdnsciencepub.com/doi/abs/10.1139/dsa-2024-0025",
+        "type": "article",
+        "category": "3D SLAM"
+      },
+      {
+        "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder–Decoder Model",
+        "venue": "Sensors (2023)",
+        "year": "2023",
+        "linkText": "Journal Page",
+        "linkUrl": "#",
+        "type": "article",
+        "category": "Depth Estimation"
+      },
+      {
+        "title": "Intelligent Road Anomaly Detection with Real-time Notification System for Enhanced Road Safety",
+        "venue": "Sustainability (2025)",
+        "year": "2025",
+        "linkText": "Full Text",
+        "linkUrl": "https://arxiv.org/abs/2505.08882",
+        "type": "article",
+        "category": "Anomaly Detection"
+      },
+      {
+        "title": "Arduino based obstacle awareness vest for blind people",
+        "venue": "ICT-ASET (2022)",
+        "year": "2022",
+        "linkText": "Full Text",
+        "linkUrl": "https://dl.acm.org/doi/abs/10.1145/3543303.3543308",
+        "type": "article",
+        "category": "Robotics"
+      },
+      {
+        "title": "Real-Time On-Device Vision-Based Road Anomaly Detection with Frame Span Interval (FSI) Event Counting",
+        "venue": "IEEE AICCSA (2025)",
+        "year": "2025",
+        "doi": "10.1109/AICCSA.2025",
+        "linkText": "Full Text",
+        "linkUrl": "https://ieeexplore.ieee.org/abstract/document/11315341/",
+        "type": "article",
+        "category": "Anomaly Detection"
+      },
+      {
+        "title": "Enhancing monocular depth estimation with an advanced encoder–decoder architecture",
+        "venue": "Neural Computing and Applications (2025)",
+        "year": "2025",
+        "doi": "10.1007/s00521-025-11566-y",
+        "linkText": "Springer",
+        "linkUrl": "https://link.springer.com/article/10.1007/s00521-025-11566-y",
+        "type": "article",
+        "category": "Depth Estimation"
+      },
+      {
+        "title": "Dynamic Real-time Learning of Electromagnetic Interference Parameters for Drone Crashing Attack",
+        "venue": "IEEE PIMRC (2025)",
+        "year": "2025",
+        "linkText": "Full Text",
+        "linkUrl": "https://ieeexplore.ieee.org/abstract/document/11275486/",
+        "type": "article",
+        "category": "Drone Security"
+      },
+      {
+        "title": "A Comparative Study of Transfer Learning and Custom Models with SSD for Face Mask Detection",
+        "venue": "IEEE (2025)",
+        "year": "2025",
+        "linkText": "Full Text",
+        "linkUrl": "https://ieeexplore.ieee.org/abstract/document/11088746/",
+        "doi": "10.1109/ICAI58373.2023.10543685",
+        "type": "article",
+        "category": "Computer Vision"
+      },
+      {
+        "title": "Pothole Detection Under Various Weather Conditions Using YOLOv9",
+        "venue": "Remote Sensing (2025)",
+        "year": "2025",
+        "linkText": "Full Text",
+        "linkUrl": "https://ieeexplore.ieee.org/abstract/document/10989851/",
+        "type": "article",
+        "category": "Anomaly Detection"
+      },
+      {
+        "title": "Distributed Intrusion Detection Systems Based on Deep Learning Techniques and Boosting Ensemble",
+        "venue": "ACM (2023)",
+        "year": "2023",
+        "linkText": "Full Text",
+        "linkUrl": "https://dl.acm.org/doi/abs/10.1145/3644713.3644736",
+        "doi": "10.1145/3644713.3644736",
+        "type": "article",
+        "category": "Cyber Security"
+      },
+      {
+        "title": "MONOCULAR DEPTH ESTIMATION USING DEEP LEARNING FOR 3D SLAM MAPPING IN AUTONOMOUS NAVIGATION",
+        "venue": "KFUPM Thesis (2022)",
+        "year": "2022",
+        "linkText": "Full Text",
+        "linkUrl": "https://eprints.kfupm.edu.sa/id/eprint/142314/",
+        "type": "article",
+        "category": "Depth Estimation"
+      },
+      {
+        "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder--Decoder Model",
+        "venue": "Authorea Preprints, 2023",
+        "year": "2023",
+        "linkText": "Full Text",
+        "linkUrl": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.23995554",
+        "doi": "10.22541/au.169117621.13702173/v1",
+        "type": "article",
+        "category": "Depth Estimation"
+      },
+      {
+        "title": "Enhancing monocular depth estimation with an advanced encoder-decoder architecture",
+        "venue": "Neural Computing and Applications 37 (29), 24265-24280, 2025",
+        "year": "2025",
+        "linkText": "Springer",
+        "linkUrl": "https://link.springer.com/article/10.1007/s00521-025-11566-y",
+        "doi": "10.1007/s00521-025-11566-y",
+        "type": "article",
+        "category": "Depth Estimation"
+      }
+    ],
+    "datasets": [
+      {
+        "title": "Road Anomaly Dataset with Depth Ground Truth",
+        "description": "The first pothole dataset with depth ground truth values, manually annotated for high accuracy.",
+        "links": [
+          {
+            "text": "Dataset link",
+            "url": "https://lnkd.in/dKBCjrxH",
+            "icon": "📥"
+          }
+        ],
+        "type": "dataset",
+        "arxiv": "2504.13648"
+      },
+      {
+        "title": "Pothole Detection Under Various Weather Conditions Dataset",
+        "description": "A dataset with pothole images and generated/simulated various weather conditions.",
+        "links": [
+          {
+            "text": "",
+            "url": "",
+            "icon": ""
+          }
+        ],
+        "type": "dataset",
+        "arxiv": ""
+      }
+    ],
+    "patents": [
+      {
+        "id": "US12445815",
+        "title": "SYSTEM AND METHOD FOR DETECTING AND COUNTING ROAD ANOMALIES",
+        "linkText": "KFUPM Pure",
+        "linkUrl": "https://pure.kfupm.edu.sa/en/publications/system-and-method-for-detecting-and-counting-road-anomalies/",
+        "type": "patent"
+      }
+    ]
+  },
+  "teaching": {
+    "courses": [
+      {
+        "id": "ITCS 122",
+        "title": "Introduction to Programming Techniques",
+        "period": "2018-2020"
+      },
+      {
+        "id": "ITCS 121",
+        "title": "Computer Programming",
+        "period": "2018-2019"
+      },
+      {
+        "id": "ITCS 101",
+        "title": "Introduction to Computers & IT",
+        "period": "2018-2020"
+      },
+      {
+        "id": "ITCS 222",
+        "title": "Visual Programming",
+        "period": "2018-2019"
+      },
+      {
+        "id": "ITMS 325",
+        "title": "Web Applications Design",
+        "period": "2018-2019"
+      },
+      {
+        "id": "ITCS 224",
+        "title": "Data Structures",
+        "period": "2019-2020"
+      },
+      {
+        "id": "ITCS 201",
+        "title": "Object Oriented Programming I",
+        "period": "2019-2020"
+      }
+    ]
+  },
+  "certificates": [
+    {
+      "title": "IELTS Certificate: 6.5",
+      "year": "2020"
+    },
+    {
+      "title": "ICDL Certificates in Microsoft Office",
+      "year": "2018"
+    },
+    {
+      "title": "Certificates of appreciation for being lab assistant, Ahlia Univ.",
+      "year": "2018"
+    },
+    {
+      "title": "Qiyas - General Aptitude Test: 100%",
+      "year": "2014"
+    },
+    {
+      "title": "Qiyas - Achievement Aptitude Test: 97%",
+      "year": "2014"
+    }
+  ]
+}

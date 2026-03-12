@@ -1,0 +1,39 @@
+name: Daily Sync and CV Generation
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+  workflow_dispatch: # Allows manual trigger directly from GitHub
+
+jobs:
+  sync_and_generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install scholarly fpdf
+
+      - name: Run Scholar Update
+        run: |
+          python update_scholar.py
+
+      - name: Run CV Generation
+        run: |
+          python generate_cv.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add "content.json"
+          git add "outputs/CV_Generated.pdf"
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update scholar data and generated CV" && git push)

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="page-title">Yasser El-Alfy — Researcher</title>
+  <meta name="description" id="meta-description" content="" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- External Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
+  <script async src="https://badge.dimensions.ai/badge.js" charset="utf-8"></script>
+
+  <style>
+    :root {
+      /* Palette - The Scientific Glass */
+      --bg: #050505;
+      --bg2: #0a0a0a;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-hover: rgba(255, 255, 255, 0.07);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f0f0f0;
+      --text-dim: #999;
+      --accent: #00d4ff;
+      --accent-dim: rgba(0, 212, 255, 0.1);
+      --glass-blur: blur(12px);
+      --header-h: 72px;
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --bg2: #ffffff;
+      --surface: rgba(0, 0, 0, 0.02);
+      --surface-hover: rgba(0, 0, 0, 0.04);
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #1a1a1a;
+      --text-dim: #666;
+      --accent: #0070f3;
+      --accent-dim: rgba(0, 112, 243, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color var(--transition);
+    }
+
+    h1, h2, h3 { font-family: 'Outfit', sans-serif; letter-spacing: -0.02em; }
+
+    #three-bg {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1; pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .container {
+      max-width: 1100px; margin: 0 auto; padding: 0 40px;
+    }
+
+    /* Header & Nav */
+    header {
+      position: fixed; top: 0; width: 100%; height: var(--header-h);
+      z-index: 100; backdrop-filter: var(--glass-blur);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      transition: background var(--transition);
+    }
+
+    nav { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+
+    .nav-brand { display: flex; align-items: center; gap: 12px; cursor: pointer; text-decoration: none; color: inherit; }
+    .avatar {
+      width: 36px; height: 36px; background: var(--accent); color: #000;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px;
+    }
+    .brand-text { font-weight: 500; font-size: 18px; font-family: 'Outfit'; }
+
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links > a, .drop-btn {
+      padding: 8px 16px; font-size: 14px; color: var(--text-dim);
+      text-decoration: none; border-radius: 8px; transition: var(--transition);
+      cursor: pointer; position: relative;
+    }
+    .nav-links > a:hover, .nav-links > a.active, .drop-btn:hover {
+      color: var(--text); background: var(--surface);
+    }
+    .nav-links > a.active::after {
+      content: ''; position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+      width: 12px; height: 2px; background: var(--accent); border-radius: 1px;
+    }
+
+    /* Dropdown */
+    .dropdown { position: relative; }
+    .drop-menu {
+      position: absolute; top: calc(100% + 8px); left: 0; min-width: 180px;
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 8px; visibility: hidden; opacity: 0; transform: translateY(10px);
+      transition: var(--transition); backdrop-filter: var(--glass-blur);
+    }
+    .dropdown.open .drop-menu { visibility: visible; opacity: 1; transform: translateY(0); }
+    .drop-menu a {
+      display: block; padding: 8px 12px; font-size: 13px; color: var(--text-dim);
+      text-decoration: none; border-radius: 6px; transition: var(--transition);
+    }
+    .drop-menu a:hover { color: var(--text); background: var(--surface); }
+
+    /* Theme Toggle */
+    #theme-toggle {
+      background: none; border: none; font-size: 18px; cursor: pointer;
+      color: var(--text); padding: 8px; border-radius: 8px;
+      transition: var(--transition);
+    }
+    #theme-toggle:hover { background: var(--surface); transform: rotate(15deg); }
+
+    /* Sections */
+    .section { padding: 120px 0 60px; display: none; }
+    .section.active { display: block; animation: sectionFade 0.6s ease; }
+    @keyframes sectionFade { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+
+    /* Cards */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 24px; padding: 32px; backdrop-filter: var(--glass-blur);
+      transition: var(--transition);
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-4px); background: var(--surface-hover); }
+
+    /* Hero */
+    .heroGrid {
+      display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center;
+    }
+    h1 { font-size: 64px; font-weight: 700; line-height: 1.1; margin-bottom: 24px; }
+    .lead { font-size: 20px; color: var(--text-dim); max-width: 500px; margin-bottom: 40px; }
+
+    .btn {
+      display: inline-flex; align-items: center; padding: 14px 28px;
+      background: var(--accent); color: #000; text-decoration: none;
+      border-radius: 12px; font-weight: 600; font-size: 16px;
+      transition: var(--transition); border: 1px solid transparent;
+    }
+    .btn:hover { transform: scale(1.05); filter: brightness(1.1); box-shadow: 0 0 20px var(--accent-dim); }
+    .btn.secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .btn.secondary:hover { border-color: var(--accent); }
+
+    .pill {
+      display: inline-block; padding: 6px 14px; background: var(--accent-dim);
+      color: var(--accent); border-radius: 20px; font-size: 12px;
+      font-weight: 600; margin-right: 8px; margin-bottom: 8px;
+      backdrop-filter: var(--glass-blur);
+    }
+
+    /* Grid & Stack */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .stack { display: flex; flex-direction: column; gap: 20px; }
+
+    /* Publications */
+    .filter-bar { display: flex; gap: 8px; margin-bottom: 32px; overflow-x: auto; padding-bottom: 8px; }
+    .filter-btn {
+      padding: 8px 18px; border-radius: 20px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text-dim); font-size: 13px;
+      cursor: pointer; transition: var(--transition); white-space: nowrap;
+    }
+    .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #000; border-color: transparent; }
+
+    .item { padding: 24px; border-radius: 16px; transition: var(--transition); border: 1px solid transparent; }
+    .item:hover { background: var(--surface); border-color: var(--border); }
+
+    .link-ext {
+      color: var(--accent); text-decoration: none; font-weight: 600;
+      transition: var(--transition); display: inline-flex; align-items: center; gap: 4px;
+    }
+    .link-ext:hover { opacity: 0.8; text-decoration: underline; }
+
+    /* Footer */
+    footer { padding: 60px 0; border-top: 1px solid var(--border); margin-top: 100px; text-align: center; }
+    .footer-text { font-size: 14px; color: var(--text-dim); }
+
+    /* Reveal Animations */
+    [data-reveal] { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
+    [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface-hover); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    @media (max-width: 960px) {
+      .heroGrid, .grid2 { grid-template-columns: 1fr; }
+      h1 { font-size: 48px; }
+      .nav-links { display: none; } /* Simplified for demo, usually add hamburger */
+    }
+  </style>
+</head>
+<body>
+
+  <div id="three-bg"></div>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#home" class="nav-brand">
+          <div class="avatar" id="nav-avatar">YA</div>
+          <div class="brand-text" id="nav-name">Yasser El-Alfy</div>
+        </a>
+        <div class="nav-links">
+          <a href="#home" data-tab="home" id="nav-home">Home</a>
+          <div class="dropdown" id="education-dd">
+            <span class="drop-btn" id="educationBtn">Education</span>
+            <div class="drop-menu">
+              <a href="#education-degrees" id="nav-educationDegrees">Degrees</a>
+              <a href="#education-certificates" id="nav-educationCertificates">Certificates</a>
+              <a href="#internships" id="nav-internships">Internships</a>
+            </div>
+          </div>
+          <div class="dropdown" id="research-dd">
+            <span class="drop-btn" id="researchBtn">Research</span>
+            <div class="drop-menu">
+              <a href="#research-overview" id="nav-researchOverview">Overview</a>
+              <a href="#research-themes" id="nav-researchThemes">Themes</a>
+              <a href="#research-projects" id="nav-researchProjects">Projects</a>
+              <a href="#research-demos" id="nav-researchDemos">Demos</a>
+            </div>
+          </div>
+          <a href="#publications" data-tab="publications" id="nav-publications">Publications</a>
+          <div class="dropdown" id="teaching-dd">
+            <span class="drop-btn" id="teachingBtn">Teaching</span>
+            <div class="drop-menu">
+              <a href="#teaching-courses" id="nav-teachingCourses">Courses</a>
+            </div>
+          </div>
+          <a href="#connect" data-tab="connect" id="nav-connect">Connect</a>
+          <button id="theme-toggle" title="Toggle theme">🌙</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content-mount">
+    <!-- Content injected by main.js -->
+    <div class="container" style="padding: 200px 0; text-align: center;">
+      <h2 style="font-family: 'Outfit';" id="loading-text"></h2>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-text">
+        <span id="footer-name">Yasser El-Alfy</span> &copy; <span id="year"></span> | 
+        <span id="footer-affiliation">KFUPM</span>
+      </div>
+      <div style="font-size: 10px; margin-top: 8px; opacity: 0.5; letter-spacing: 2px;" id="footer-version">
+        VERSION 08 — THE SCIENTIFIC GLASS EDITION
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
