@@ -198,10 +198,42 @@
     ::-webkit-scrollbar-thumb { background: var(--surface-hover); border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
     @media (max-width: 960px) {
       .heroGrid, .grid2 { grid-template-columns: 1fr; }
-      h1 { font-size: 48px; }
-      .nav-links { display: none; } /* Simplified for demo, usually add hamburger */
+      h1 { font-size: 42px; }
+      .nav-links {
+        position: fixed; top: var(--header-h); left: 0; width: 100%; height: calc(100vh - var(--header-h));
+        background: var(--bg); flex-direction: column; padding: 40px; gap: 20px;
+        transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        display: none; /* Will be toggled to flex via JS */
+        overflow-y: auto;
+      }
+      .nav-links.open { transform: translateX(0); display: flex; }
+      .menu-toggle { display: block; }
+      .dropdown { width: 100%; }
+      .drop-btn { width: 100%; display: flex; justify-content: space-between; font-size: 18px; }
+      .drop-menu { position: static; visibility: visible; opacity: 1; transform: none; display: none; background: none; border: none; padding-left: 20px; }
+      .dropdown.open .drop-menu { display: block; }
+
+      .card-stats { grid-template-columns: 1fr 1fr !important; gap: 20px !important; }
+      
+      #demo-modal-prev { left: 0 !important; background: rgba(0,0,0,0.3); border-radius: 0 8px 8px 0; }
+      #demo-modal-next { right: 0 !important; background: rgba(0,0,0,0.3); border-radius: 8px 0 0 8px; }
+      #demo-modal-media video, #demo-modal-media img { max-height: 60vh !important; }
+      #demo-modal-title { font-size: 18px !important; }
+      #demo-modal-desc { font-size: 13px !important; }
     }
   </style>
 </head>
@@ -216,7 +248,7 @@
           <div class="avatar" id="nav-avatar">YA</div>
           <div class="brand-text" id="nav-name">Yasser El-Alfy</div>
         </a>
-        <div class="nav-links">
+        <div class="nav-links" id="nav-menu">
           <a href="#home" data-tab="home" id="nav-home">Home</a>
           <div class="dropdown" id="education-dd">
             <span class="drop-btn" id="educationBtn">Education</span>
@@ -243,7 +275,10 @@
             </div>
           </div>
           <a href="#connect" data-tab="connect" id="nav-connect">Connect</a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
           <button id="theme-toggle" title="Toggle theme">🌙</button>
+          <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">☰</button>
         </div>
       </nav>
     </div>

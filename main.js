@@ -191,7 +191,7 @@ function renderContent(data) {
           <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:32px; flex-wrap:wrap; gap:16px;">
             <h2 style="margin-bottom:0;">${data.ui.quickFacts.title}</h2>
           </div>
-          <div class="card" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:40px; text-align:center;">
+          <div class="card card-stats" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:40px; text-align:center;">
              <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.metrics.citations}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.citations}</div></div>
              <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.metrics.hIndex}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.hIndex}</div></div>
              <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.metrics.hIndex5y}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.hIndex5y}</div></div>
@@ -677,6 +677,17 @@ function setupDemoModal() {
 }
 
 function setupNavigation() {
+  const menuToggle = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navMenu.classList.toggle('open');
+      menuToggle.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
+    });
+  }
+
   function wireDropdown(dropdownId, buttonId) {
     const dd = document.getElementById(dropdownId);
     const btn = document.getElementById(buttonId);
@@ -703,6 +714,12 @@ function setupNavigation() {
     const section = document.getElementById(h);
     if (!section || !section.classList.contains('tabSection')) {
       h = 'home';
+    }
+
+    // Force-close mobile menu on hash change
+    if (navMenu && navMenu.classList.contains('open')) {
+      navMenu.classList.remove('open');
+      menuToggle.textContent = '☰';
     }
 
     // Force-close any open dropdown menus when changing tabs
