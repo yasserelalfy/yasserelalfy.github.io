@@ -187,10 +187,16 @@
     ],
     "os": [
       "Windows",
+      "Mac",
       "Linux"
     ],
+    "otherSkills": [
+      "Teamwork and communications skills",
+      "Research skills",
+      "Video and graphical editing"
+    ],
     "software": [
-      "Matlab & Simulink",
+      "Matlab & Simulink, GNU Octave",
       "Sumo Simulator",
       "Cooja/Contiki Simulator",
       "Xilinx",
@@ -204,8 +210,8 @@
       "Visual Studio Code",
       "Google Colab",
       "Jupyter Notebook",
-      "Microsoft office programs",
-      "Latex",
+      "Microsoft office programs (Word, Excel, PowerPoint, Access)",
+      "Latex professional editing",
       "Overleaf",
       "Adobe Photoshop",
       "GIMP",
@@ -213,6 +219,7 @@
       "DaVinci Resolve",
       "PowerDirector",
       "Kdenlive",
+      "Windows Movie Maker",
       "Microsoft Teams",
       "Zoom",
       "Google Meet",
@@ -265,10 +272,20 @@
     ],
     "demos": [
       {
+        "title": "Monocular Depth Estimation",
+        "description": "Monocular depth estimation using deep learning for 3D SLAM mapping.",
+        "media": [
+          "demos/images/results samples.jpeg",
+          "demos/images/RGB-D SLAM dataset.jpeg"
+        ]
+      },
+      {
         "title": "3D SLAM Point Cloud",
         "description": "Interactive 3D visualization of SLAM-generated point clouds from monocular depth estimation.",
         "media": [
-          "demos/thumbnails/slam_pointcloud.jpg"
+          "demos/images/Estimated Trajectory with GT Depths.png",
+          "demos/images/Our SLAM Output TL (Rotated).jpg",
+          "demos/images/Our SLAM Output TL (Zoomed).jpg"
         ]
       },
       {
@@ -539,6 +556,18 @@
         "id": "ITCS 201",
         "title": "Object Oriented Programming I",
         "period": "2019-2020"
+      },
+      {
+        "id": "COE 301",
+        "title": "Computer Organization"
+      },
+      {
+        "id": "COE 292",
+        "title": "Introduction to Artificial Intelligence"
+      },
+      {
+        "id": "COE 412",
+        "title": ""
       }
     ]
   },
@@ -548,7 +577,7 @@
       "year": "2020"
     },
     {
-      "title": "ICDL Certificates in Microsoft Office",
+      "title": "ICDL Certificates in Microsoft Office (Word, Spreadsheets, PowerPoint)",
       "year": "2018"
     },
     {

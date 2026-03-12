@@ -22,8 +22,8 @@ class ClassicCV(FPDF):
     def __init__(self, data):
         super().__init__()
         self.data = data
-        self.set_auto_page_break(auto=True, margin=20)
-        self.set_margins(MARGIN, MARGIN, MARGIN)
+        self.set_auto_page_break(auto=True, margin=15)
+        self.set_margins(MARGIN, 10, MARGIN) # Smaller top margin
 
     def header(self):
         # We only want the giant header on page 1
@@ -38,48 +38,54 @@ class ClassicCV(FPDF):
         self.cell(0, 10, f'{name} - {title} - Page {self.page_no()}/{{nb}}', align='C')
 
     def add_section_title(self, title):
-        self.ln(6)
-        self.set_font('Helvetica', 'B', 14)
+        # Ensure section title isn't left alone at bottom
+        if self.get_y() > 250:
+            self.add_page()
+        self.ln(4)
+        self.set_font('Helvetica', 'B', 12)
         self.set_text_color(*COL_ACCENT)
         self.cell(0, 8, title.upper(), ln=1)
         self.set_draw_color(*COL_ACCENT)
-        self.set_line_width(0.4)
+        self.set_line_width(0.3)
         self.line(MARGIN, self.get_y(), PAGE_WIDTH - MARGIN, self.get_y())
-        self.ln(4)
+        self.ln(2)
 
     def add_entry(self, left_text, right_text, details='', bullet_points=None):
-        self.set_font('Helvetica', 'B', 11)
+        # Column safety: check height first
+        if self.get_y() > 250:
+            self.add_page()
+            
+        start_y = self.get_y()
+        self.set_font('Helvetica', 'B', 10.5)
         self.set_text_color(*COL_TEXT)
         
-        # Save X and Y
-        start_y = self.get_y()
-        self.set_x(MARGIN)
-        self.multi_cell(125, 6, left_text)
+        # Draw left part
+        self.multi_cell(130, 5, left_text)
         left_h = self.get_y() - start_y
         
-        self.set_xy(MARGIN + 125, start_y)
+        # Draw right part (reset back to start_y)
+        self.set_xy(MARGIN + 130, start_y)
         self.set_font('Helvetica', '', 10)
         self.set_text_color(*COL_DIM)
-        self.multi_cell(0, 6, right_text, align='R')
+        self.multi_cell(0, 5, right_text, align='R')
         right_h = self.get_y() - start_y
         
-        # Advance y past whichever side was taller
+        # Sync Y (avoid negative jumps if one side wrapped more than others)
         self.set_y(start_y + max(left_h, right_h))
         
         if details:
             self.set_x(MARGIN + 5)
-            self.set_font('Helvetica', 'I', 10)
+            self.set_font('Helvetica', 'I', 9.5)
             self.set_text_color(*COL_TEXT)
-            self.multi_cell(0, 5, details)
+            self.multi_cell(0, 4.5, details)
             
         if bullet_points:
-            self.set_font('Helvetica', '', 10)
-            self.set_text_color(*COL_TEXT)
+            self.set_font('Helvetica', '', 9.5)
             for bullet in bullet_points:
                 self.set_x(MARGIN + 5)
-                self.cell(5, 5, "- ")
-                self.multi_cell(0, 5, bullet)
-        self.ln(3)
+                self.cell(4, 4.5, "- ")
+                self.multi_cell(0, 4.5, bullet)
+        self.ln(2)
 
 def clean_data(d):
     if isinstance(d, dict):
@@ -222,12 +228,26 @@ def generate_cv():
             pdf.set_font('Helvetica', '', 10.5)
             pdf.multi_cell(0, 6, ", ".join(skills['software']))
 
+        if skills.get('os'):
+            pdf.set_font('Helvetica', 'B', 10.5)
+            pdf.cell(35, 6, "OS:")
+            pdf.set_font('Helvetica', '', 10.5)
+            pdf.multi_cell(0, 6, "Background in different Operating Systems: " + ", ".join(skills['os']))
+
+        if skills.get('otherSkills'):
+            pdf.set_font('Helvetica', 'B', 10.5)
+            pdf.cell(35, 6, "Other Skills:")
+            pdf.set_font('Helvetica', '', 10.5)
+            pdf.multi_cell(0, 6, ", ".join(skills['otherSkills']))
+
     # === TEACHING ===
     teaching = data.get('teaching', {})
     if teaching.get('courses'):
         pdf.add_section_title(ui_sections.get('teachingProfile', 'Teaching'))
         for course in teaching['courses']:
-            title_str = f"{course.get('id', '')}: {course.get('title', '')}" if course.get('id') else course.get('title', '')
+            title = course.get('title', '')
+            course_id = course.get('id', '')
+            title_str = f"{course_id}: {title}" if course_id and title else (course_id or title)
             pdf.add_entry(title_str, course.get('period', ''))
 
     # === CERTIFICATES ===
