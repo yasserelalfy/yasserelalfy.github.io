@@ -6,9 +6,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('year').textContent = new Date().getFullYear();
 
   try {
-    const res = await fetch('content.json');
+    const res = await fetch('content.json?v=' + Date.now());
     if (!res.ok) throw new Error('Failed to load content');
-    globalData = await res.json();
+    const rawData = await res.json();
+    globalData = applyMarkdown(rawData);
+    
+    // Apply Dynamic Sorting Logic
+    globalData = sortContent(globalData);
+
     if (loadingText) loadingText.textContent = globalData.ui.loading;
 
     initThreeJS();
@@ -121,15 +126,86 @@ function linkifyTabs(text) {
 }
 
 function parseMarkdown(text) {
-  if (!text) return '';
+  if (typeof text !== 'string' || !text) return text || '';
   let html = text
     // Links: [text](url)
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="link-ext">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="link-ext" style="text-decoration: underline;">$1</a>')
     // Bold: **text**
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     // Italics: *text*
     .replace(/\*([^*]+)\*/g, '<em>$1</em>');
   return html;
+}
+
+function applyMarkdown(obj, path = '') {
+  if (typeof obj === 'string') {
+    const p = path.toLowerCase();
+    // Do not parse URLs, IDs, Media, or Meta Tags
+    if (p.includes('.meta') || p.endsWith('url') || p.endsWith('media') || p.endsWith('id') || p.includes('metrics')) {
+      return obj;
+    }
+    return parseMarkdown(obj);
+  } else if (Array.isArray(obj)) {
+    return obj.map((item, idx) => applyMarkdown(item, `${path}[${idx}]`));
+  } else if (obj !== null && typeof obj === 'object') {
+    const res = {};
+    for (const key in obj) {
+      const nextPath = path ? `${path}.${key}` : key;
+      res[key] = applyMarkdown(obj[key], nextPath);
+    }
+    return res;
+  }
+  return obj;
+}
+
+/**
+ * Extracts the most recent year from a string like "2023-present" or "2018-2020"
+ */
+function getLatestYear(periodStr) {
+  if (!periodStr) return 0;
+  const s = periodStr.toString().toLowerCase();
+  if (s.includes('present') || s.includes('now')) return new Date().getFullYear() + 1; // Future weight
+  const years = s.match(/\d{4}/g);
+  if (years) return Math.max(...years.map(Number));
+  return 0;
+}
+
+/**
+ * Automatically reorders content based on user priorities
+ */
+function sortContent(data) {
+  // 1. Sort Research Demos (Videos > Scripts > Images)
+  if (data.research && data.research.interactiveDemosList) {
+    data.research.interactiveDemosList.sort((a, b) => {
+      const getWeight = (item) => {
+        const firstMedia = (item.media && item.media[0]) || '';
+        if (firstMedia.toLowerCase().endsWith('.mp4')) return 1; // Video
+        if (item.pyScript || item.colabUrl) return 2;           // Script
+        return 3;                                             // Image
+      };
+      return getWeight(a) - getWeight(b);
+    });
+  }
+
+  // 2. Sort Dated Content (Most Recent First)
+  const sortByDate = (arr, key = 'period') => {
+    if (!arr) return;
+    arr.sort((a, b) => {
+      const yearA = getLatestYear(a[key] || a.year || a.date);
+      const yearB = getLatestYear(b[key] || b.year || b.date);
+      return yearB - yearA;
+    });
+  };
+
+  sortByDate(data.education.degrees);
+  sortByDate(data.education.workExperience);
+  sortByDate(data.education.workshops);
+  sortByDate(data.publications.articles);
+  sortByDate(data.publications.datasets);
+  sortByDate(data.teaching.courses);
+  sortByDate(data.teaching.talks, 'date');
+
+  return data;
 }
 
 function renderContent(data) {
@@ -139,10 +215,10 @@ function renderContent(data) {
   const metaDesc = document.getElementById('meta-description');
   if (metaDesc) metaDesc.setAttribute('content', data.ui.meta.description);
 
-  document.getElementById('nav-name').textContent = data.basics.name;
-  document.getElementById('nav-avatar').textContent = data.basics.navbarInitials;
-  document.getElementById('footer-name').textContent = data.basics.name;
-  document.getElementById('footer-affiliation').textContent = data.basics.affiliation;
+  document.getElementById('nav-name').innerHTML = data.basics.name;
+  document.getElementById('nav-avatar').innerHTML = data.basics.navbarInitials;
+  document.getElementById('footer-name').innerHTML = data.basics.name;
+  document.getElementById('footer-affiliation').innerHTML = data.basics.affiliation;
 
   // Populate nav labels from content.json
   const navMap = data.ui.nav;
@@ -155,17 +231,17 @@ function renderContent(data) {
     'educationBtn': navMap.education,
     'nav-educationDegrees': navMap.educationDegrees, 'nav-educationCertificates': navMap.educationCertificates,
     'nav-educationWorkshops': navMap.educationWorkshops,
-    'nav-internships': navMap.professionalInternships,
+    'nav-workExperience': navMap.workExperience,
     'nav-connect': navMap.connect
   };
   Object.entries(navIds).forEach(([id, text]) => {
     const el = document.getElementById(id);
-    if (el) el.textContent = text;
+    if (el) el.innerHTML = text;
   });
 
   // Populate footer version
   const footerVer = document.getElementById('footer-version');
-  if (footerVer) footerVer.textContent = data.ui.footer.version;
+  if (footerVer) footerVer.innerHTML = data.ui.footer.version;
 
   const linkifiedPubSummary = linkifyTabs(data.publications.summary);
 
@@ -227,7 +303,7 @@ function renderContent(data) {
         <div class="card" data-reveal>
           <h2>${data.ui.sections.education}</h2>
           <div class="stack" style="margin-top:24px;">
-            ${data.education.map(e => `
+            ${data.education.degrees.map(e => `
               <div class="item" style="border-left:2px solid var(--accent); padding-left:24px;">
                 <div style="font-weight:600; font-size:16px;">${e.degree}</div>
                 <div class="muted" style="font-size:13px;">${e.institution} | ${e.period}</div>
@@ -258,25 +334,25 @@ function renderContent(data) {
                <div>
                  <h4 style="font-size:12px; color:var(--accent); margin-bottom:6px;">${data.ui.sections.languagesFrameworks}</h4>
                  <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                   ${data.technicalSkills.languages.map(s => `<span class="pill" style="font-size:10px;">${s}</span>`).join('')}
+                   ${data.research.technicalSkills.languages.map(s => `<span class="pill" style="font-size:10px;">${s}</span>`).join('')}
                  </div>
                </div>
                                <div style="margin-top:12px;">
                   <h4 style="font-size:12px; color:var(--accent); margin-bottom:6px;">${data.ui.sections.softwareTools}</h4>
                   <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                    ${data.technicalSkills.software.map(s => `<span class="pill" style="font-size:10px; opacity:0.8;">${s}</span>`).join('')}
+                    ${data.research.technicalSkills.software.map(s => `<span class="pill" style="font-size:10px; opacity:0.8;">${s}</span>`).join('')}
                   </div>
                 </div>
                 <div style="margin-top:12px;">
                   <h4 style="font-size:12px; color:var(--accent); margin-bottom:6px;">${data.ui.sections.operatingSystems}</h4>
                   <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                    ${data.technicalSkills.os.map(s => `<span class="pill" style="font-size:10px; opacity:0.8;">${s}</span>`).join('')}
+                    ${data.research.technicalSkills.os.map(s => `<span class="pill" style="font-size:10px; opacity:0.8;">${s}</span>`).join('')}
                   </div>
                 </div>
                 <div style="margin-top:12px;">
                   <h4 style="font-size:12px; color:var(--accent); margin-bottom:6px;">${data.ui.sections.otherSkills}</h4>
                   <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                    ${data.technicalSkills.otherSkills.map(s => `<span class="pill" style="font-size:10px; opacity:0.8;">${s}</span>`).join('')}
+                    ${data.research.technicalSkills.otherSkills.map(s => `<span class="pill" style="font-size:10px; opacity:0.8;">${s}</span>`).join('')}
                   </div>
                 </div>
              </div>
@@ -325,8 +401,10 @@ function renderContent(data) {
             ${(data.research.interactiveDemosList || []).map((demo, i) => {
     const firstMedia = (demo.media && demo.media[0]) || '';
     const isVideo = firstMedia.toLowerCase().endsWith('.mp4');
-    const icon = isVideo ? '🎬' : '🖼️';
-    const badge = isVideo ? data.ui.sections.videoBadge : data.ui.sections.imageBadge;
+    const isScript = !!demo.pyScript || !!demo.colabUrl; // Any code-based demo
+    const icon = isScript ? '🐍' : (isVideo ? '🎬' : '🖼️');
+    const badge = isScript ? (data.ui.sections.pythonBadge || 'Python') : (isVideo ? data.ui.sections.videoBadge : data.ui.sections.imageBadge);
+    
     return `
               <div class="card item" style="background:var(--bg2); cursor:pointer;" data-demo-index="${i}">
                 <div style="width:100%; height:200px; border-radius:12px; background:var(--bg); display:flex; align-items:center; justify-content:center; overflow:hidden; border:1px solid var(--border); position: relative;">
@@ -348,16 +426,17 @@ function renderContent(data) {
       </div>
     </section>
 
-    <!-- INTERNSHIPS -->
-    <section id="internships" class="section tabSection" data-tab="education">
+    <!-- WORK EXPERIENCE -->
+    <section id="work-experience" class="section tabSection" data-tab="education">
       <div class="container">
         <div class="card" data-reveal>
-          <h2>${data.ui.sections.professionalInternships}</h2>
+          <h2>${data.ui.sections.workExperience}</h2>
           <div class="stack" style="margin-top:24px;">
-            ${data.research.professionalInternshipsList.map(i => `
+            ${data.education.workExperience.map(i => `
               <div class="item" style="border-left:2px solid var(--accent); padding-left:24px;">
                 <div style="font-weight:600; font-size:16px;">${i.title}</div>
                 <div class="muted" style="font-size:13px;">${i.institution} | ${i.period}</div>
+                ${i.type ? `<span class="pill" style="margin-top:8px;">${i.type}</span>` : ''}
               </div>
             `).join('')}
           </div>
@@ -445,7 +524,7 @@ function renderContent(data) {
         <div class="card" data-reveal>
           <h2>${data.ui.sections.certificates}</h2>
           <div class="grid2" style="margin-top:24px;">
-            ${data.certificates.map(cert => `
+            ${data.education.certificates.map(cert => `
               <div class="item card" style="background:var(--bg2); border-left: 3px solid var(--accent); padding:20px;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                   <div style="font-weight:600; font-size:15px; color:var(--text);">${cert.title}</div>
@@ -466,7 +545,7 @@ function renderContent(data) {
         <div class="card" data-reveal>
           <h2>${data.ui.sections.workshops}</h2>
           <div class="stack" style="margin-top:24px;">
-            ${(data.workshops || []).map(w => `
+            ${(data.education.workshops || []).map(w => `
               <div class="item" style="border-left:2px solid var(--accent); padding-left:24px;">
                 <div style="font-weight:600; font-size:16px;">${w.title}</div>
                 <div class="muted" style="font-size:13px;">${w.institution} | ${w.period}</div>
@@ -662,8 +741,28 @@ function setupDemoModal() {
       </div>
       
       <div id="demo-modal-counter" style="color:var(--accent); font-size:12px; font-weight:bold; margin-top:16px; letter-spacing:1px; display:none;"></div>
-      <h3 id="demo-modal-title" style="color:#fff; margin-top:8px; text-align:center; font-family:'Outfit'; font-size:24px;"></h3>
-      <p id="demo-modal-desc" style="color:#aaa; text-align:center; max-width:800px; margin-top:8px; font-size:15px;"></p>
+      <h3 id="demo-modal-title" style="color:var(--text); margin-top:8px; text-align:center; font-family:'Outfit'; font-size:24px;"></h3>
+      <p id="demo-modal-desc" style="color:var(--muted, #aaa); text-align:center; max-width:800px; margin-top:8px; font-size:15px;"></p>
+      
+      <div id="demo-modal-actions" style="margin-top:20px; display:none; gap:16px;">
+         <a id="demo-modal-colab" href="#" target="_blank" class="btn" style="background:#f9ab00; color:#000; display:none;"><span style="margin-right:8px;">🚀</span> Run in Google Colab ↗</a>
+         <button id="demo-modal-pyscript" class="btn" style="background:#306998; color:#fff; display:none; border:none; cursor:pointer;"><span style="margin-right:8px;">🐍</span> Run Local Terminal Demo</button>
+         <a id="demo-modal-download" href="#" download class="btn" style="background:var(--accent); color:#000; display:none;"><span style="margin-right:8px;">📥</span> Download Script</a>
+      </div>
+      <p id="demo-modal-note" style="color:#ffcc00; font-size:12px; margin-top:10px; display:none;"></p>
+      
+      <!-- Code & Terminal Viewer -->
+      <div id="demo-interactive-viewer" style="display:none; width:90vw; max-width:800px; margin-top:20px; text-align:left;">
+         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:12px; font-weight:bold; color:var(--accent);">PYTHON SOURCE CODE</span>
+            <button id="close-interactive" style="background:none; border:none; color:#ff3333; cursor:pointer; font-size:12px;">Close Session ✕</button>
+         </div>
+         <pre id="demo-code-display" style="background:#1a1a1a; border:1px solid #333; border-radius:8px; padding:16px; font-size:13px; color:#ccc; overflow:auto; max-height:50vh; margin-bottom:16px; font-family:monospace;"></pre>
+         
+         <span style="font-size:12px; font-weight:bold; color:var(--accent);">TERMINAL OUTPUT</span>
+         <div id="pyscript-output" style="background:#000; border:1px solid #333; border-radius:8px; padding:16px; font-size:13px; color:#00ff00; min-height:100px; max-height:300px; overflow-y:auto; font-family:monospace; margin-top:8px;"></div>
+      </div>
+
     </div>
   `;
   document.body.insertAdjacentHTML('beforeend', modalHTML);
@@ -676,6 +775,17 @@ function setupDemoModal() {
   const prevBtn = document.getElementById('demo-modal-prev');
   const nextBtn = document.getElementById('demo-modal-next');
   const counterEl = document.getElementById('demo-modal-counter');
+  
+  const actionsContainer = document.getElementById('demo-modal-actions');
+  const colabBtn = document.getElementById('demo-modal-colab');
+  const pyscriptBtn = document.getElementById('demo-modal-pyscript');
+  const downloadBtn = document.getElementById('demo-modal-download');
+  const noteEl = document.getElementById('demo-modal-note');
+  
+  const interactiveViewer = document.getElementById('demo-interactive-viewer');
+  const codeDisplay = document.getElementById('demo-code-display');
+  const terminalOutput = document.getElementById('pyscript-output');
+  const closeInteractiveBtn = document.getElementById('close-interactive');
 
   let currentDemo = null;
   let currentMediaIndex = 0;
@@ -686,7 +796,9 @@ function setupDemoModal() {
 
     // Safety check
     if (mediaList.length === 0) {
-      mediaContainer.innerHTML = `<div style="padding:100px; color:#fff;">${globalData.ui.fallbacks.noMedia}</div>`;
+      const isScript = !!currentDemo.pyScript;
+      const placeholder = isScript ? '🐍' : (globalData.ui.fallbacks && globalData.ui.fallbacks.noMedia || 'No Media');
+      mediaContainer.innerHTML = `<div style="padding:100px; color:#fff; font-size:64px;">${placeholder}</div>`;
       prevBtn.style.display = 'none';
       nextBtn.style.display = 'none';
       counterEl.style.display = 'none';
@@ -714,9 +826,82 @@ function setupDemoModal() {
     }
   };
 
+  closeInteractiveBtn.onclick = () => {
+    interactiveViewer.style.display = 'none';
+    mediaContainer.parentElement.style.display = 'flex';
+    terminalOutput.innerHTML = '';
+  };
+
+  const executePyScript = async (scriptPath, isDesktopOnly = false) => {
+    mediaContainer.parentElement.style.display = 'none';
+    interactiveViewer.style.display = 'block';
+    
+    if (isDesktopOnly) {
+        terminalOutput.innerHTML = `
+            <div style="color:#ffcc00; background:rgba(255,204,0,0.1); padding:16px; border-radius:8px; border:1px solid rgba(255,204,0,0.3);">
+                <div style="font-weight:bold; margin-bottom:8px;">🖥️ Desktop Application Only</div>
+                This utility uses the <strong>Tkinter</strong> GUI library, which cannot run natively in a web browser. 
+                You can review the source code above, or download it to run locally on your computer.
+            </div>`;
+    } else {
+        terminalOutput.innerHTML = '<div style="color:#888;">Initializing Python environment...</div>';
+    }
+    
+    try {
+        const res = await fetch(scriptPath);
+        const code = await res.text();
+        
+        // Show Source Code
+        codeDisplay.textContent = code;
+        
+        if (!isDesktopOnly) {
+            terminalOutput.innerHTML = '<div id="pyscript-manual-terminal" style="background:#000; color:#00ff00; font-family:Courier New, monospace; padding:15px; border-radius:4px; min-height:400px; white-space:pre-wrap; font-size:14px; line-height:1.4; border:1px solid #333; overflow-y:auto; max-height:500px;">Initializing Python environment...</div>';
+            
+            // Indent each line of the user's code to fit inside the try/except block
+            const indentedCode = code.split('\n').map(line => '    ' + line).join('\n');
+            
+            // Use a dedicated tag for PyScript but manually redirect stdout to our div
+            // This avoids the "py-terminal is read-only" bug on re-runs
+            const scriptEl = document.createElement('script');
+            scriptEl.type = 'py';
+            scriptEl.textContent = `
+import sys
+import js
+
+class TerminalWriter:
+    def write(self, text):
+        container = js.document.getElementById('pyscript-manual-terminal')
+        if container:
+            if container.innerHTML == 'Initializing Python environment...':
+                container.innerHTML = ''
+            container.innerText += text
+            container.scrollTop = container.scrollHeight
+    def flush(self):
+        pass
+
+sys.stdout = TerminalWriter()
+sys.stderr = TerminalWriter()
+
+# User Script
+try:
+${indentedCode}
+except Exception as e:
+    print(f"\\n[Error] {e}")
+`;
+            terminalOutput.appendChild(scriptEl);
+        }
+
+    } catch(err) {
+        terminalOutput.innerHTML = `<div style="color:#ff3333;">Failed to load script: ${err}</div>`;
+    }
+  };
+
   const closeModal = () => {
     modal.style.display = 'none';
-    mediaContainer.innerHTML = ''; // Stop video playback
+    mediaContainer.innerHTML = ''; 
+    mediaContainer.parentElement.style.display = 'flex';
+    interactiveViewer.style.display = 'none';
+    terminalOutput.innerHTML = '';
     currentDemo = null;
   };
 
@@ -751,6 +936,36 @@ function setupDemoModal() {
     currentMediaIndex = 0;
     titleEl.textContent = currentDemo.title;
     descEl.textContent = currentDemo.description;
+    
+    // Handle Interactive Code Buttons
+    actionsContainer.style.display = 'none';
+    colabBtn.style.display = 'none';
+    pyscriptBtn.style.display = 'none';
+    downloadBtn.style.display = 'none';
+    noteEl.style.display = 'none';
+    
+    if (currentDemo.colabUrl || currentDemo.pyScript) {
+        actionsContainer.style.display = 'flex';
+        
+        if (currentDemo.colabUrl) {
+            colabBtn.href = currentDemo.colabUrl;
+            colabBtn.style.display = 'inline-flex';
+        }
+        
+        if (currentDemo.pyScript) {
+            const isDesktop = !!currentDemo.isDesktopOnly;
+            pyscriptBtn.style.display = 'inline-flex';
+            pyscriptBtn.innerHTML = isDesktop ? '<span style="margin-right:8px;">🔍</span> View Source Code' : '<span style="margin-right:8px;">🐍</span> Run Local Terminal Demo';
+            pyscriptBtn.onclick = () => executePyScript(currentDemo.pyScript, isDesktop);
+
+            if (isDesktop) {
+                downloadBtn.style.display = 'inline-flex';
+                downloadBtn.href = currentDemo.pyScript;
+                noteEl.style.display = 'block';
+                noteEl.textContent = "Note: This is a desktop application. You can view the source code here, or download it to run locally.";
+            }
+        }
+    }
 
     renderMedia();
     modal.style.display = 'flex';

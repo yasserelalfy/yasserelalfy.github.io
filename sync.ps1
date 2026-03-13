@@ -3,6 +3,17 @@ $ErrorActionPreference = "Stop"
 try {
     Write-Host "--- GitHub Sync Started ---`n" -ForegroundColor Cyan
 
+    # --- NEW: Google Drive Conflict Cleanup ---
+    if (Test-Path .git) {
+        Write-Host "Checking for Google Drive conflict files in .git..." -ForegroundColor Gray
+        $conflicts = Get-ChildItem .git -Recurse -Filter "*(*)*" -ErrorAction SilentlyContinue
+        if ($conflicts) {
+            Write-Host "Found $($conflicts.Count) conflict files. Cleaning up..." -ForegroundColor Yellow
+            $conflicts | Remove-Item -Force
+            Write-Host "Cleanup done." -ForegroundColor Gray
+        }
+    }
+
     # Check if this is a git repo
     if (!(Test-Path .git)) {
         Write-Host "Initializing Git Repository..." -ForegroundColor Yellow

@@ -2,6 +2,7 @@
 """Generate a professional PDF CV from content.json"""
 import json
 import os
+import re
 from fpdf import FPDF
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -100,7 +101,13 @@ def clean_data(d):
     elif isinstance(d, list):
         return [clean_data(v) for v in d]
     elif isinstance(d, str):
-        return d.replace('\u2013', '-').replace('\u2014', '-').replace('\u2018', "'").replace('\u2019', "'").replace('\u201c', '"').replace('\u201d', '"').replace('\u2026', '...')
+        s = d.replace('\u2013', '-').replace('\u2014', '-').replace('\u2018', "'").replace('\u2019', "'").replace('\u201c', '"').replace('\u201d', '"').replace('\u2026', '...')
+        # Strip Markdown Links [Text](URL) -> Text
+        s = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'\1', s)
+        # Strip Bold/Italics **Text** -> Text, *Text* -> Text
+        s = re.sub(r'\*\*([^*]+)\*\*', r'\1', s)
+        s = re.sub(r'\*([^*]+)\*', r'\1', s)
+        return s
     return d
 
 def generate_cv():
@@ -186,13 +193,13 @@ def generate_cv():
     # === EDUCATION ===
     ui_sections = data.get('ui', {}).get('sections', {})
     
-    if data.get('education'):
+    if data.get('education', {}).get('degrees'):
         pdf.add_section_title(ui_sections.get('education', 'Education'))
-        for edu in data['education']:
+        for edu in data['education']['degrees']:
             pdf.add_entry(edu.get('degree', ''), f"{edu.get('institution', '')} | {edu.get('period', '')}", edu.get('details', ''))
 
     # === WORKSHOPS ===
-    workshops = data.get('workshops', [])
+    workshops = data.get('education', {}).get('workshops', [])
     if workshops:
         pdf.add_section_title(ui_sections.get('workshops', 'Workshops'))
         for w in workshops:
@@ -200,9 +207,9 @@ def generate_cv():
 
     # === EXPERIENCE ===
     research = data.get('research', {})
-    if research.get('professionalInternshipsList'):
+    if data.get('education', {}).get('workExperience'):
         pdf.add_section_title(ui_sections.get('cvProfessionalExperience', 'Professional Experience'))
-        for intern in research['professionalInternshipsList']:
+        for intern in data['education']['workExperience']:
             pdf.add_entry(intern.get('title', ''), f"{intern.get('institution', '')} | {intern.get('period', '')}")
 
     # === RESEARCH OVERVIEW ===
@@ -224,7 +231,7 @@ def generate_cv():
                 pdf.multi_cell(0, 5, area)
 
     # === SKILLS ===
-    skills = data.get('technicalSkills', {})
+    skills = research.get('technicalSkills', {})
     if skills:
         pdf.add_section_title(ui_sections.get('technicalSkills', 'Technical Skills'))
         pdf.set_font('Helvetica', '', 10.5)
@@ -272,9 +279,9 @@ def generate_cv():
             pdf.add_entry(talk.get('title', ''), f"{talk.get('type', '')} | {talk.get('date', '')}", talk.get('location', ''))
 
     # === CERTIFICATES ===
-    if data.get('certificates'):
+    if data.get('education', {}).get('certificates'):
         pdf.add_section_title(ui_sections.get('cvCertifications', 'Certifications'))
-        for cert in data['certificates']:
+        for cert in data['education']['certificates']:
             pdf.add_entry(cert.get('title', ''), cert.get('year', ''), cert.get('details', ''))
 
     # === PUBLICATIONS ===
