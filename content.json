@@ -458,7 +458,7 @@
       },
       {
         "title": "RSU Communication Testing",
-        "description": "Roadside Unit (RSU) Testing using wifi and a moving vehicle (C-V2X)",
+        "description": "Roadside Unit (RSU) Testing using WiFi and a moving vehicle (C-V2X)",
         "media": [
           "demos/images/RSUTesting.jpg"
         ]
