@@ -3,29 +3,33 @@ import os
 from scholarly import scholarly
 
 # Configuration
-SCHOLAR_ID = 'tnF56TUAAAAJ'
 CONTENT_PATH = 'content.json'
 
 def sync_scholar():
+    # Load existing content first to get Scholar ID
+    with open(CONTENT_PATH, 'r', encoding='utf-8-sig') as f:
+        content = json.load(f)
+    
+    SCHOLAR_ID = content['basics'].get('scholarId', '')
+    if not SCHOLAR_ID:
+        print("Error: No scholarId found in content.json basics section.")
+        return
+    
     print(f"Fetching updates for Scholar ID: {SCHOLAR_ID}...")
     
     try:
         author = scholarly.search_author_id(SCHOLAR_ID)
         scholarly.fill(author, sections=['basics', 'publications', 'indices'])
         
-        # Load existing content
-        with open(CONTENT_PATH, 'r', encoding='utf-8') as f:
-            content = json.load(f)
-        
         # 1. Update Metrics
-        content['basics']['metrics'] = {
+        content['basics']['quickFactsMetrics'] = {
             "citations": str(author.get('citedby', '0')),
             "hIndex": str(author.get('hindex', '0')),
             "hIndex5y": str(author.get('hindex5y', '0')),
             "i10Index": str(author.get('i10index', '0')),
             "i10Index5y": str(author.get('i10index5y', '0'))
         }
-        print(f"Metrics updated: Citations={content['basics']['metrics']['citations']}, h-index={content['basics']['metrics']['hIndex']}")
+        print(f"Metrics updated: Citations={content['basics']['quickFactsMetrics']['citations']}, h-index={content['basics']['quickFactsMetrics']['hIndex']}")
 
         # 2. Sync Publications
         existing_articles = content.get('publications', {}).get('articles', [])

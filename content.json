@@ -13,7 +13,10 @@
       "education": "Education",
       "educationDegrees": "Degrees",
       "educationCertificates": "Certificates",
-      "connect": "Connect"
+      "educationWorkshops": "Workshops",
+      "workExperience": "Work Experience",
+      "connect": "Connect",
+      "teachingTalks": "Talks & Events"
     },
     "hero": {
       "welcomeBadge": "Welcome to my Research Portfolio",
@@ -35,9 +38,9 @@
         "publications": "PUBLICATIONS",
         "i10Index": "i10-INDEX",
         "i10Index5y": "i10-5y INDEX",
-        "phdStatus": "Candidate",
-        "phdLabel": "PhD",
-        "affiliation": "AFFILIATION"
+        "roleStatus": "Candidate",
+        "roleDegree": "PhD",
+        "universityName": "AFFILIATION"
       }
     },
     "sections": {
@@ -53,11 +56,12 @@
       "allProjects": "All Projects",
       "spatialPerceptionDemo": "Research Demos",
       "demoDescription": "Browse interactive 3D demos and video demonstrations of research projects.",
-      "professionalInternships": "Professional Internships",
+      "workExperience": "Work Experience",
       "scientificContributions": "Scientific Contributions",
       "pubSummaryTemplate": "Full publication list synced from Google Scholar. Total {totalPubs} items indexed.",
       "teachingProfile": "Teaching Academic Profile",
       "certificates": "Certificates",
+      "workshops": "Workshops",
       "scholarlyProfiles": "Scholarly Profiles",
       "communication": "Communication",
       "communicationText": "For collaboration or graduate research inquiries:",
@@ -66,7 +70,21 @@
       "cvMetrics": "Metrics",
       "cvFocusAreas": "Key Focus Areas:",
       "cvLanguages": "Languages:",
-      "cvSoftware": "Software:"
+      "cvSoftware": "Software:",
+      "cvOsPrefix": "Background in different Operating Systems: ",
+      "cvOsTitle": "OS:",
+      "cvOtherSkillsTitle": "Other Skills:",
+      "cvPage": "Page",
+      "cvSelectedPublications": "Selected Publications",
+      "cvCertifications": "Certifications",
+      "cvProfessionalExperience": "Professional Experience",
+      "operatingSystems": "Operating Systems",
+      "otherSkills": "Other Skills",
+      "abstract": "Abstract",
+      "videoBadge": "Video",
+      "imageBadge": "Image",
+      "pythonBadge": "Python script",
+      "talksEvents": "Talks & Events"
     },
     "filters": {
       "all": "All",
@@ -86,7 +104,7 @@
       "reference": "Reference ↗"
     },
     "footer": {
-      "version": "VERSION 08 — THE SCIENTIFIC GLASS EDITION"
+      "version": "VERSION 11 — THE SCIENTIFIC GLASS EDITION"
     },
     "errors": {
       "loadFailed": "System failure.",
@@ -100,29 +118,30 @@
       "interactiveNotSupported": "Interactive demo not supported in this view"
     },
     "meta": {
-      "title": "Yasser El-Sayed El-Alfy — Researcher",
+      "title": "Yasser El-Sayed M. El-Alfy — Researcher",
       "description": "Researcher specializing in 3D SLAM, Depth Estimation, and Road Anomaly Detection."
     },
     "loading": "Initializing Experience..."
   },
   "basics": {
-    "name": "Yasser El-Sayed El-Alfy",
+    "name": "Yasser El-Sayed M. El-Alfy",
     "role": "Researcher",
     "affiliation": "KFUPM",
     "affiliationRole": "PhD Student",
     "shortBio": "Yasser El-Alfy is a researcher at KFUPM working on learning-based perception and 3D SLAM. His work focuses on integrating deep learning with traditional robotics to build robust navigation systems for autonomous vehicles and drones.",
-    "lead": "Pushing the boundaries of 3D Perception and Autonomous Systems.",
-    "avatar": "YE",
+    "heroSubtitle": "Pushing the boundaries of 3D Perception and Autonomous Systems.",
+    "navbarInitials": "YE",
     "photoUrl": "assets/profile.jpeg",
     "cvUrl": "assets/Resume_Yasser El-Alfy_Latest.pdf",
     "emailUni": "g201406850@kfupm.edu.sa",
     "emailPersonal": "yas.alfy@gmail.com",
+    "scholarId": "tnF56TUAAAAJ",
     "scholarUrl": "https://scholar.google.com/citations?user=tnF56TUAAAAJ",
     "orcidUrl": "https://orcid.org/0000-0002-3642-132X",
     "linkedinUrl": "https://www.linkedin.com/in/yasser-elalfy-465b571a8/",
     "researchGateUrl": "https://www.researchgate.net/profile/Yasser-El-Alfy",
     "kfupmPureUrl": "https://pure.kfupm.edu.sa/en/persons/yasser-el-alfy",
-    "pills": [
+    "heroSkillTags": [
       "Anomaly Detection",
       "Autonomous Navigation",
       "Robotics",
@@ -138,7 +157,7 @@
       "Reinforcement Learning",
       "Federated Learning"
     ],
-    "metrics": {
+    "quickFactsMetrics": {
       "citations": "21",
       "hIndex": "2",
       "hIndex5y": "2",
@@ -146,90 +165,84 @@
       "i10Index5y": "1"
     }
   },
-  "education": [
-    {
-      "degree": "Doctor of Philosophy in Computer Engineering",
-      "institution": "King Fahd University of Petroleum and Minerals, Saudi Arabia",
-      "period": "2023-present"
-    },
-    {
-      "degree": "Master of Science in Computer Engineering",
-      "institution": "King Fahd University of Petroleum and Minerals, Saudi Arabia",
-      "period": "2021-2022",
-      "details": "CGPA: 3.688"
-    },
-    {
-      "degree": "Bachelor of Science in Computer & Communication Engineering (BSCCE)",
-      "institution": "Ahlia University, College of Engineering, Bahrain",
-      "period": "2018-2020",
-      "details": "CGPA: 3.99"
-    },
-    {
-      "degree": "High School",
-      "institution": "Ahlia Schools, King Fahd University of Petroleum and Minerals, Saudi Arabia",
-      "period": "2012-2014",
-      "details": "Cumulative Grade: 99.92%"
-    }
-  ],
-  "technicalSkills": {
-    "languages": [
-      "Java",
-      "JavaScript",
-      "Visual Basic",
-      "Python",
-      "TensorFlow",
-      "Pytorch",
-      "HTML",
-      "Assembly",
-      "Arduino",
-      "VHDL",
-      "Verilog"
+  "education": {
+    "degrees": [
+      {
+        "degree": "Doctor of Philosophy in Computer Engineering",
+        "institution": "King Fahd University of Petroleum and Minerals, Saudi Arabia",
+        "period": "2023-present"
+      },
+      {
+        "degree": "Master of Science in Computer Engineering",
+        "institution": "King Fahd University of Petroleum and Minerals, Saudi Arabia",
+        "period": "2021-2022",
+        "details": "CGPA: 3.688"
+      },
+      {
+        "degree": "Bachelor of Science in Computer & Communication Engineering (BSCCE)",
+        "institution": "Ahlia University, College of Engineering, Bahrain",
+        "period": "2018-2020",
+        "details": "CGPA: 3.99"
+      },
+      {
+        "degree": "High School",
+        "institution": "Ahlia Schools, King Fahd University of Petroleum and Minerals, Saudi Arabia",
+        "period": "2012-2014",
+        "details": "Cumulative Grade: 99.92%"
+      }
     ],
-    "os": [
-      "Windows",
-      "Mac",
-      "Linux"
+    "certificates": [
+      {
+        "title": "IELTS Certificate: 6.5",
+        "year": "2020"
+      },
+      {
+        "title": "ICDL Certificates in Microsoft Office (Word, Spreadsheets, PowerPoint)",
+        "year": "2018"
+      },
+      {
+        "title": "Certificates of appreciation for being lab assistant, Ahlia Univ.",
+        "year": "2018"
+      },
+      {
+        "title": "Qiyas - General Aptitude Test: 100%",
+        "year": "2014"
+      },
+      {
+        "title": "Qiyas - Achievement Aptitude Test: 97%",
+        "year": "2014"
+      }
     ],
-    "otherSkills": [
-      "Teamwork and communications skills",
-      "Research skills",
-      "Video and graphical editing"
+    "workshops": [
+      {
+        "title": "Advanced Quantum Computing Workshop",
+        "institution": "Saudi Data and Artificial Intelligence Authority (SDAIA)",
+        "period": "11-15 Jan 2026"
+      }
     ],
-    "software": [
-      "Matlab & Simulink, GNU Octave",
-      "Sumo Simulator",
-      "Cooja/Contiki Simulator",
-      "Xilinx",
-      "Modelsim",
-      "Cisco Packet Tracer",
-      "Arduino IDE",
-      "mikroc pro",
-      "ISIS 7 Professional",
-      "Eclipse",
-      "Visual Studio",
-      "Visual Studio Code",
-      "Google Colab",
-      "Jupyter Notebook",
-      "Microsoft office programs (Word, Excel, PowerPoint, Access)",
-      "Latex professional editing",
-      "Overleaf",
-      "Adobe Photoshop",
-      "GIMP",
-      "Adobe Indesign",
-      "DaVinci Resolve",
-      "PowerDirector",
-      "Kdenlive",
-      "Windows Movie Maker",
-      "Microsoft Teams",
-      "Zoom",
-      "Google Meet",
-      "Cisco Webex",
-      "Blackboard",
-      "Moodle"
+    "workExperience": [
+      {
+        "title": "Teaching and Lab Assistant",
+        "institution": "King Fahd University of Petroleum and Minerals (KFUPM)",
+        "period": "2023-present",
+        "type": "teaching assistant"
+      },
+      {
+        "title": "Research Intern",
+        "institution": "Center for Communication and Information Technology Research (CCITR), Research Institute, KFUPM",
+        "period": "2020",
+        "type": "internship"
+      },
+      {
+        "title": "Teaching and Lab Assistant",
+        "institution": "Ahlia University",
+        "period": "2018-2020",
+        "type": "teaching assistant"
+      }
     ]
   },
   "research": {
-    "overview": {
+    "strategyOverview": {
       "text": "My research focuses on bridging the gap between raw sensor data and high-level spatial understanding. I develop monocular depth estimation models and integrate them into SLAM pipelines to enable 3D mapping without expensive LiDAR hardware.",
       "researchAreas": [
         "Monocular Depth Estimation",
@@ -240,7 +253,76 @@
         "Scene Understanding"
       ]
     },
-    "themes": [
+    "technicalSkills": {
+      "languages": [
+        "Java",
+        "JavaScript",
+        "Visual Basic",
+        "Python",
+        "TensorFlow",
+        "Pytorch",
+        "HTML",
+        "Assembly",
+        "Arduino",
+        "VHDL",
+        "Verilog"
+      ],
+      "os": [
+        "Windows",
+        "Mac",
+        "Linux"
+      ],
+      "otherSkills": [
+        "Teamwork and communications skills",
+        "Research skills",
+        "Video and graphical editing"
+      ],
+      "software": [
+        "Matlab & Simulink, GNU Octave",
+        "Sumo Simulator",
+        "Cooja/Contiki Simulator",
+        "Xilinx",
+        "Modelsim",
+        "Cisco Packet Tracer",
+        "Arduino IDE",
+        "mikroc pro",
+        "ISIS 7 Professional",
+        "Eclipse",
+        "Visual Studio",
+        "Visual Studio Code",
+        "Google Colab",
+        "Jupyter Notebook",
+        "Microsoft office programs (Word, Excel, PowerPoint, Access)",
+        "Latex professional editing",
+        "Overleaf",
+        "Adobe Photoshop",
+        "GIMP",
+        "Adobe Indesign",
+        "DaVinci Resolve",
+        "PowerDirector",
+        "Kdenlive",
+        "Windows Movie Maker",
+        "Microsoft Teams",
+        "Zoom",
+        "Google Meet",
+        "Cisco Webex",
+        "Blackboard",
+        "Moodle"
+      ]
+    },
+    "researchThemesList": [
+      {
+        "title": "AI & Machine Learning",
+        "description": "Learning under constraints, robustness, and deployment."
+      },
+      {
+        "title": "Computer Vision",
+        "description": "Vision for monitoring, recognition, and decision support."
+      },
+      {
+        "title": "Secure Analytics",
+        "description": "Privacy-preserving learning, secure data processing, and risk-aware systems."
+      },
       {
         "title": "3D SLAM",
         "description": "Spatial localization and mapping using monocular vision and deep learning."
@@ -252,32 +334,100 @@
       {
         "title": "Learning-Based Perception",
         "description": "Improving robustness of perception models in challenging environmental conditions."
+      },
+      {
+        "title": "Edge AI for Robotics",
+        "description": "Deploying AI models on edge devices for real-time decision support."
+      },
+      {
+        "title": "Scene Understanding",
+        "description": "Understanding the environment using AI models."
       }
     ],
-    "projects": [
+    "activeProjectsList": [
       {
-        "title": "Road Anomaly Detection System",
+        "title": "Multi-Modal Curriculum Federated Learning for Breast Cancer Detection",
+        "details": "A federated learning framework for breast cancer detection using multi-modal data (mammography images and generated text descriptions).",
+        "links": [],
+        "category": "Federated Learning"
+      },
+      {
+        "title": "Road Anomaly Detection and Characterization System",
         "details": "A real-time edge system that identifies road hazards and estimates their depth using a single camera.",
-        "linkText": "View Thesis",
-        "linkUrl": "https://pure.kfupm.edu.sa/en/studentTheses/monocular-depth-estimation-using-deep-learning-for-3d-slam-mappin/",
+        "links": [
+          {
+            "text": "View Paper",
+            "url": "https://arxiv.org/abs/2504.13648",
+            "icon": "📄"
+          },
+          {
+            "text": "View Paper",
+            "url": "https://arxiv.org/abs/2505.08882",
+            "icon": "📄"
+          }
+        ],
         "category": "Anomaly Detection"
       },
       {
         "title": "3D SLAM Integration",
         "details": "Coupling monocular depth estimators with ORB-SLAM3 for dense volumetric mapping.",
-        "linkText": "View Paper",
-        "linkUrl": "https://cdnsciencepub.com/doi/10.1139/dsa-2024-0025",
+        "links": [
+          {
+            "text": "View Paper",
+            "url": "https://cdnsciencepub.com/doi/10.1139/dsa-2024-0025",
+            "icon": "📄"
+          },
+          {
+            "text": "View Thesis",
+            "url": "https://pure.kfupm.edu.sa/en/studentTheses/monocular-depth-estimation-using-deep-learning-for-3d-slam-mappin/",
+            "icon": "🎓"
+          }
+        ],
         "category": "3D SLAM"
+      },
+      {
+        "title": "Monocular Depth Estimation",
+        "details": "Monocular depth estimation using deep learning.",
+        "links": [
+          {
+            "text": "View Paper",
+            "url": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.23995554",
+            "icon": "📄"
+          }
+        ],
+        "category": "Monocular Depth Estimation"
       }
     ],
-    "demos": [
+    "interactiveDemosList": [
+      {
+        "title": "Drone Obstacle Avoidance",
+        "description": "Obstacle detection and avoidance using monocular depth estimation with a drone",
+        "media": [
+          "demos/videos/drone_obstacle_avoidance.mp4"
+        ]
+      },
+      {
+        "title": "Pothole Detection, Classification, and Counting",
+        "description": "Pothole detection, classification, and counting using a car dashcam video",
+        "media": [
+          "demos/videos/pothole_detection_classification_and_counting.mp4"
+        ]
+      },
+      {
+        "title": "Dataset Annotation GUI Utility",
+        "description": "Desktop-based Python/Tkinter application for researchers to annotate image and video datasets with custom features.",
+        "media": [],
+        "pyScript": "demos/scripts/GUI-V05.py",
+        "isDesktopOnly": true
+      },
       {
         "title": "Monocular Depth Estimation",
         "description": "Monocular depth estimation using deep learning for 3D SLAM mapping.",
         "media": [
           "demos/images/results samples.jpeg",
           "demos/images/RGB-D SLAM dataset.jpeg"
-        ]
+        ],
+        "colabUrl": "https://colab.research.google.com/github/keras-team/keras-io/blob/master/examples/vision/ipynb/depth_estimation.ipynb#scrollTo=d6lcsppu9YZr"
       },
       {
         "title": "3D SLAM Point Cloud",
@@ -289,26 +439,12 @@
         ]
       },
       {
-        "title": "Drone Obstacle Avoidance",
-        "description": "Obstacle detection and avoidance using monocular depth estimation with a drone",
-        "media": [
-          "demos/videos/drone_obstacle_avoidance.mp4"
-        ]
-      },
-      {
         "title": "Pothole Detection and Classification Under Various Weather Conditions",
         "description": "Pothole detection and classification under various weather conditions using still images",
         "media": [
           "demos/images/pothole_detection_under_various_weather_conditions.jpg",
           "demos/images/pothole_detection_under_various_weather_conditions1.jpg",
           "demos/images/pothole_detection_under_various_weather_conditions2.jpg"
-        ]
-      },
-      {
-        "title": "Pothole Detection, Classification, and Counting",
-        "description": "Pothole detection, classification, and counting using a car dashcam video",
-        "media": [
-          "demos/videos/pothole_detection_classification_and_counting.mp4"
         ]
       },
       {
@@ -322,17 +458,10 @@
       },
       {
         "title": "RSU Communication Testing",
-        "description": "RSU Testing using wifi and a moving vehicle (C-V2X)",
+        "description": "Roadside Unit (RSU) Testing using wifi and a moving vehicle (C-V2X)",
         "media": [
           "demos/images/RSUTesting.jpg"
         ]
-      }
-    ],
-    "internships": [
-      {
-        "title": "Research Intern",
-        "institution": "Center for Communication and Information Technology Research (CCITR), Research Institute, KFUPM",
-        "period": "2020"
       }
     ]
   },
@@ -349,15 +478,6 @@
         "category": "Anomaly Detection"
       },
       {
-        "title": "A federated learning approach to banking loan decisions",
-        "venue": "ISNCC (2023)",
-        "year": "2023",
-        "linkText": "Full Text",
-        "linkUrl": "https://ieeexplore.ieee.org/abstract/document/10323875/",
-        "type": "article",
-        "category": "Federated Learning"
-      },
-      {
         "title": "Monocular based 3D depth estimation and SLAM integration",
         "venue": "Drone Systems and Applications (2025)",
         "year": "2025",
@@ -368,15 +488,6 @@
         "category": "3D SLAM"
       },
       {
-        "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder–Decoder Model",
-        "venue": "Sensors (2023)",
-        "year": "2023",
-        "linkText": "Journal Page",
-        "linkUrl": "#",
-        "type": "article",
-        "category": "Depth Estimation"
-      },
-      {
         "title": "Intelligent Road Anomaly Detection with Real-time Notification System for Enhanced Road Safety",
         "venue": "Sustainability (2025)",
         "year": "2025",
@@ -384,15 +495,6 @@
         "linkUrl": "https://arxiv.org/abs/2505.08882",
         "type": "article",
         "category": "Anomaly Detection"
-      },
-      {
-        "title": "Arduino based obstacle awareness vest for blind people",
-        "venue": "ICT-ASET (2022)",
-        "year": "2022",
-        "linkText": "Full Text",
-        "linkUrl": "https://dl.acm.org/doi/abs/10.1145/3543303.3543308",
-        "type": "article",
-        "category": "Robotics"
       },
       {
         "title": "Real-Time On-Device Vision-Based Road Anomaly Detection with Frame Span Interval (FSI) Event Counting",
@@ -443,6 +545,24 @@
         "category": "Anomaly Detection"
       },
       {
+        "title": "A federated learning approach to banking loan decisions",
+        "venue": "ISNCC (2023)",
+        "year": "2023",
+        "linkText": "Full Text",
+        "linkUrl": "https://ieeexplore.ieee.org/abstract/document/10323875/",
+        "type": "article",
+        "category": "Federated Learning"
+      },
+      {
+        "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder–Decoder Model",
+        "venue": "Sensors (2023)",
+        "year": "2023",
+        "linkText": "Journal Page",
+        "linkUrl": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.23995554",
+        "type": "article",
+        "category": "Depth Estimation"
+      },
+      {
         "title": "Distributed Intrusion Detection Systems Based on Deep Learning Techniques and Boosting Ensemble",
         "venue": "ACM (2023)",
         "year": "2023",
@@ -453,31 +573,25 @@
         "category": "Cyber Security"
       },
       {
+        "title": "Arduino based obstacle awareness vest for blind people",
+        "venue": "ICT-ASET (2022)",
+        "year": "2022",
+        "linkText": "Full Text",
+        "linkUrl": "https://dl.acm.org/doi/abs/10.1145/3543303.3543308",
+        "type": "article",
+        "category": "Robotics"
+      },
+      {
         "title": "MONOCULAR DEPTH ESTIMATION USING DEEP LEARNING FOR 3D SLAM MAPPING IN AUTONOMOUS NAVIGATION",
         "venue": "KFUPM Thesis (2022)",
         "year": "2022",
-        "linkText": "Full Text",
-        "linkUrl": "https://eprints.kfupm.edu.sa/id/eprint/142314/",
-        "type": "article",
-        "category": "Depth Estimation"
-      },
-      {
-        "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder--Decoder Model",
-        "venue": "Authorea Preprints, 2023",
-        "year": "2023",
-        "linkText": "Full Text",
-        "linkUrl": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.23995554",
-        "doi": "10.22541/au.169117621.13702173/v1",
-        "type": "article",
-        "category": "Depth Estimation"
-      },
-      {
-        "title": "Enhancing monocular depth estimation with an advanced encoder-decoder architecture",
-        "venue": "Neural Computing and Applications 37 (29), 24265-24280, 2025",
-        "year": "2025",
-        "linkText": "Springer",
-        "linkUrl": "https://link.springer.com/article/10.1007/s00521-025-11566-y",
-        "doi": "10.1007/s00521-025-11566-y",
+        "links": [
+          {
+            "text": "Full Text",
+            "url": "https://eprints.kfupm.edu.sa/id/eprint/142314/",
+            "icon": "📄"
+          }
+        ],
         "type": "article",
         "category": "Depth Estimation"
       }
@@ -514,8 +628,13 @@
       {
         "id": "US12445815",
         "title": "SYSTEM AND METHOD FOR DETECTING AND COUNTING ROAD ANOMALIES",
-        "linkText": "KFUPM Pure",
-        "linkUrl": "https://pure.kfupm.edu.sa/en/publications/system-and-method-for-detecting-and-counting-road-anomalies/",
+        "links": [
+          {
+            "text": "KFUPM Pure",
+            "url": "https://pure.kfupm.edu.sa/en/publications/system-and-method-for-detecting-and-counting-road-anomalies/",
+            "icon": "📄"
+          }
+        ],
         "type": "patent"
       }
     ]
@@ -569,28 +688,15 @@
         "id": "COE 412",
         "title": ""
       }
+    ],
+    "talks": [
+      {
+        "date": "26th November 2025, 4:00PM",
+        "title": "Multi-Modal Curriculum Federated Learning for Breast Cancer detection",
+        "abstract": "Breast cancer remains one of the most life-threatening cancers worldwide. Early detection is important for improving treatment outcomes and survival rates. Routine examination results are dominated by negative samples which limit the accuracy of the Computer-Aided Diagnosis (CAD) system due to a small number of positive sample representations. Aggregating data from multiple sources is a viable solution to address the limited samples of positive cases. Federated Learning (FL) emerged as a technique to learn features collaboratively from different locations. However, these models are still trained following the traditional diagnostic method separately, limiting the integration and analysis of diverse patient data. To address this, multi-modal federated learning (MMFL) emerged as a promising solution that combines FL and multi-modal learning (MML) to improve diagnostic accuracy while preserving data privacy. In this work, we leveraged MMFL to enhance breast cancer classification by integrating multiple modalities (image and text) from multiple institutions. The text was generated using a caption generator to improve information and enhance the model learning of complex features more effectively. Our approach outperforms single-modality models, achieving better accuracy in fewer training rounds. By facilitating collaboration across institutions and maintaining privacy, MMFL offers a scalable, flexible, and more efficient method for personalized breast cancer diagnosis and treatment planning.",
+        "location": "Bldg. 22, Room 119, King Fahd University of Petroleum and Minerals (KFUPM)",
+        "type": "Seminar"
+      }
     ]
-  },
-  "certificates": [
-    {
-      "title": "IELTS Certificate: 6.5",
-      "year": "2020"
-    },
-    {
-      "title": "ICDL Certificates in Microsoft Office (Word, Spreadsheets, PowerPoint)",
-      "year": "2018"
-    },
-    {
-      "title": "Certificates of appreciation for being lab assistant, Ahlia Univ.",
-      "year": "2018"
-    },
-    {
-      "title": "Qiyas - General Aptitude Test: 100%",
-      "year": "2014"
-    },
-    {
-      "title": "Qiyas - Achievement Aptitude Test: 97%",
-      "year": "2014"
-    }
-  ]
+  }
 }

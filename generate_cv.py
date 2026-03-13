@@ -35,7 +35,8 @@ class ClassicCV(FPDF):
         self.set_text_color(*COL_DIM)
         name = self.data['basics'].get('name', '')
         title = self.data.get('ui', {}).get('sections', {}).get('cvTitle', 'Curriculum Vitae')
-        self.cell(0, 10, f'{name} - {title} - Page {self.page_no()}/{{nb}}', align='C')
+        page_word = self.data.get('ui', {}).get('sections', {}).get('cvPage', 'Page')
+        self.cell(0, 10, f'{name} - {title} - {page_word} {self.page_no()}/{{nb}}', align='C')
 
     def add_section_title(self, title):
         # Ensure section title isn't left alone at bottom
@@ -50,7 +51,7 @@ class ClassicCV(FPDF):
         self.line(MARGIN, self.get_y(), PAGE_WIDTH - MARGIN, self.get_y())
         self.ln(2)
 
-    def add_entry(self, left_text, right_text, details='', bullet_points=None):
+    def add_entry(self, left_text, right_text, details='', bullet_points=None, link=None):
         # Column safety: check height first
         if self.get_y() > 250:
             self.add_page()
@@ -60,7 +61,13 @@ class ClassicCV(FPDF):
         self.set_text_color(*COL_TEXT)
         
         # Draw left part
-        self.multi_cell(130, 5, left_text)
+        if link:
+            self.set_text_color(*COL_ACCENT)
+            self.write(5, left_text, link)
+            self.set_text_color(*COL_TEXT)
+            self.ln()
+        else:
+            self.multi_cell(130, 5, left_text)
         left_h = self.get_y() - start_y
         
         # Draw right part (reset back to start_y)
@@ -97,7 +104,7 @@ def clean_data(d):
     return d
 
 def generate_cv():
-    with open(CONTENT_PATH, 'r', encoding='utf-8') as f:
+    with open(CONTENT_PATH, 'r', encoding='utf-8-sig') as f:
         data = clean_data(json.load(f))
     
     basics = data['basics']
@@ -168,7 +175,7 @@ def generate_cv():
         pdf.ln(3)
 
     # Metrics
-    metrics = basics.get('metrics', {})
+    metrics = basics.get('quickFactsMetrics', {})
     if metrics:
         ui_quick = data.get('ui', {}).get('quickFacts', {}).get('labels', {})
         pdf.set_font('Helvetica', 'B', 9.5)
@@ -184,21 +191,28 @@ def generate_cv():
         for edu in data['education']:
             pdf.add_entry(edu.get('degree', ''), f"{edu.get('institution', '')} | {edu.get('period', '')}", edu.get('details', ''))
 
+    # === WORKSHOPS ===
+    workshops = data.get('workshops', [])
+    if workshops:
+        pdf.add_section_title(ui_sections.get('workshops', 'Workshops'))
+        for w in workshops:
+            pdf.add_entry(w.get('title', ''), f"{w.get('institution', '')} | {w.get('period', '')}")
+
     # === EXPERIENCE ===
     research = data.get('research', {})
-    if research.get('internships'):
-        pdf.add_section_title(ui_sections.get('professionalInternships', 'Professional Experience'))
-        for intern in research['internships']:
+    if research.get('professionalInternshipsList'):
+        pdf.add_section_title(ui_sections.get('cvProfessionalExperience', 'Professional Experience'))
+        for intern in research['professionalInternshipsList']:
             pdf.add_entry(intern.get('title', ''), f"{intern.get('institution', '')} | {intern.get('period', '')}")
 
     # === RESEARCH OVERVIEW ===
-    if research.get('overview'):
+    if research.get('strategyOverview'):
         pdf.add_section_title(ui_sections.get('researchStrategy', 'Research Overview'))
         pdf.set_font('Helvetica', '', 10.5)
         pdf.set_text_color(*COL_TEXT)
-        pdf.multi_cell(0, 5.5, research['overview'].get('text', ''))
+        pdf.multi_cell(0, 5.5, research['strategyOverview'].get('text', ''))
         
-        areas = research['overview'].get('researchAreas', [])
+        areas = research['strategyOverview'].get('researchAreas', [])
         if areas:
             pdf.ln(3)
             pdf.set_font('Helvetica', 'B', 10)
@@ -230,13 +244,13 @@ def generate_cv():
 
         if skills.get('os'):
             pdf.set_font('Helvetica', 'B', 10.5)
-            pdf.cell(35, 6, "OS:")
+            pdf.cell(35, 6, ui_sections.get('cvOsTitle', 'OS:'))
             pdf.set_font('Helvetica', '', 10.5)
-            pdf.multi_cell(0, 6, "Background in different Operating Systems: " + ", ".join(skills['os']))
+            pdf.multi_cell(0, 6, ui_sections.get('cvOsPrefix', 'Background in different Operating Systems: ') + ", ".join(skills['os']))
 
         if skills.get('otherSkills'):
             pdf.set_font('Helvetica', 'B', 10.5)
-            pdf.cell(35, 6, "Other Skills:")
+            pdf.cell(35, 6, ui_sections.get('cvOtherSkillsTitle', 'Other Skills:'))
             pdf.set_font('Helvetica', '', 10.5)
             pdf.multi_cell(0, 6, ", ".join(skills['otherSkills']))
 
@@ -250,9 +264,16 @@ def generate_cv():
             title_str = f"{course_id}: {title}" if course_id and title else (course_id or title)
             pdf.add_entry(title_str, course.get('period', ''))
 
+    # === TALKS & EVENTS ===
+    talks = teaching.get('talks', [])
+    if talks:
+        pdf.add_section_title(ui_sections.get('talksEvents', 'Talks & Events'))
+        for talk in talks:
+            pdf.add_entry(talk.get('title', ''), f"{talk.get('type', '')} | {talk.get('date', '')}", talk.get('location', ''))
+
     # === CERTIFICATES ===
     if data.get('certificates'):
-        pdf.add_section_title(ui_sections.get('certificates', 'Certifications'))
+        pdf.add_section_title(ui_sections.get('cvCertifications', 'Certifications'))
         for cert in data['certificates']:
             pdf.add_entry(cert.get('title', ''), cert.get('year', ''), cert.get('details', ''))
 
@@ -260,22 +281,37 @@ def generate_cv():
     pubs = data.get('publications', {})
     articles = pubs.get('articles', [])
     if articles:
-        pdf.add_section_title(ui_sections.get('scientificContributions', 'Selected Publications'))
+        pdf.add_section_title(ui_sections.get('cvSelectedPublications', 'Selected Publications'))
         pdf.set_font('Helvetica', '', 10)
         pdf.set_text_color(*COL_TEXT)
         for pub in articles:
             title = pub.get('title', '')
             venue = pub.get('venue', '')
             year = pub.get('year', '')
+            url = pub.get('linkUrl', '')
             
             pdf.set_font('Helvetica', 'B', 10)
-            pdf.multi_cell(0, 5, title)
+            if url and url != '#':
+                pdf.set_text_color(*COL_ACCENT)
+                pdf.write(5, title, url)
+                pdf.ln()
+            else:
+                pdf.multi_cell(0, 5, title)
             
             pdf.set_font('Helvetica', 'I', 10)
             pdf.set_text_color(*COL_DIM)
             pdf.multi_cell(0, 5, f"{venue} ({year})" if year else venue)
             pdf.ln(3)
             pdf.set_text_color(*COL_TEXT)
+
+    # === PATENTS ===
+    patents = pubs.get('patents', [])
+    if patents:
+        pdf.add_section_title(data.get('ui', {}).get('filters', {}).get('patents', 'Patents'))
+        for patent in patents:
+            p_links = patent.get('links', [])
+            url = p_links[0].get('url', '') if p_links else ''
+            pdf.add_entry(patent.get('title', ''), f"{patent.get('id', '')}", link=url if url and url != '#' else None)
 
     # === DATASETS ===
     datasets = pubs.get('datasets', [])
@@ -286,9 +322,16 @@ def generate_cv():
         for ds in datasets:
             title = ds.get('title', '')
             desc = ds.get('description', '')
+            ds_links = ds.get('links', [])
+            ds_url = ds_links[0].get('url', '') if ds_links else ''
             
             pdf.set_font('Helvetica', 'B', 10)
-            pdf.multi_cell(0, 5, title)
+            if ds_url:
+                pdf.set_text_color(*COL_ACCENT)
+                pdf.write(5, title, ds_url)
+                pdf.ln()
+            else:
+                pdf.multi_cell(0, 5, title)
             
             if desc:
                 pdf.set_font('Helvetica', 'I', 10)

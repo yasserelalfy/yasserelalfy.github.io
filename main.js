@@ -120,6 +120,18 @@ function linkifyTabs(text) {
   return up;
 }
 
+function parseMarkdown(text) {
+  if (!text) return '';
+  let html = text
+    // Links: [text](url)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="link-ext">$1</a>')
+    // Bold: **text**
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    // Italics: *text*
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  return html;
+}
+
 function renderContent(data) {
   const mount = document.getElementById('content-mount');
 
@@ -128,7 +140,7 @@ function renderContent(data) {
   if (metaDesc) metaDesc.setAttribute('content', data.ui.meta.description);
 
   document.getElementById('nav-name').textContent = data.basics.name;
-  document.getElementById('nav-avatar').textContent = data.basics.avatar;
+  document.getElementById('nav-avatar').textContent = data.basics.navbarInitials;
   document.getElementById('footer-name').textContent = data.basics.name;
   document.getElementById('footer-affiliation').textContent = data.basics.affiliation;
 
@@ -139,8 +151,11 @@ function renderContent(data) {
     'nav-researchOverview': navMap.researchOverview, 'nav-researchThemes': navMap.researchThemes,
     'nav-researchProjects': navMap.researchProjects, 'nav-researchDemos': navMap.researchDemos,
     'nav-publications': navMap.publications, 'teachingBtn': navMap.teaching,
-    'nav-teachingCourses': navMap.teachingCourses, 'educationBtn': navMap.education,
+    'nav-teachingCourses': navMap.teachingCourses, 'nav-teachingTalks': navMap.teachingTalks,
+    'educationBtn': navMap.education,
     'nav-educationDegrees': navMap.educationDegrees, 'nav-educationCertificates': navMap.educationCertificates,
+    'nav-educationWorkshops': navMap.educationWorkshops,
+    'nav-internships': navMap.professionalInternships,
     'nav-connect': navMap.connect
   };
   Object.entries(navIds).forEach(([id, text]) => {
@@ -166,7 +181,7 @@ function renderContent(data) {
           <div data-reveal>
             <div class="pill">${data.ui.hero.welcomeBadge}</div>
             <h1>${data.ui.hero.headlinePre}<span style="color:var(--accent)">${data.ui.hero.headlineAccent}</span>${data.ui.hero.headlinePost}</h1>
-            <p class="lead">${data.basics.lead}</p>
+            <p class="lead">${parseMarkdown(data.basics.heroSubtitle)}</p>
             <div class="stack" style="flex-direction:row; gap:16px; margin-bottom:40px; flex-wrap:wrap;">
               <a class="btn" href="${data.basics.cvUrl}" target="_blank">${data.ui.hero.ctaPrimary}</a>
               <a class="btn secondary" href="outputs/CV_Generated.pdf" target="CV.pdf">${data.ui.hero.ctaGenerate}</a>
@@ -174,7 +189,7 @@ function renderContent(data) {
               <a class="btn" href="#research-demos">${data.ui.hero.ctaSamples}</a>
             </div>
             <div style="margin-top:24px;">
-              ${data.basics.pills.map(p => `<span class="pill">${p}</span>`).join('')}
+              ${data.basics.heroSkillTags.map(p => `<span class="pill">${p}</span>`).join('')}
             </div>
           </div>
           <div class="card" style="padding:0; overflow:hidden;" data-reveal>
@@ -192,15 +207,15 @@ function renderContent(data) {
             <h2 style="margin-bottom:0;">${data.ui.quickFacts.title}</h2>
           </div>
           <div class="card card-stats" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:40px; text-align:center;">
-             <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.metrics.citations}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.citations}</div></div>
-             <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.metrics.hIndex}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.hIndex}</div></div>
-             <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.metrics.hIndex5y}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.hIndex5y}</div></div>
+             <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.quickFactsMetrics.citations}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.citations}</div></div>
+             <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.quickFactsMetrics.hIndex}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.hIndex}</div></div>
+             <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.quickFactsMetrics.hIndex5y}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.hIndex5y}</div></div>
              <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${totalPubs}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.publications}</div></div>
              
-             <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.metrics.i10Index}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.i10Index}</div></div>
-             <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.metrics.i10Index5y}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.i10Index5y}</div></div>
-             <div><div style="font-size:32px; font-weight:700; color:var(--accent); display: flex; align-items: center; justify-content: center; height: 38px;">${data.ui.quickFacts.labels.phdLabel}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.phdStatus}</div></div>
-             <div><div style="font-size:32px; font-weight:700; color:var(--accent); display: flex; align-items: center; justify-content: center; height: 38px;">${data.basics.affiliation}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.affiliation}</div></div>
+             <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.quickFactsMetrics.i10Index}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.i10Index}</div></div>
+             <div><div style="font-size:32px; font-weight:700; color:var(--accent);">${data.basics.quickFactsMetrics.i10Index5y}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.i10Index5y}</div></div>
+             <div><div style="font-size:32px; font-weight:700; color:var(--accent); display: flex; align-items: center; justify-content: center; height: 38px;">${data.ui.quickFacts.labels.roleDegree}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.roleStatus}</div></div>
+             <div><div style="font-size:32px; font-weight:700; color:var(--accent); display: flex; align-items: center; justify-content: center; height: 38px;">${data.basics.affiliation}</div><div class="muted" style="font-size:11px;">${data.ui.quickFacts.labels.universityName}</div></div>
           </div>
         </div>
       </div>
@@ -229,12 +244,13 @@ function renderContent(data) {
       <div class="container">
         <div class="card" data-reveal>
           <h2>${data.ui.sections.researchStrategy}</h2>
-          <p class="lead" style="margin-top:20px; max-width:100%;">${data.research.overview.text}</p>
+          ${data.basics.shortBio ? `<p class="muted" style="margin-top:16px; font-size:16px;">${parseMarkdown(data.basics.shortBio)}</p>` : ''}
+          <p class="lead" style="margin-top:20px; max-width:100%;">${parseMarkdown(data.research.strategyOverview.text)}</p>
           <div class="grid2" style="margin-top:40px;">
              <div class="card" style="background:var(--bg2); padding:30px; border: 1px solid var(--accent-dim);">
                <h3 style="margin-bottom:20px; font-size: 18px; color:var(--accent);">${data.ui.sections.researchAreas}</h3>
                <ul style="list-style:none; display:grid; grid-template-columns: 1fr; gap:16px;">
-                 ${data.research.overview.researchAreas.map(s => `<li style="font-size:15px; display:flex; align-items:center; gap:8px;"><span style="color:var(--accent);">▹</span> ${s}</li>`).join('')}
+                 ${data.research.strategyOverview.researchAreas.map(s => `<li style="font-size:15px; display:flex; align-items:center; gap:8px;"><span style="color:var(--accent);">▹</span> ${s}</li>`).join('')}
                </ul>
              </div>
              <div class="card" style="background:var(--bg2); padding:30px; border: 1px solid var(--border);">
@@ -245,12 +261,24 @@ function renderContent(data) {
                    ${data.technicalSkills.languages.map(s => `<span class="pill" style="font-size:10px;">${s}</span>`).join('')}
                  </div>
                </div>
-               <div style="margin-top:12px;">
-                 <h4 style="font-size:12px; color:var(--accent); margin-bottom:6px;">${data.ui.sections.softwareTools}</h4>
-                 <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                   ${data.technicalSkills.software.map(s => `<span class="pill" style="font-size:10px; opacity:0.8;">${s}</span>`).join('')}
-                 </div>
-               </div>
+                               <div style="margin-top:12px;">
+                  <h4 style="font-size:12px; color:var(--accent); margin-bottom:6px;">${data.ui.sections.softwareTools}</h4>
+                  <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                    ${data.technicalSkills.software.map(s => `<span class="pill" style="font-size:10px; opacity:0.8;">${s}</span>`).join('')}
+                  </div>
+                </div>
+                <div style="margin-top:12px;">
+                  <h4 style="font-size:12px; color:var(--accent); margin-bottom:6px;">${data.ui.sections.operatingSystems}</h4>
+                  <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                    ${data.technicalSkills.os.map(s => `<span class="pill" style="font-size:10px; opacity:0.8;">${s}</span>`).join('')}
+                  </div>
+                </div>
+                <div style="margin-top:12px;">
+                  <h4 style="font-size:12px; color:var(--accent); margin-bottom:6px;">${data.ui.sections.otherSkills}</h4>
+                  <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                    ${data.technicalSkills.otherSkills.map(s => `<span class="pill" style="font-size:10px; opacity:0.8;">${s}</span>`).join('')}
+                  </div>
+                </div>
              </div>
           </div>
         </div>
@@ -263,10 +291,10 @@ function renderContent(data) {
         <div class="stack">
           <h2 data-reveal>${data.ui.sections.researchThemes}</h2>
           <div class="grid2">
-            ${data.research.themes.map(t => `
+            ${data.research.researchThemesList.map(t => `
               <div class="card item" data-reveal>
                 <h3>${t.title}</h3>
-                <p class="muted" style="margin-top:10px;">${t.description}</p>
+                <p class="muted" style="margin-top:10px;">${parseMarkdown(t.description)}</p>
               </div>
             `).join('')}
           </div>
@@ -294,11 +322,11 @@ function renderContent(data) {
           <h2>${data.ui.sections.spatialPerceptionDemo}</h2>
           <p class="muted" style="margin-bottom:32px;">${data.ui.sections.demoDescription}</p>
           <div id="demos-gallery" class="grid2">
-            ${(data.research.demos || []).map((demo, i) => {
+            ${(data.research.interactiveDemosList || []).map((demo, i) => {
     const firstMedia = (demo.media && demo.media[0]) || '';
     const isVideo = firstMedia.toLowerCase().endsWith('.mp4');
     const icon = isVideo ? '🎬' : '🖼️';
-    const badge = isVideo ? 'Video' : 'Image';
+    const badge = isVideo ? data.ui.sections.videoBadge : data.ui.sections.imageBadge;
     return `
               <div class="card item" style="background:var(--bg2); cursor:pointer;" data-demo-index="${i}">
                 <div style="width:100%; height:200px; border-radius:12px; background:var(--bg); display:flex; align-items:center; justify-content:center; overflow:hidden; border:1px solid var(--border); position: relative;">
@@ -311,7 +339,7 @@ function renderContent(data) {
                   ${demo.media && demo.media.length > 1 ? `<div style="position:absolute; bottom:8px; right:8px; background:rgba(0,0,0,0.7); color:#fff; border-radius:12px; font-size:10px; padding:2px 8px; font-weight:bold;">1/${demo.media.length}</div>` : ''}
                 </div>
                 <h3 style="margin-top:12px; font-size:15px;">${demo.title}</h3>
-                <p class="muted" style="font-size:12px; margin-top:4px;">${demo.description}</p>
+                <p class="muted" style="font-size:12px; margin-top:4px;">${parseMarkdown(demo.description)}</p>
                 <span class="pill" style="margin-top:8px; font-size:10px;">${badge}</span>
               </div>
             `}).join('')}
@@ -326,7 +354,7 @@ function renderContent(data) {
         <div class="card" data-reveal>
           <h2>${data.ui.sections.professionalInternships}</h2>
           <div class="stack" style="margin-top:24px;">
-            ${data.research.internships.map(i => `
+            ${data.research.professionalInternshipsList.map(i => `
               <div class="item" style="border-left:2px solid var(--accent); padding-left:24px;">
                 <div style="font-weight:600; font-size:16px;">${i.title}</div>
                 <div class="muted" style="font-size:13px;">${i.institution} | ${i.period}</div>
@@ -370,9 +398,40 @@ function renderContent(data) {
               <div class="card item" style="background:var(--bg2); padding: 24px;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                   <span class="pill" style="margin:0;">${c.id}</span>
-                  <span class="muted" style="font-size:12px;">${c.period}</span>
+                  ${c.period ? `<span class="muted" style="font-size:12px;">${c.period}</span>` : ''}
                 </div>
                 <div style="font-weight:600; font-size: 16px; margin-top:12px;">${c.title}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEACHING - TALKS & EVENTS -->
+    <section id="teaching-talks" class="section tabSection" data-tab="teaching">
+      <div class="container">
+        <div class="card" data-reveal>
+          <h2>${data.ui.sections.talksEvents}</h2>
+          <div class="stack" style="margin-top:32px;">
+            ${(data.teaching.talks || []).map(talk => `
+              <div class="item card" style="background:var(--bg2); border-left: 3px solid var(--accent); padding:24px;">
+                <div style="display:flex; justify-content:space-between; align-items:start; flex-wrap:wrap; gap:12px;">
+                  <div style="flex:1; min-width:300px;">
+                    <span class="pill" style="margin:0 0 12px 0;">${talk.type}</span>
+                    <h3 style="margin:0; font-size:18px;">${talk.title}</h3>
+                    <div class="muted" style="margin-top:8px; font-size:14px;">
+                      <div>📍 ${talk.location}</div>
+                      <div style="margin-top:4px;">🗓️ ${talk.date}</div>
+                    </div>
+                  </div>
+                </div>
+                ${talk.abstract ? `
+                  <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
+                    <div style="font-weight:600; font-size:14px; margin-bottom:8px;">${data.ui.sections.abstract}</div>
+                    <p class="muted" style="font-size:13px; line-height:1.6; text-align:justify;">${talk.abstract}</p>
+                  </div>
+                ` : ''}
               </div>
             `).join('')}
           </div>
@@ -401,6 +460,23 @@ function renderContent(data) {
       </div>
     </section>
 
+    <!-- EDUCATION - WORKSHOPS -->
+    <section id="education-workshops" class="section tabSection" data-tab="education">
+      <div class="container">
+        <div class="card" data-reveal>
+          <h2>${data.ui.sections.workshops}</h2>
+          <div class="stack" style="margin-top:24px;">
+            ${(data.workshops || []).map(w => `
+              <div class="item" style="border-left:2px solid var(--accent); padding-left:24px;">
+                <div style="font-weight:600; font-size:16px;">${w.title}</div>
+                <div class="muted" style="font-size:13px;">${w.institution} | ${w.period}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CONNECT -->
     <section id="connect" class="section tabSection" data-tab="connect">
       <div class="container">
@@ -412,11 +488,12 @@ function renderContent(data) {
                 <a class="link-ext" href="${data.basics.orcidUrl}" target="_blank">${data.ui.links.orcid}</a>
                 <a class="link-ext" href="${data.basics.researchGateUrl}" target="_blank">${data.ui.links.researchGate}</a>
                 <a class="link-ext" href="${data.basics.linkedinUrl}" target="_blank">${data.ui.links.linkedin}</a>
+                ${data.basics.kfupmPureUrl ? `<a class="link-ext" href="${data.basics.kfupmPureUrl}" target="_blank">KFUPM Pure</a>` : ''}
               </div>
            </div>
            <div class="card" data-reveal>
               <h2>${data.ui.sections.communication}</h2>
-              <p class="muted">${data.ui.sections.communicationText}</p>
+              <p class="muted">${parseMarkdown(data.ui.sections.communicationText)}</p>
               <div class="stack" style="margin-top:20px;">
                 <div><span class="muted">${data.ui.links.university}</span> <a class="link-ext" href="mailto:${data.basics.emailUni}">${data.basics.emailUni}</a></div>
                 <div><span class="muted">${data.ui.links.personal}</span> <a class="link-ext" href="mailto:${data.basics.emailPersonal}">${data.basics.emailPersonal}</a></div>
@@ -434,7 +511,7 @@ function renderContent(data) {
   // Dynamic Project Filters
   const projBar = document.getElementById('project-filter-bar');
   if (projBar) {
-    const categories = [...new Set(data.research.projects.map(p => p.category).filter(c => c))];
+    const categories = [...new Set(data.research.activeProjectsList.map(p => p.category).filter(c => c))];
     projBar.innerHTML = `<button class="filter-btn active" data-proj-filter="all">${data.ui.sections.allProjects}</button>` +
       categories.map(c => `<button class="filter-btn" data-proj-filter="${c}">${c}</button>`).join('');
 
@@ -514,16 +591,20 @@ function updateProjectList(filter) {
   const list = document.getElementById('project-list');
   if (!list) return;
   const filtered = filter === 'all'
-    ? globalData.research.projects
-    : globalData.research.projects.filter(p => p.category === filter);
+    ? globalData.research.activeProjectsList
+    : globalData.research.activeProjectsList.filter(p => p.category === filter);
 
   list.innerHTML = filtered.map(p => `
     <div class="item card" style="background:var(--bg2);">
       <h3>${p.title}</h3>
-      <p class="muted" style="margin:8px 0;">${p.details}</p>
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span class="pill">${p.category}</span>
-        <a href="${p.linkUrl}" target="_blank" class="link-ext">${p.linkText || globalData.ui.fallbacks.noLink}</a>
+      <p class="muted" style="margin:8px 0;">${parseMarkdown(p.details)}</p>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <span class="pill" style="margin:0;">${p.category}</span>
+        <div style="display:flex; gap:12px; align-items:center;">
+          ${p.links ? p.links.map(l => `<a href="${l.url}" target="_blank" class="link-ext">${l.icon || ''} ${l.text || globalData.ui.fallbacks.noLink}</a>`).join('') : ''}
+          ${p.linkUrl ? `<a href="${p.linkUrl}" target="_blank" class="link-ext">${p.linkText || globalData.ui.fallbacks.noLink}</a>` : ''}
+          ${p.linkUrl2 ? `<a href="${p.linkUrl2}" target="_blank" class="link-ext">${p.linkText2 || globalData.ui.fallbacks.noLink}</a>` : ''}
+        </div>
       </div>
     </div>
   `).join('');
@@ -553,7 +634,7 @@ function updatePubList(typeFilter, categoryFilter) {
       </div>
       
       ${(item.venue || item.year) ? `<div class="muted" style="font-size:13px; margin-bottom:8px;">${item.venue || (item.type === 'patent' ? globalData.ui.fallbacks.patentOffice : '')} ${item.year ? '• ' + item.year : ''}</div>` : ''}
-      ${item.description ? `<p class="muted" style="font-size:14px; margin-bottom:12px;">${item.description}</p>` : ''}
+      ${item.description ? `<p class="muted" style="font-size:14px; margin-bottom:12px;">${parseMarkdown(item.description)}</p>` : ''}
       
       <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:8px;">
         ${item.linkUrl && item.linkUrl !== '#' ? `<a href="${item.linkUrl}" target="_blank" class="link-ext" style="font-size:12px;">${item.linkText || globalData.ui.links.fullText}</a>` : ''}
@@ -664,7 +745,7 @@ function setupDemoModal() {
     if (!card) return;
 
     const idx = card.getAttribute('data-demo-index');
-    currentDemo = globalData.research.demos[idx];
+    currentDemo = globalData.research.interactiveDemosList[idx];
     if (!currentDemo) return;
 
     currentMediaIndex = 0;
@@ -695,7 +776,7 @@ function setupNavigation() {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const wasOpen = dd.classList.contains('open');
-      document.querySelectorAll('.drop-menu').forEach(menu => menu.classList.remove('open'));
+      document.querySelectorAll('.dropdown').forEach(menu => menu.classList.remove('open'));
       if (!wasOpen) dd.classList.add('open');
     });
     document.addEventListener('click', () => { dd.classList.remove('open'); });
