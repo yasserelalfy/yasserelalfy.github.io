@@ -178,10 +178,10 @@ function sortContent(data) {
   if (data.research && data.research.interactiveDemosList) {
     data.research.interactiveDemosList.sort((a, b) => {
       const getWeight = (item) => {
-        const firstMedia = (item.media && item.media[0]) || '';
-        if (firstMedia.toLowerCase().endsWith('.mp4')) return 1; // Video
-        if (item.pyScript || item.colabUrl) return 2;           // Script
-        return 3;                                             // Image
+        const hasVideo = (item.media || []).some(m => m.toLowerCase().endsWith('.mp4'));
+        if (hasVideo) return 1;                               // Has any video
+        if (item.pyScript || item.colabUrl) return 2;         // Script/Colab
+        return 3;                                             // Images only
       };
       return getWeight(a) - getWeight(b);
     });
@@ -399,11 +399,20 @@ function renderContent(data) {
           <p class="muted" style="margin-bottom:32px;">${data.ui.sections.demoDescription}</p>
           <div id="demos-gallery" class="grid2">
             ${(data.research.interactiveDemosList || []).map((demo, i) => {
-    const firstMedia = (demo.media && demo.media[0]) || '';
-    const isVideo = firstMedia.toLowerCase().endsWith('.mp4');
-    const isScript = !!demo.pyScript || !!demo.colabUrl; // Any code-based demo
-    const icon = isScript ? '🐍' : (isVideo ? '🎬' : '🖼️');
-    const badge = isScript ? (data.ui.sections.pythonBadge || 'Python') : (isVideo ? data.ui.sections.videoBadge : data.ui.sections.imageBadge);
+    const mediaList = demo.media || [];
+    const hasVideo = mediaList.some(m => m.toLowerCase().endsWith('.mp4'));
+    const hasImage = mediaList.some(m => /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(m));
+    const isScript = !!demo.pyScript || !!demo.colabUrl;
+    
+    // Build array of all applicable badges
+    const badges = [];
+    if (hasVideo) badges.push({ icon: '🎬', label: data.ui.sections.videoBadge || 'Video' });
+    if (isScript) badges.push({ icon: '🐍', label: data.ui.sections.pythonBadge || 'Python' });
+    if (hasImage) badges.push({ icon: '🖼️', label: data.ui.sections.imageBadge || 'Image' });
+    if (badges.length === 0) badges.push({ icon: '📁', label: 'Demo' });
+    
+    // Pick the primary icon for the fallback placeholder
+    const icon = badges[0].icon;
     
     return `
               <div class="card item" style="background:var(--bg2); cursor:pointer;" data-demo-index="${i}">
@@ -418,7 +427,9 @@ function renderContent(data) {
                 </div>
                 <h3 style="margin-top:12px; font-size:15px;">${demo.title}</h3>
                 <p class="muted" style="font-size:12px; margin-top:4px;">${parseMarkdown(demo.description)}</p>
-                <span class="pill" style="margin-top:8px; font-size:10px;">${badge}</span>
+                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;">
+                  ${badges.map(b => `<span class="pill" style="font-size:10px;">${b.icon} ${b.label}</span>`).join('')}
+                </div>
               </div>
             `}).join('')}
           </div>

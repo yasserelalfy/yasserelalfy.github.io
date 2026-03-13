@@ -433,6 +433,7 @@
         "title": "3D SLAM Point Cloud",
         "description": "Interactive 3D visualization of SLAM-generated point clouds from monocular depth estimation.",
         "media": [
+          "demos/videos/SLAM Experiment using Tello.mp4",
           "demos/images/Estimated Trajectory with GT Depths.png",
           "demos/images/Our SLAM Output TL (Rotated).jpg",
           "demos/images/Our SLAM Output TL (Zoomed).jpg"
