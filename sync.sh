@@ -32,6 +32,31 @@ fi
 git config user.name "$USER_NAME"
 git config user.email "$USER_EMAIL"
 
+# --- Run Python Scripts Before Sync ---
+echo ""
+echo "--- Running Pre-Sync Scripts ---"
+echo ""
+
+# 1. Update Scholar Data
+if [ -f "update_scholar.py" ]; then
+    echo "Running update_scholar.py..."
+    python3 update_scholar.py && echo "Scholar data updated successfully." || echo "Warning: update_scholar.py failed. Continuing with sync..."
+else
+    echo "update_scholar.py not found, skipping."
+fi
+
+# 2. Generate CV
+if [ -f "generate_cv.py" ]; then
+    echo "Running generate_cv.py..."
+    python3 generate_cv.py && echo "CV generated successfully." || echo "Warning: generate_cv.py failed. Continuing with sync..."
+else
+    echo "generate_cv.py not found, skipping."
+fi
+
+echo ""
+echo "--- Pre-Sync Scripts Complete ---"
+echo ""
+
 # Add all changes
 echo "Adding changes..."
 git add . || { echo "Failed to add changes"; exit 1; }

@@ -26,6 +26,39 @@ try {
     git config user.email "yas.alfy@gmail.com"
     git config user.name "Yasser El-Alfy"
 
+    # --- Run Python Scripts Before Sync ---
+    Write-Host "`n--- Running Pre-Sync Scripts ---`n" -ForegroundColor Yellow
+
+    # 1. Update Scholar Data
+    if (Test-Path "update_scholar.py") {
+        Write-Host "Running update_scholar.py..." -ForegroundColor Gray
+        try {
+            python update_scholar.py
+            Write-Host "Scholar data updated successfully." -ForegroundColor Green
+        } catch {
+            Write-Host "Warning: update_scholar.py failed: $($_.Exception.Message)" -ForegroundColor Yellow
+            Write-Host "Continuing with sync..." -ForegroundColor Gray
+        }
+    } else {
+        Write-Host "update_scholar.py not found, skipping." -ForegroundColor Gray
+    }
+
+    # 2. Generate CV
+    if (Test-Path "generate_cv.py") {
+        Write-Host "Running generate_cv.py..." -ForegroundColor Gray
+        try {
+            python generate_cv.py
+            Write-Host "CV generated successfully." -ForegroundColor Green
+        } catch {
+            Write-Host "Warning: generate_cv.py failed: $($_.Exception.Message)" -ForegroundColor Yellow
+            Write-Host "Continuing with sync..." -ForegroundColor Gray
+        }
+    } else {
+        Write-Host "generate_cv.py not found, skipping." -ForegroundColor Gray
+    }
+
+    Write-Host "`n--- Pre-Sync Scripts Complete ---`n" -ForegroundColor Yellow
+
     # Add all changes
     Write-Host "Adding changes..." -ForegroundColor Gray
     git add .

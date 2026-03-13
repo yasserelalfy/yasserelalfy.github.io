@@ -594,7 +594,27 @@
           }
         ],
         "type": "article",
-        "category": "Depth Estimation"
+        "category": "Depth Estimation",
+        "linkUrl": "https://eprints.kfupm.edu.sa/id/eprint/142314/",
+        "linkText": "Full Text"
+      },
+      {
+        "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder--Decoder Model",
+        "venue": "Authorea Preprints, 2023",
+        "year": "2023",
+        "linkText": "Full Text",
+        "linkUrl": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.23995554",
+        "type": "article",
+        "category": "Unknown"
+      },
+      {
+        "title": "Enhancing monocular depth estimation with an advanced encoder-decoder architecture",
+        "venue": "Neural Computing and Applications 37 (29), 24265-24280, 2025",
+        "year": "2025",
+        "linkText": "Full Text",
+        "linkUrl": "https://link.springer.com/article/10.1007/s00521-025-11566-y",
+        "type": "article",
+        "category": "Unknown"
       }
     ],
     "datasets": [
