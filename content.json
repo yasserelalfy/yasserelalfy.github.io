@@ -652,6 +652,8 @@
       {
         "id": "US12445815",
         "title": "SYSTEM AND METHOD FOR DETECTING AND COUNTING ROAD ANOMALIES",
+        "year": "2025",
+        "description": "A system and a non-transitory computer-readable storage medium for executing a method of detecting road anomalies includes obtaining visual data of a road from an end computing device and inputting the visual data to a machine learning (ML) model that learns to detect and classify at least one road anomaly such as a pothole, longitudinal crack, transverse crack, or alligator crack. The class and a bounding box of at least one road anomaly are output. Multiple post-detection features of the road anomaly, such as an object box area, intersection of neighboring object boxes, union of neighboring object boxes are determined. When the road anomaly is detected across multiple sequential frames, a number of skip frames is determined based on a model fidelity distance (MFD) and a vehicle speed.",
         "links": [
           {
             "text": "KFUPM Pure",
