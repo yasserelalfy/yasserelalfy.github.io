@@ -245,6 +245,9 @@
     "strategyOverview": {
       "text": "My research focuses on bridging the gap between raw sensor data and high-level spatial understanding. I develop monocular depth estimation models and integrate them into SLAM pipelines to enable 3D mapping without expensive LiDAR hardware.",
       "researchAreas": [
+        "Smart Cities",
+        "Autonomous Navigation",
+        "Drone Applications",
         "Monocular Depth Estimation",
         "Visual SLAM & Navigation",
         "Road Anomaly Characterization",
