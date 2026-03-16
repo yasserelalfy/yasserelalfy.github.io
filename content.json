@@ -659,6 +659,16 @@
             "text": "KFUPM Pure",
             "url": "https://pure.kfupm.edu.sa/en/publications/system-and-method-for-detecting-and-counting-road-anomalies/",
             "icon": "📄"
+          },
+          {
+            "text": "Google Patents",
+            "url": "https://patents.google.com/patent/US12445815B1/en?oq=US12445815",
+            "icon": "📄"
+          },
+          {
+            "text": "USPTO PDF",
+            "url": "https://ppubs.uspto.gov/api/pdf/downloadPdf/12445815?requestToken=eyJzdWIiOiIxMTM5ZjMwYy1mMDVhLTQ4ZjktYjAwMy1hM2Y5MTM5ZTFlYmMiLCJ2ZXIiOiI5NjVmODY1Ny05NWRmLTQ2NGQtOTEyMy1mODY4ODhiZGVkODMiLCJleHAiOjB9",
+            "icon": "📄"
           }
         ],
         "type": "patent"
