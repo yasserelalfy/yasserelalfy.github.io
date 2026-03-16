@@ -32,7 +32,7 @@ class ClassicCV(FPDF):
 
     def footer(self):
         self.set_y(-15)
-        self.set_font('Helvetica', 'I', 8)
+        self.set_font('Roboto', 'I', 8)
         self.set_text_color(*COL_DIM)
         name = self.data['basics'].get('name', '')
         title = self.data.get('ui', {}).get('sections', {}).get('cvTitle', 'Curriculum Vitae')
@@ -43,22 +43,22 @@ class ClassicCV(FPDF):
         # Ensure section title isn't left alone at bottom
         if self.get_y() > 250:
             self.add_page()
-        self.ln(4)
-        self.set_font('Helvetica', 'B', 12)
+        self.ln(6)
+        self.set_font('Roboto', 'B', 12)
         self.set_text_color(*COL_ACCENT)
-        self.cell(0, 8, title.upper(), ln=1)
+        self.cell(0, 8, title.upper(), new_x="LMARGIN", new_y="NEXT")
         self.set_draw_color(*COL_ACCENT)
         self.set_line_width(0.3)
         self.line(MARGIN, self.get_y(), PAGE_WIDTH - MARGIN, self.get_y())
         self.ln(2)
 
-    def add_entry(self, left_text, right_text, details='', bullet_points=None, link=None):
+    def add_entry(self, left_text, right_text, details='', bullet_points=None, link=None, right_subtext=''):
         # Column safety: check height first
         if self.get_y() > 250:
             self.add_page()
             
         start_y = self.get_y()
-        self.set_font('Helvetica', 'B', 10.5)
+        self.set_font('Roboto', 'B', 10.5)
         self.set_text_color(*COL_TEXT)
         
         # Draw left part
@@ -73,9 +73,22 @@ class ClassicCV(FPDF):
         
         # Draw right part (reset back to start_y)
         self.set_xy(MARGIN + 130, start_y)
-        self.set_font('Helvetica', '', 10)
-        self.set_text_color(*COL_DIM)
+        self.set_font('Roboto', 'B', 10)
+        # Highlight Institution with Accent color if there is a subtext (period), otherwise assume normal right text
+        if right_subtext:
+            self.set_text_color(*COL_ACCENT)
+        else:
+            self.set_font('Roboto', '', 10)
+            self.set_text_color(*COL_DIM)
+            
         self.multi_cell(0, 5, right_text, align='R')
+        
+        if right_subtext:
+            self.set_x(MARGIN + 130)
+            self.set_font('Roboto', '', 10)
+            self.set_text_color(*COL_DIM)
+            self.multi_cell(0, 5, right_subtext, align='R')
+            
         right_h = self.get_y() - start_y
         
         # Sync Y (avoid negative jumps if one side wrapped more than others)
@@ -83,16 +96,16 @@ class ClassicCV(FPDF):
         
         if details:
             self.set_x(MARGIN + 5)
-            self.set_font('Helvetica', 'I', 9.5)
+            self.set_font('Roboto', 'I', 9.5)
             self.set_text_color(*COL_TEXT)
             self.multi_cell(0, 4.5, details)
             
         if bullet_points:
-            self.set_font('Helvetica', '', 9.5)
+            self.set_font('Roboto', '', 9.5)
             for bullet in bullet_points:
                 self.set_x(MARGIN + 5)
-                self.cell(4, 4.5, "- ")
-                self.multi_cell(0, 4.5, bullet)
+                self.cell(4, 4.0, "- ")
+                self.multi_cell(0, 4.0, bullet)
         self.ln(2)
 
 def clean_data(d):
@@ -119,6 +132,12 @@ def generate_cv():
     
     pdf = ClassicCV(data)
     pdf.alias_nb_pages()
+    
+    # Register Fonts
+    pdf.add_font('Roboto', '', os.path.join(SCRIPT_DIR, 'assets/fonts/Roboto-Regular.ttf'))
+    pdf.add_font('Roboto', 'B', os.path.join(SCRIPT_DIR, 'assets/fonts/Roboto-Bold.ttf'))
+    pdf.add_font('Roboto', 'I', os.path.join(SCRIPT_DIR, 'assets/fonts/Roboto-Italic.ttf'))
+    
     pdf.add_page()
     
     # === HEADER ===
@@ -128,25 +147,29 @@ def generate_cv():
         full_photo_path = os.path.join(SCRIPT_DIR, photo_path)
         if os.path.exists(full_photo_path):
             photo_w = 30
-            # Draw photo on top right
-            pdf.image(full_photo_path, x=PAGE_WIDTH - MARGIN - photo_w, y=MARGIN, w=photo_w, h=photo_w + 5)
+            # Draw photo on top right with keep_aspect_ratio
+            pdf.image(full_photo_path, x=PAGE_WIDTH - MARGIN - photo_w, y=MARGIN, w=photo_w, h=photo_w + 5, keep_aspect_ratio=True)
     
     # Name
-    pdf.set_y(MARGIN)
-    pdf.set_font('Helvetica', 'B', 24)
+    max_w = PAGE_WIDTH - (MARGIN*2) - photo_w - 5
+    pdf.set_xy(MARGIN, MARGIN)
+    pdf.set_font('Roboto', 'B', 24)
     pdf.set_text_color(*COL_TEXT)
-    # Multi cell prevents name from overflowing by automatically wrapping it and scaling down if we want
-    # We restrict width so it doesn't overlap the photo
-    pdf.multi_cell(PAGE_WIDTH - (MARGIN*2) - photo_w - 5, 10, basics.get('name', '').upper())
+    pdf.multi_cell(max_w, 10, basics.get('name', '').upper())
     
     # Role & Affiliation
-    pdf.set_font('Helvetica', 'I', 12)
+    current_y = pdf.get_y()
+    pdf.set_xy(MARGIN, current_y)
+    pdf.set_font('Roboto', 'I', 12)
     pdf.set_text_color(*COL_ACCENT)
-    pdf.multi_cell(PAGE_WIDTH - (MARGIN*2) - photo_w - 5, 6, f"{basics.get('role', '')} | {basics.get('affiliation', '')}")
-    pdf.ln(2)
+    pdf.multi_cell(max_w, 6, f"{basics.get('role', '')} | {basics.get('affiliation', '')}")
+    
+    # Setup for Contact Row
+    current_y = pdf.get_y()
+    pdf.set_xy(MARGIN, current_y + 2)
     
     # Contact Row
-    pdf.set_font('Helvetica', '', 9.5)
+    pdf.set_font('Roboto', '', 9.5)
     pdf.set_text_color(*COL_DIM)
     
     contacts = []
@@ -176,7 +199,7 @@ def generate_cv():
 
     # Bio
     if basics.get('shortBio'):
-        pdf.set_font('Helvetica', '', 10.5)
+        pdf.set_font('Roboto', '', 10.5)
         pdf.set_text_color(*COL_TEXT)
         pdf.multi_cell(0, 5.5, basics['shortBio'])
         pdf.ln(3)
@@ -185,10 +208,10 @@ def generate_cv():
     metrics = basics.get('quickFactsMetrics', {})
     if metrics:
         ui_quick = data.get('ui', {}).get('quickFacts', {}).get('labels', {})
-        pdf.set_font('Helvetica', 'B', 9.5)
+        pdf.set_font('Roboto', 'B', 9.5)
         pdf.set_text_color(*COL_ACCENT)
         m_str = f"{ui_quick.get('citations', 'Citations')}: {metrics.get('citations','')}  |  {ui_quick.get('hIndex', 'h-index')}: {metrics.get('hIndex','')}  |  {ui_quick.get('i10Index', 'i10-index')}: {metrics.get('i10Index','')}"
-        pdf.cell(0, 5, m_str, ln=1)
+        pdf.cell(0, 5, m_str, new_x="LMARGIN", new_y="NEXT")
 
     # === EDUCATION ===
     ui_sections = data.get('ui', {}).get('sections', {})
@@ -196,35 +219,35 @@ def generate_cv():
     if data.get('education', {}).get('degrees'):
         pdf.add_section_title(ui_sections.get('education', 'Education'))
         for edu in data['education']['degrees']:
-            pdf.add_entry(edu.get('degree', ''), f"{edu.get('institution', '')} | {edu.get('period', '')}", edu.get('details', ''))
+            pdf.add_entry(edu.get('degree', ''), edu.get('institution', ''), edu.get('details', ''), right_subtext=edu.get('period', ''))
 
     # === WORKSHOPS ===
     workshops = data.get('education', {}).get('workshops', [])
     if workshops:
         pdf.add_section_title(ui_sections.get('workshops', 'Workshops'))
         for w in workshops:
-            pdf.add_entry(w.get('title', ''), f"{w.get('institution', '')} | {w.get('period', '')}")
+            pdf.add_entry(w.get('title', ''), w.get('institution', ''), right_subtext=w.get('period', ''))
 
     # === EXPERIENCE ===
     research = data.get('research', {})
     if data.get('education', {}).get('workExperience'):
         pdf.add_section_title(ui_sections.get('cvProfessionalExperience', 'Professional Experience'))
         for intern in data['education']['workExperience']:
-            pdf.add_entry(intern.get('title', ''), f"{intern.get('institution', '')} | {intern.get('period', '')}")
+            pdf.add_entry(intern.get('title', ''), intern.get('institution', ''), right_subtext=intern.get('period', ''))
 
     # === RESEARCH OVERVIEW ===
     if research.get('strategyOverview'):
         pdf.add_section_title(ui_sections.get('researchStrategy', 'Research Overview'))
-        pdf.set_font('Helvetica', '', 10.5)
+        pdf.set_font('Roboto', '', 10.5)
         pdf.set_text_color(*COL_TEXT)
         pdf.multi_cell(0, 5.5, research['strategyOverview'].get('text', ''))
         
         areas = research['strategyOverview'].get('researchAreas', [])
         if areas:
             pdf.ln(3)
-            pdf.set_font('Helvetica', 'B', 10)
-            pdf.cell(0, 6, ui_sections.get('cvFocusAreas', 'Key Focus Areas:'), ln=1)
-            pdf.set_font('Helvetica', '', 10)
+            pdf.set_font('Roboto', 'B', 10)
+            pdf.cell(0, 6, ui_sections.get('cvFocusAreas', 'Key Focus Areas:'), new_x="LMARGIN", new_y="NEXT")
+            pdf.set_font('Roboto', '', 10)
             for area in areas:
                 pdf.set_x(MARGIN + 5)
                 pdf.cell(5, 5, "- ")
@@ -234,32 +257,29 @@ def generate_cv():
     skills = research.get('technicalSkills', {})
     if skills:
         pdf.add_section_title(ui_sections.get('technicalSkills', 'Technical Skills'))
-        pdf.set_font('Helvetica', '', 10.5)
-        pdf.set_text_color(*COL_TEXT)
         
+        def render_skill(label, values):
+            pdf.set_font('Roboto', 'B', 10.5)
+            pdf.set_text_color(*COL_TEXT)
+            # Use align='L' and explicitly move to next line with new_x="LMARGIN", new_y="NEXT" 
+            # or just ln=1 which is deprecated, we use the add_entry instead for safer wrapping 
+            # or direct print. The simplest is printing label, then values.
+            pdf.cell(0, 6, label, new_x="LMARGIN", new_y="NEXT")
+            pdf.set_font('Roboto', '', 10.5)
+            pdf.multi_cell(0, 6, values)
+            pdf.ln(2)
+
         if skills.get('languages'):
-            pdf.set_font('Helvetica', 'B', 10.5)
-            pdf.cell(35, 6, ui_sections.get('cvLanguages', 'Languages:'))
-            pdf.set_font('Helvetica', '', 10.5)
-            pdf.multi_cell(0, 6, ", ".join(skills['languages']))
+            render_skill(ui_sections.get('cvLanguages', 'Languages:'), ", ".join(skills['languages']))
             
         if skills.get('software'):
-            pdf.set_font('Helvetica', 'B', 10.5)
-            pdf.cell(35, 6, ui_sections.get('cvSoftware', 'Software:'))
-            pdf.set_font('Helvetica', '', 10.5)
-            pdf.multi_cell(0, 6, ", ".join(skills['software']))
+            render_skill(ui_sections.get('cvSoftware', 'Software:'), ", ".join(skills['software']))
 
         if skills.get('os'):
-            pdf.set_font('Helvetica', 'B', 10.5)
-            pdf.cell(35, 6, ui_sections.get('cvOsTitle', 'OS:'))
-            pdf.set_font('Helvetica', '', 10.5)
-            pdf.multi_cell(0, 6, ui_sections.get('cvOsPrefix', 'Background in different Operating Systems: ') + ", ".join(skills['os']))
+            render_skill(ui_sections.get('cvOsTitle', 'OS:'), ui_sections.get('cvOsPrefix', 'Background in different Operating Systems: ') + ", ".join(skills['os']))
 
         if skills.get('otherSkills'):
-            pdf.set_font('Helvetica', 'B', 10.5)
-            pdf.cell(35, 6, ui_sections.get('cvOtherSkillsTitle', 'Other Skills:'))
-            pdf.set_font('Helvetica', '', 10.5)
-            pdf.multi_cell(0, 6, ", ".join(skills['otherSkills']))
+            render_skill(ui_sections.get('cvOtherSkillsTitle', 'Other Skills:'), ", ".join(skills['otherSkills']))
 
     # === TEACHING ===
     teaching = data.get('teaching', {})
@@ -289,7 +309,7 @@ def generate_cv():
     articles = pubs.get('articles', [])
     if articles:
         pdf.add_section_title(ui_sections.get('cvSelectedPublications', 'Selected Publications'))
-        pdf.set_font('Helvetica', '', 10)
+        pdf.set_font('Roboto', '', 10)
         pdf.set_text_color(*COL_TEXT)
         for pub in articles:
             title = pub.get('title', '')
@@ -297,15 +317,14 @@ def generate_cv():
             year = pub.get('year', '')
             url = pub.get('linkUrl', '')
             
-            pdf.set_font('Helvetica', 'B', 10)
+            pdf.set_font('Roboto', 'B', 10)
             if url and url != '#':
                 pdf.set_text_color(*COL_ACCENT)
-                pdf.write(5, title, url)
-                pdf.ln()
+                pdf.cell(0, 5, title, link=url, new_x="LMARGIN", new_y="NEXT")
             else:
                 pdf.multi_cell(0, 5, title)
             
-            pdf.set_font('Helvetica', 'I', 10)
+            pdf.set_font('Roboto', 'I', 10)
             pdf.set_text_color(*COL_DIM)
             pdf.multi_cell(0, 5, f"{venue} ({year})" if year else venue)
             pdf.ln(3)
@@ -324,7 +343,7 @@ def generate_cv():
     datasets = pubs.get('datasets', [])
     if datasets:
         pdf.add_section_title(data.get('ui', {}).get('filters', {}).get('datasets', 'Datasets'))
-        pdf.set_font('Helvetica', '', 10)
+        pdf.set_font('Roboto', '', 10)
         pdf.set_text_color(*COL_TEXT)
         for ds in datasets:
             title = ds.get('title', '')
@@ -332,16 +351,16 @@ def generate_cv():
             ds_links = ds.get('links', [])
             ds_url = ds_links[0].get('url', '') if ds_links else ''
             
-            pdf.set_font('Helvetica', 'B', 10)
+            pdf.set_font('Roboto', 'B', 10)
             if ds_url:
                 pdf.set_text_color(*COL_ACCENT)
-                pdf.write(5, title, ds_url)
-                pdf.ln()
+                pdf.cell(0, 5, title, link=ds_url, new_x="LMARGIN", new_y="NEXT")
             else:
                 pdf.multi_cell(0, 5, title)
             
             if desc:
-                pdf.set_font('Helvetica', 'I', 10)
+                pdf.set_x(MARGIN) # Ensure we are at the left margin before multi_cell
+                pdf.set_font('Roboto', 'I', 10)
                 pdf.set_text_color(*COL_DIM)
                 pdf.multi_cell(0, 5, desc)
                 
