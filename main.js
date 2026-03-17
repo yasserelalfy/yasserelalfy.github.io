@@ -221,18 +221,18 @@ function renderContent(data) {
   document.getElementById('footer-affiliation').innerHTML = data.basics.affiliation;
 
   // Populate nav labels from content.json
-  const navMap = data.ui.nav;
+  const navMap = data.ui.sections;
   const navIds = {
     'nav-home': navMap.home, 'researchBtn': navMap.research,
-    'nav-researchOverview': navMap.researchOverview, 'nav-researchThemes': navMap.researchThemes,
-    'nav-researchProjects': navMap.researchProjects, 'nav-researchDemos': navMap.researchDemos,
-    'nav-publications': navMap.publications, 'teachingBtn': navMap.teaching,
-    'nav-teachingCourses': navMap.teachingCourses, 'nav-teachingTalks': navMap.teachingTalks,
+    'nav-researchOverview': navMap.overview, 'nav-researchThemes': navMap.themes,
+    'nav-researchProjects': navMap.projects, 'nav-researchDemos': navMap.demos,
+    'nav-publications': navMap.publicationsNav, 'teachingBtn': navMap.teaching,
+    'nav-teachingCourses': navMap.courses, 'nav-teachingTalks': navMap.talksEvents,
     'educationBtn': navMap.education,
-    'nav-educationDegrees': navMap.educationDegrees, 'nav-educationCertificates': navMap.educationCertificates,
-    'nav-educationWorkshops': navMap.educationWorkshops,
+    'nav-educationDegrees': navMap.degrees, 'nav-educationCertificates': navMap.certificates,
+    'nav-educationWorkshops': navMap.workshops,
     'nav-workExperience': navMap.workExperience,
-    'nav-connect': navMap.connect
+    'nav-connect': navMap.connectBtn
   };
   Object.entries(navIds).forEach(([id, text]) => {
     const el = document.getElementById(id);

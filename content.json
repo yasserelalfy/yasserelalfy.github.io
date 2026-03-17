@@ -1,23 +1,5 @@
 {
   "ui": {
-    "nav": {
-      "home": "Home",
-      "research": "Research",
-      "researchOverview": "Overview",
-      "researchThemes": "Themes",
-      "researchProjects": "Projects",
-      "researchDemos": "Demos",
-      "publications": "Publications",
-      "teaching": "Teaching",
-      "teachingCourses": "Courses",
-      "education": "Education",
-      "educationDegrees": "Degrees",
-      "educationCertificates": "Certificates",
-      "educationWorkshops": "Workshops",
-      "workExperience": "Work Experience",
-      "connect": "Connect",
-      "teachingTalks": "Talks & Events"
-    },
     "hero": {
       "welcomeBadge": "Welcome to my Research Portfolio",
       "headlinePre": "The science of ",
@@ -64,7 +46,7 @@
       "workshops": "Workshops",
       "scholarlyProfiles": "Scholarly Profiles",
       "communication": "Communication",
-      "communicationText": "For collaboration or graduate research inquiries:",
+      "communicationText": "For collaboration or research inquiries:",
       "cvTitle": "Curriculum Vitae",
       "cvContact": "Contact",
       "cvMetrics": "Metrics",
@@ -84,7 +66,18 @@
       "videoBadge": "Video",
       "imageBadge": "Image",
       "pythonBadge": "Python script",
-      "talksEvents": "Talks & Events"
+      "talksEvents": "Talks & Events",
+      "home": "Home",
+      "research": "Research",
+      "overview": "Overview",
+      "themes": "Themes",
+      "projects": "Projects",
+      "demos": "Demos",
+      "teaching": "Teaching",
+      "courses": "Courses",
+      "degrees": "Degrees",
+      "connectBtn": "Connect",
+      "publicationsNav": "Publications"
     },
     "filters": {
       "all": "All",
