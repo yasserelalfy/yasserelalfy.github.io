@@ -326,7 +326,7 @@ def generate_cv():
             
             pdf.set_font('Roboto', 'I', 10)
             pdf.set_text_color(*COL_DIM)
-            pdf.multi_cell(0, 5, f"{venue} ({year})" if year else venue)
+            pdf.multi_cell(0, 5, f"{venue}, ({year})" if year else venue)
             pdf.ln(3)
             pdf.set_text_color(*COL_TEXT)
 
