@@ -259,8 +259,8 @@ function renderContent(data) {
             <h1>${data.ui.hero.headlinePre}<span style="color:var(--accent)">${data.ui.hero.headlineAccent}</span>${data.ui.hero.headlinePost}</h1>
             <p class="lead">${parseMarkdown(data.basics.heroSubtitle)}</p>
             <div class="stack" style="flex-direction:row; gap:16px; margin-bottom:40px; flex-wrap:wrap;">
-              <a class="btn" href="${data.basics.cvUrl}" target="_blank">${data.ui.hero.ctaPrimary}</a>
-              <a class="btn secondary" href="outputs/CV_Generated.pdf" target="CV.pdf">${data.ui.hero.ctaGenerate}</a>
+              // <a class="btn" href="${data.basics.cvUrl}" target="_blank">${data.ui.hero.ctaPrimary}</a>
+              <a class="btn" href="outputs/CV_Generated.pdf" target="CV.pdf">${data.ui.hero.ctaGenerate}</a>
               <a class="btn secondary" href="#publications">${data.ui.hero.ctaSecondary}</a>
               <a class="btn" href="#research-demos">${data.ui.hero.ctaSamples}</a>
             </div>
