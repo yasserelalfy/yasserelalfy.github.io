@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!res.ok) throw new Error('Failed to load content');
     const rawData = await res.json();
     globalData = applyMarkdown(rawData);
-    
+
     // Apply Dynamic Sorting Logic
     globalData = sortContent(globalData);
 
@@ -259,8 +259,8 @@ function renderContent(data) {
             <h1>${data.ui.hero.headlinePre}<span style="color:var(--accent)">${data.ui.hero.headlineAccent}</span>${data.ui.hero.headlinePost}</h1>
             <p class="lead">${parseMarkdown(data.basics.heroSubtitle)}</p>
             <div class="stack" style="flex-direction:row; gap:16px; margin-bottom:40px; flex-wrap:wrap;">
-              // <a class="btn" href="${data.basics.cvUrl}" target="_blank">${data.ui.hero.ctaPrimary}</a>
-              <a class="btn" href="outputs/CV_Generated.pdf" target="CV.pdf">${data.ui.hero.ctaGenerate}</a>
+              <a class="btn" href="${data.basics.cvUrl}" target="_blank">${data.ui.hero.ctaPrimary}</a>
+              <a class="btn" href="${data.basics.cvUrlGenerated}" target="CV.pdf">${data.ui.hero.ctaGenerate}</a>
               <a class="btn secondary" href="#publications">${data.ui.hero.ctaSecondary}</a>
               <a class="btn" href="#research-demos">${data.ui.hero.ctaSamples}</a>
             </div>
@@ -403,17 +403,17 @@ function renderContent(data) {
     const hasVideo = mediaList.some(m => m.toLowerCase().endsWith('.mp4'));
     const hasImage = mediaList.some(m => /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(m));
     const isScript = !!demo.pyScript || !!demo.colabUrl;
-    
+
     // Build array of all applicable badges
     const badges = [];
     if (hasVideo) badges.push({ icon: '🎬', label: data.ui.sections.videoBadge || 'Video' });
     if (isScript) badges.push({ icon: '🐍', label: data.ui.sections.pythonBadge || 'Python' });
     if (hasImage) badges.push({ icon: '🖼️', label: data.ui.sections.imageBadge || 'Image' });
     if (badges.length === 0) badges.push({ icon: '📁', label: 'Demo' });
-    
+
     // Pick the primary icon for the fallback placeholder
     const icon = badges[0].icon;
-    
+
     return `
               <div class="card item" style="background:var(--bg2); cursor:pointer;" data-demo-index="${i}">
                 <div style="width:100%; height:200px; border-radius:12px; background:var(--bg); display:flex; align-items:center; justify-content:center; overflow:hidden; border:1px solid var(--border); position: relative;">
@@ -786,13 +786,13 @@ function setupDemoModal() {
   const prevBtn = document.getElementById('demo-modal-prev');
   const nextBtn = document.getElementById('demo-modal-next');
   const counterEl = document.getElementById('demo-modal-counter');
-  
+
   const actionsContainer = document.getElementById('demo-modal-actions');
   const colabBtn = document.getElementById('demo-modal-colab');
   const pyscriptBtn = document.getElementById('demo-modal-pyscript');
   const downloadBtn = document.getElementById('demo-modal-download');
   const noteEl = document.getElementById('demo-modal-note');
-  
+
   const interactiveViewer = document.getElementById('demo-interactive-viewer');
   const codeDisplay = document.getElementById('demo-code-display');
   const terminalOutput = document.getElementById('pyscript-output');
@@ -846,36 +846,36 @@ function setupDemoModal() {
   const executePyScript = async (scriptPath, isDesktopOnly = false) => {
     mediaContainer.parentElement.style.display = 'none';
     interactiveViewer.style.display = 'block';
-    
+
     if (isDesktopOnly) {
-        terminalOutput.innerHTML = `
+      terminalOutput.innerHTML = `
             <div style="color:#ffcc00; background:rgba(255,204,0,0.1); padding:16px; border-radius:8px; border:1px solid rgba(255,204,0,0.3);">
                 <div style="font-weight:bold; margin-bottom:8px;">🖥️ Desktop Application Only</div>
                 This utility uses the <strong>Tkinter</strong> GUI library, which cannot run natively in a web browser. 
                 You can review the source code above, or download it to run locally on your computer.
             </div>`;
     } else {
-        terminalOutput.innerHTML = '<div style="color:#888;">Initializing Python environment...</div>';
+      terminalOutput.innerHTML = '<div style="color:#888;">Initializing Python environment...</div>';
     }
-    
+
     try {
-        const res = await fetch(scriptPath);
-        const code = await res.text();
-        
-        // Show Source Code
-        codeDisplay.textContent = code;
-        
-        if (!isDesktopOnly) {
-            terminalOutput.innerHTML = '<div id="pyscript-manual-terminal" style="background:#000; color:#00ff00; font-family:Courier New, monospace; padding:15px; border-radius:4px; min-height:400px; white-space:pre-wrap; font-size:14px; line-height:1.4; border:1px solid #333; overflow-y:auto; max-height:500px;">Initializing Python environment...</div>';
-            
-            // Indent each line of the user's code to fit inside the try/except block
-            const indentedCode = code.split('\n').map(line => '    ' + line).join('\n');
-            
-            // Use a dedicated tag for PyScript but manually redirect stdout to our div
-            // This avoids the "py-terminal is read-only" bug on re-runs
-            const scriptEl = document.createElement('script');
-            scriptEl.type = 'py';
-            scriptEl.textContent = `
+      const res = await fetch(scriptPath);
+      const code = await res.text();
+
+      // Show Source Code
+      codeDisplay.textContent = code;
+
+      if (!isDesktopOnly) {
+        terminalOutput.innerHTML = '<div id="pyscript-manual-terminal" style="background:#000; color:#00ff00; font-family:Courier New, monospace; padding:15px; border-radius:4px; min-height:400px; white-space:pre-wrap; font-size:14px; line-height:1.4; border:1px solid #333; overflow-y:auto; max-height:500px;">Initializing Python environment...</div>';
+
+        // Indent each line of the user's code to fit inside the try/except block
+        const indentedCode = code.split('\n').map(line => '    ' + line).join('\n');
+
+        // Use a dedicated tag for PyScript but manually redirect stdout to our div
+        // This avoids the "py-terminal is read-only" bug on re-runs
+        const scriptEl = document.createElement('script');
+        scriptEl.type = 'py';
+        scriptEl.textContent = `
 import sys
 import js
 
@@ -899,17 +899,17 @@ ${indentedCode}
 except Exception as e:
     print(f"\\n[Error] {e}")
 `;
-            terminalOutput.appendChild(scriptEl);
-        }
+        terminalOutput.appendChild(scriptEl);
+      }
 
-    } catch(err) {
-        terminalOutput.innerHTML = `<div style="color:#ff3333;">Failed to load script: ${err}</div>`;
+    } catch (err) {
+      terminalOutput.innerHTML = `<div style="color:#ff3333;">Failed to load script: ${err}</div>`;
     }
   };
 
   const closeModal = () => {
     modal.style.display = 'none';
-    mediaContainer.innerHTML = ''; 
+    mediaContainer.innerHTML = '';
     mediaContainer.parentElement.style.display = 'flex';
     interactiveViewer.style.display = 'none';
     terminalOutput.innerHTML = '';
@@ -947,35 +947,35 @@ except Exception as e:
     currentMediaIndex = 0;
     titleEl.textContent = currentDemo.title;
     descEl.textContent = currentDemo.description;
-    
+
     // Handle Interactive Code Buttons
     actionsContainer.style.display = 'none';
     colabBtn.style.display = 'none';
     pyscriptBtn.style.display = 'none';
     downloadBtn.style.display = 'none';
     noteEl.style.display = 'none';
-    
-    if (currentDemo.colabUrl || currentDemo.pyScript) {
-        actionsContainer.style.display = 'flex';
-        
-        if (currentDemo.colabUrl) {
-            colabBtn.href = currentDemo.colabUrl;
-            colabBtn.style.display = 'inline-flex';
-        }
-        
-        if (currentDemo.pyScript) {
-            const isDesktop = !!currentDemo.isDesktopOnly;
-            pyscriptBtn.style.display = 'inline-flex';
-            pyscriptBtn.innerHTML = isDesktop ? '<span style="margin-right:8px;">🔍</span> View Source Code' : '<span style="margin-right:8px;">🐍</span> Run Local Terminal Demo';
-            pyscriptBtn.onclick = () => executePyScript(currentDemo.pyScript, isDesktop);
 
-            if (isDesktop) {
-                downloadBtn.style.display = 'inline-flex';
-                downloadBtn.href = currentDemo.pyScript;
-                noteEl.style.display = 'block';
-                noteEl.textContent = "Note: This is a desktop application. You can view the source code here, or download it to run locally.";
-            }
+    if (currentDemo.colabUrl || currentDemo.pyScript) {
+      actionsContainer.style.display = 'flex';
+
+      if (currentDemo.colabUrl) {
+        colabBtn.href = currentDemo.colabUrl;
+        colabBtn.style.display = 'inline-flex';
+      }
+
+      if (currentDemo.pyScript) {
+        const isDesktop = !!currentDemo.isDesktopOnly;
+        pyscriptBtn.style.display = 'inline-flex';
+        pyscriptBtn.innerHTML = isDesktop ? '<span style="margin-right:8px;">🔍</span> View Source Code' : '<span style="margin-right:8px;">🐍</span> Run Local Terminal Demo';
+        pyscriptBtn.onclick = () => executePyScript(currentDemo.pyScript, isDesktop);
+
+        if (isDesktop) {
+          downloadBtn.style.display = 'inline-flex';
+          downloadBtn.href = currentDemo.pyScript;
+          noteEl.style.display = 'block';
+          noteEl.textContent = "Note: This is a desktop application. You can view the source code here, or download it to run locally.";
         }
+      }
     }
 
     renderMedia();
