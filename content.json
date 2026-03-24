@@ -506,16 +506,6 @@
         "category": "Anomaly Detection"
       },
       {
-        "title": "Enhancing monocular depth estimation with an advanced encoder–decoder architecture",
-        "venue": "Neural Computing and Applications (2025)",
-        "year": "2025",
-        "doi": "10.1007/s00521-025-11566-y",
-        "linkText": "Springer",
-        "linkUrl": "https://link.springer.com/article/10.1007/s00521-025-11566-y",
-        "type": "article",
-        "category": "Depth Estimation"
-      },
-      {
         "title": "Dynamic Real-time Learning of Electromagnetic Interference Parameters for Drone Crashing Attack",
         "venue": "IEEE PIMRC (2025)",
         "year": "2025",
@@ -582,7 +572,7 @@
       },
       {
         "title": "MONOCULAR DEPTH ESTIMATION USING DEEP LEARNING FOR 3D SLAM MAPPING IN AUTONOMOUS NAVIGATION",
-        "venue": "KFUPM Thesis",
+        "venue": "KFUPM Master Thesis",
         "year": "2022",
         "links": [],
         "type": "article",
@@ -602,7 +592,7 @@
       },
       {
         "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder--Decoder Model",
-        "venue": "Authorea Preprints, 2023",
+        "venue": "Authorea Preprints",
         "year": "2023",
         "linkText": "Full Text",
         "linkUrl": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.23995554",
@@ -611,9 +601,10 @@
       },
       {
         "title": "Enhancing monocular depth estimation with an advanced encoder-decoder architecture",
-        "venue": "Neural Computing and Applications 37 (29), 24265-24280, 2025",
+        "venue": "Neural Computing and Applications 37 (29), 24265-24280",
         "year": "2025",
-        "linkText": "Full Text",
+        "doi": "10.1007/s00521-025-11566-y",
+        "linkText": "Springer",
         "linkUrl": "https://link.springer.com/article/10.1007/s00521-025-11566-y",
         "type": "article",
         "category": "Depth Estimation"
