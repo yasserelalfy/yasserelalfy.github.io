@@ -602,7 +602,7 @@
         "linkText": "Full Text",
         "linkUrl": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.23995554",
         "type": "article",
-        "category": "Unknown"
+        "category": "Depth Estimation"
       },
       {
         "title": "Enhancing monocular depth estimation with an advanced encoder-decoder architecture",
@@ -611,7 +611,7 @@
         "linkText": "Full Text",
         "linkUrl": "https://link.springer.com/article/10.1007/s00521-025-11566-y",
         "type": "article",
-        "category": "Unknown"
+        "category": "Depth Estimation"
       }
     ],
     "datasets": [
