@@ -61,6 +61,10 @@ class ClassicCV(FPDF):
         self.set_font('Roboto', 'B', 10.5)
         self.set_text_color(*COL_TEXT)
         
+        # Column split: 115mm left, 65mm right (Total 180mm between margins)
+        LEFT_W = 115
+        RIGHT_W = PAGE_WIDTH - MARGIN*2 - LEFT_W
+        
         # Draw left part
         if link:
             self.set_text_color(*COL_ACCENT)
@@ -68,11 +72,11 @@ class ClassicCV(FPDF):
             self.set_text_color(*COL_TEXT)
             self.ln()
         else:
-            self.multi_cell(130, 5, left_text)
+            self.multi_cell(LEFT_W, 5, left_text)
         left_h = self.get_y() - start_y
         
         # Draw right part (reset back to start_y)
-        self.set_xy(MARGIN + 130, start_y)
+        self.set_xy(MARGIN + LEFT_W, start_y)
         self.set_font('Roboto', 'B', 10)
         # Highlight Institution with Accent color if there is a subtext (period), otherwise assume normal right text
         if right_subtext:
@@ -81,13 +85,13 @@ class ClassicCV(FPDF):
             self.set_font('Roboto', '', 10)
             self.set_text_color(*COL_DIM)
             
-        self.multi_cell(0, 5, right_text, align='R')
+        self.multi_cell(RIGHT_W, 5, right_text, align='R')
         
         if right_subtext:
-            self.set_x(MARGIN + 130)
+            self.set_x(MARGIN + LEFT_W)
             self.set_font('Roboto', '', 10)
             self.set_text_color(*COL_DIM)
-            self.multi_cell(0, 5, right_subtext, align='R')
+            self.multi_cell(RIGHT_W, 5, right_subtext, align='R')
             
         right_h = self.get_y() - start_y
         
@@ -123,10 +127,46 @@ def clean_data(d):
         return s
     return d
 
+def get_sort_year(date_str):
+    """Extract a sortable year from strings like '2023-present' or '2022'"""
+    if not date_str or not isinstance(date_str, str):
+        return 0
+    if 'present' in date_str.lower():
+        return 9999
+    years = re.findall(r'\d{4}', date_str)
+    if years:
+        return int(max(years))
+    return 0
+
 def generate_cv():
     with open(CONTENT_PATH, 'r', encoding='utf-8-sig') as f:
         data = clean_data(json.load(f))
     
+    # === SORTING ===
+    # Publications
+    if 'publications' in data:
+        for cat in ['articles', 'datasets', 'patents']:
+            if cat in data['publications']:
+                data['publications'][cat].sort(key=lambda x: int(x.get('year', 0)) if str(x.get('year','')).isdigit() else 0, reverse=True)
+    
+    # Education & Experience
+    if 'education' in data:
+        if 'degrees' in data['education']:
+            data['education']['degrees'].sort(key=lambda x: get_sort_year(x.get('period', '')), reverse=True)
+        if 'certificates' in data['education']:
+            data['education']['certificates'].sort(key=lambda x: int(x.get('year', 0)) if str(x.get('year','')).isdigit() else 0, reverse=True)
+        if 'workshops' in data['education']:
+            data['education']['workshops'].sort(key=lambda x: get_sort_year(x.get('period', '')), reverse=True)
+        if 'workExperience' in data['education']:
+            data['education']['workExperience'].sort(key=lambda x: get_sort_year(x.get('period', '')), reverse=True)
+            
+    # Teaching & Talks
+    if 'teaching' in data:
+        if 'courses' in data['teaching']:
+            data['teaching']['courses'].sort(key=lambda x: get_sort_year(x.get('period', '')), reverse=True)
+        if 'talks' in data['teaching']:
+            data['teaching']['talks'].sort(key=lambda x: get_sort_year(x.get('date', '')), reverse=True)
+
     basics = data['basics']
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
@@ -178,15 +218,25 @@ def generate_cv():
     if basics.get('linkedinUrl'): contacts.append(("LinkedIn", basics['linkedinUrl']))
     if basics.get('scholarUrl'): contacts.append(("Google Scholar", basics['scholarUrl']))
     
+    total_w = 0
+    available_w = PAGE_WIDTH - MARGIN*2
     for i, (text, url) in enumerate(contacts):
-        width = pdf.get_string_width(text) + 2
+        item_w = pdf.get_string_width(text) + 2
+        sep_w = pdf.get_string_width("  |  ") + 2 if i < len(contacts) - 1 else 0
+        
+        if total_w + item_w + sep_w > available_w:
+            pdf.ln(5)
+            pdf.set_x(MARGIN)
+            total_w = 0
+            
         pdf.set_text_color(*COL_ACCENT)
-        pdf.cell(width, 5, text, link=url)
+        pdf.cell(item_w, 5, text, link=url)
+        total_w += item_w
         
         if i < len(contacts) - 1:
             pdf.set_text_color(*COL_DIM)
-            sep_width = pdf.get_string_width("  |  ") + 2
-            pdf.cell(sep_width, 5, "  |  ")
+            pdf.cell(sep_w, 5, "  |  ")
+            total_w += sep_w
     
     pdf.ln(5)
     
@@ -211,7 +261,7 @@ def generate_cv():
         pdf.set_font('Roboto', 'B', 9.5)
         pdf.set_text_color(*COL_ACCENT)
         m_str = f"{ui_quick.get('citations', 'Citations')}: {metrics.get('citations','')}  |  {ui_quick.get('hIndex', 'h-index')}: {metrics.get('hIndex','')}  |  {ui_quick.get('i10Index', 'i10-index')}: {metrics.get('i10Index','')}"
-        pdf.cell(0, 5, m_str, new_x="LMARGIN", new_y="NEXT")
+        pdf.multi_cell(0, 5, m_str)
 
     # === EDUCATION ===
     ui_sections = data.get('ui', {}).get('sections', {})
@@ -320,7 +370,8 @@ def generate_cv():
             pdf.set_font('Roboto', 'B', 10)
             if url and url != '#':
                 pdf.set_text_color(*COL_ACCENT)
-                pdf.cell(0, 5, title, link=url, new_x="LMARGIN", new_y="NEXT")
+                pdf.write(5, title, link=url)
+                pdf.ln(5)
             else:
                 pdf.multi_cell(0, 5, title)
             
@@ -354,7 +405,8 @@ def generate_cv():
             pdf.set_font('Roboto', 'B', 10)
             if ds_url:
                 pdf.set_text_color(*COL_ACCENT)
-                pdf.cell(0, 5, title, link=ds_url, new_x="LMARGIN", new_y="NEXT")
+                pdf.write(5, title, link=ds_url)
+                pdf.ln(5)
             else:
                 pdf.multi_cell(0, 5, title)
             
