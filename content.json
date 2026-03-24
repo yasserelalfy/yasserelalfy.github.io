@@ -400,7 +400,8 @@
         "title": "Drone Obstacle Avoidance",
         "description": "Obstacle detection and avoidance using monocular depth estimation with a drone",
         "media": [
-          "demos/videos/drone_obstacle_avoidance.mp4"
+          "demos/videos/drone_obstacle_avoidance.mp4",
+          "demos/images/Drone Obstacle Avoidance.jpg"
         ]
       },
       {
@@ -581,19 +582,23 @@
       },
       {
         "title": "MONOCULAR DEPTH ESTIMATION USING DEEP LEARNING FOR 3D SLAM MAPPING IN AUTONOMOUS NAVIGATION",
-        "venue": "KFUPM Thesis (2022)",
+        "venue": "KFUPM Thesis",
         "year": "2022",
-        "links": [
-          {
-            "text": "Full Text",
-            "url": "https://eprints.kfupm.edu.sa/id/eprint/142314/",
-            "icon": "📄"
-          }
-        ],
+        "links": [],
         "type": "article",
         "category": "Depth Estimation",
         "linkUrl": "https://eprints.kfupm.edu.sa/id/eprint/142314/",
-        "linkText": "Full Text"
+        "linkText": "KFUPM Eprints"
+      },
+      {
+        "title": "Ultrasonic Projection for the Blind & Visually Impaired: A Proposed Model (Blind-Bat)",
+        "venue": "Ahlia University",
+        "year": "2020",
+        "links": [],
+        "type": "article",
+        "category": "Robotics",
+        "linkUrl": "https://yasserelalfy.github.io/assets/Major Project 499 Report_Yasser El-Alfy, 201720055_Ahmed Al-Goud, 201810348_Final Edit_WithSignitures.pdf",
+        "linkText": "Major Project Report"
       },
       {
         "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder--Decoder Model",
