@@ -543,15 +543,6 @@
         "category": "Federated Learning"
       },
       {
-        "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder–Decoder Model",
-        "venue": "Sensors (2023)",
-        "year": "2023",
-        "linkText": "Journal Page",
-        "linkUrl": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.23995554",
-        "type": "article",
-        "category": "Depth Estimation"
-      },
-      {
         "title": "Distributed Intrusion Detection Systems Based on Deep Learning Techniques and Boosting Ensemble",
         "venue": "ACM (2023)",
         "year": "2023",
@@ -591,7 +582,7 @@
         "linkText": "Major Project Report"
       },
       {
-        "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder--Decoder Model",
+        "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder–Decoder Model",
         "venue": "Authorea Preprints",
         "year": "2023",
         "linkText": "Full Text",
@@ -608,6 +599,15 @@
         "linkUrl": "https://link.springer.com/article/10.1007/s00521-025-11566-y",
         "type": "article",
         "category": "Depth Estimation"
+      },
+      {
+        "title": "Enhancing Monocular Depth Estimation Using an Enhanced Encoder--Decoder Model",
+        "venue": "Authorea Preprints, 2023",
+        "year": "2023",
+        "linkText": "Full Text",
+        "linkUrl": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.23995554",
+        "type": "article",
+        "category": "Unknown"
       }
     ],
     "datasets": [
