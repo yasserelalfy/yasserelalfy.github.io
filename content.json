@@ -565,7 +565,13 @@
         "title": "MONOCULAR DEPTH ESTIMATION USING DEEP LEARNING FOR 3D SLAM MAPPING IN AUTONOMOUS NAVIGATION",
         "venue": "KFUPM Master Thesis",
         "year": "2022",
-        "links": [],
+        "links": [
+          {
+            "text": "Full Text",
+            "url": "https://eprints.kfupm.edu.sa/id/eprint/142314/1/221_COE_610___Yasser_Master_Thesis%20-%20print%20-%20With%20Green%20Cover.pdf",
+            "icon": "📄"
+          }
+        ],
         "type": "article",
         "category": "Depth Estimation",
         "linkUrl": "https://eprints.kfupm.edu.sa/id/eprint/142314/",
