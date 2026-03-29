@@ -704,15 +704,18 @@
       },
       {
         "id": "COE 301",
-        "title": "Computer Organization"
+        "title": "Computer Organization",
+        "period": "2024-2025"
       },
       {
         "id": "COE 292",
-        "title": "Introduction to Artificial Intelligence"
+        "title": "Introduction to Artificial Intelligence",
+        "period": "2022-2024"
       },
       {
         "id": "COE 412",
-        "title": ""
+        "title": "Senior Design Project II",
+        "period": "2024-2026"
       }
     ],
     "talks": [
