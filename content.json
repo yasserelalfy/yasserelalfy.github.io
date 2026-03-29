@@ -619,7 +619,8 @@
           }
         ],
         "type": "dataset",
-        "arxiv": "2504.13648"
+        "arxiv": "2504.13648",
+        "category": "Anomaly Detection"
       },
       {
         "title": "Pothole Detection Under Various Weather Conditions Dataset",
