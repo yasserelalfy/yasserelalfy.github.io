@@ -114,7 +114,24 @@
       "title": "Yasser El-Sayed M. El-Alfy — Researcher",
       "description": "Researcher specializing in 3D SLAM, Depth Estimation, and Road Anomaly Detection."
     },
-    "loading": "Initializing Experience..."
+    "loading": "Initializing Experience...",
+    "modal": {
+      "close": "Close",
+      "prev": "Previous",
+      "next": "Next",
+      "counter": "{current} / {total}",
+      "colabBtn": "Run in Google Colab ↗",
+      "pyscriptBtn": "Run Local Terminal Demo",
+      "pyscriptViewSource": "View Source Code",
+      "downloadBtn": "Download Script",
+      "desktopOnlyTitle": "Desktop Application Only",
+      "desktopOnlyNotice": "This utility uses the Tkinter GUI library, which cannot run natively in a web browser. You can review the source code above, or download it to run locally on your computer.",
+      "pythonSource": "PYTHON SOURCE CODE",
+      "terminalOutput": "TERMINAL OUTPUT",
+      "closeSession": "Close Session ✕",
+      "initPython": "Initializing Python environment...",
+      "desktopNote": "Note: This is a desktop application. You can view the source code here, or download it to run locally."
+    }
   },
   "basics": {
     "longName": "Yasser El-Sayed M. El-Alfy",

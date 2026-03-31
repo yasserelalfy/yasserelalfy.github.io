@@ -756,21 +756,21 @@ function setupDemoModal() {
       <p id="demo-modal-desc" style="color:var(--muted, #aaa); text-align:center; max-width:800px; margin-top:8px; font-size:15px;"></p>
       
       <div id="demo-modal-actions" style="margin-top:20px; display:none; gap:16px;">
-         <a id="demo-modal-colab" href="#" target="_blank" class="btn" style="background:#f9ab00; color:#000; display:none;"><span style="margin-right:8px;">🚀</span> Run in Google Colab ↗</a>
-         <button id="demo-modal-pyscript" class="btn" style="background:#306998; color:#fff; display:none; border:none; cursor:pointer;"><span style="margin-right:8px;">🐍</span> Run Local Terminal Demo</button>
-         <a id="demo-modal-download" href="#" download class="btn" style="background:var(--accent); color:#000; display:none;"><span style="margin-right:8px;">📥</span> Download Script</a>
+         <a id="demo-modal-colab" href="#" target="_blank" class="btn" style="background:#f9ab00; color:#000; display:none;"><span style="margin-right:8px;">🚀</span> ${globalData.ui.modal.colabBtn}</a>
+         <button id="demo-modal-pyscript" class="btn" style="background:#306998; color:#fff; display:none; border:none; cursor:pointer;"><span style="margin-right:8px;">🐍</span> ${globalData.ui.modal.pyscriptBtn}</button>
+         <a id="demo-modal-download" href="#" download class="btn" style="background:var(--accent); color:#000; display:none;"><span style="margin-right:8px;">📥</span> ${globalData.ui.modal.downloadBtn}</a>
       </div>
       <p id="demo-modal-note" style="color:#ffcc00; font-size:12px; margin-top:10px; display:none;"></p>
       
       <!-- Code & Terminal Viewer -->
       <div id="demo-interactive-viewer" style="display:none; width:90vw; max-width:800px; margin-top:20px; text-align:left;">
          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span style="font-size:12px; font-weight:bold; color:var(--accent);">PYTHON SOURCE CODE</span>
-            <button id="close-interactive" style="background:none; border:none; color:#ff3333; cursor:pointer; font-size:12px;">Close Session ✕</button>
+            <span style="font-size:12px; font-weight:bold; color:var(--accent);">${globalData.ui.modal.pythonSource}</span>
+            <button id="close-interactive" style="background:none; border:none; color:#ff3333; cursor:pointer; font-size:12px;">${globalData.ui.modal.closeSession}</button>
          </div>
          <pre id="demo-code-display" style="background:#1a1a1a; border:1px solid #333; border-radius:8px; padding:16px; font-size:13px; color:#ccc; overflow:auto; max-height:50vh; margin-bottom:16px; font-family:monospace;"></pre>
          
-         <span style="font-size:12px; font-weight:bold; color:var(--accent);">TERMINAL OUTPUT</span>
+         <span style="font-size:12px; font-weight:bold; color:var(--accent);">${globalData.ui.modal.terminalOutput}</span>
          <div id="pyscript-output" style="background:#000; border:1px solid #333; border-radius:8px; padding:16px; font-size:13px; color:#00ff00; min-height:100px; max-height:300px; overflow-y:auto; font-family:monospace; margin-top:8px;"></div>
       </div>
 
@@ -829,7 +829,9 @@ function setupDemoModal() {
       prevBtn.style.display = 'block';
       nextBtn.style.display = 'block';
       counterEl.style.display = 'block';
-      counterEl.innerText = `${currentMediaIndex + 1} / ${mediaList.length}`;
+      counterEl.innerText = (globalData.ui.modal.counter || '{current} / {total}')
+        .replace('{current}', currentMediaIndex + 1)
+        .replace('{total}', mediaList.length);
     } else {
       prevBtn.style.display = 'none';
       nextBtn.style.display = 'none';
@@ -850,12 +852,11 @@ function setupDemoModal() {
     if (isDesktopOnly) {
       terminalOutput.innerHTML = `
             <div style="color:#ffcc00; background:rgba(255,204,0,0.1); padding:16px; border-radius:8px; border:1px solid rgba(255,204,0,0.3);">
-                <div style="font-weight:bold; margin-bottom:8px;">🖥️ Desktop Application Only</div>
-                This utility uses the <strong>Tkinter</strong> GUI library, which cannot run natively in a web browser. 
-                You can review the source code above, or download it to run locally on your computer.
+                <div style="font-weight:bold; margin-bottom:8px;">🖥️ ${globalData.ui.modal.desktopOnlyTitle}</div>
+                ${globalData.ui.modal.desktopOnlyNotice}
             </div>`;
     } else {
-      terminalOutput.innerHTML = '<div style="color:#888;">Initializing Python environment...</div>';
+      terminalOutput.innerHTML = `<div style="color:#888;">${globalData.ui.modal.initPython}</div>`;
     }
 
     try {
@@ -866,7 +867,7 @@ function setupDemoModal() {
       codeDisplay.textContent = code;
 
       if (!isDesktopOnly) {
-        terminalOutput.innerHTML = '<div id="pyscript-manual-terminal" style="background:#000; color:#00ff00; font-family:Courier New, monospace; padding:15px; border-radius:4px; min-height:400px; white-space:pre-wrap; font-size:14px; line-height:1.4; border:1px solid #333; overflow-y:auto; max-height:500px;">Initializing Python environment...</div>';
+        terminalOutput.innerHTML = `<div id="pyscript-manual-terminal" style="background:#000; color:#00ff00; font-family:Courier New, monospace; padding:15px; border-radius:4px; min-height:400px; white-space:pre-wrap; font-size:14px; line-height:1.4; border:1px solid #333; overflow-y:auto; max-height:500px;">${globalData.ui.modal.initPython}</div>`;
 
         // Indent each line of the user's code to fit inside the try/except block
         const indentedCode = code.split('\n').map(line => '    ' + line).join('\n');
@@ -883,7 +884,7 @@ class TerminalWriter:
     def write(self, text):
         container = js.document.getElementById('pyscript-manual-terminal')
         if container:
-            if container.innerHTML == 'Initializing Python environment...':
+            if container.innerHTML == '${globalData.ui.modal.initPython}':
                 container.innerHTML = ''
             container.innerText += text
             container.scrollTop = container.scrollHeight
@@ -966,14 +967,15 @@ except Exception as e:
       if (currentDemo.pyScript) {
         const isDesktop = !!currentDemo.isDesktopOnly;
         pyscriptBtn.style.display = 'inline-flex';
-        pyscriptBtn.innerHTML = isDesktop ? '<span style="margin-right:8px;">🔍</span> View Source Code' : '<span style="margin-right:8px;">🐍</span> Run Local Terminal Demo';
+        pyscriptBtn.innerHTML = isDesktop ? `<span style="margin-right:8px;">🔍</span> ${globalData.ui.modal.pyscriptViewSource}` : `<span style="margin-right:8px;">🐍</span> ${globalData.ui.modal.pyscriptBtn}`;
         pyscriptBtn.onclick = () => executePyScript(currentDemo.pyScript, isDesktop);
 
         if (isDesktop) {
           downloadBtn.style.display = 'inline-flex';
+          downloadBtn.innerHTML = `<span style="margin-right:8px;">📥</span> ${globalData.ui.modal.downloadBtn}`;
           downloadBtn.href = currentDemo.pyScript;
           noteEl.style.display = 'block';
-          noteEl.textContent = "Note: This is a desktop application. You can view the source code here, or download it to run locally.";
+          noteEl.textContent = globalData.ui.modal.desktopNote;
         }
       }
     }
