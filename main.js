@@ -116,6 +116,7 @@ function initScrollReveal() {
 }
 
 function linkifyTabs(text) {
+  if (!text || typeof text !== 'string') return text || '';
   const tabs = ['home', 'research', 'publications', 'teaching', 'connect'];
   let up = text;
   tabs.forEach(t => {
@@ -243,7 +244,7 @@ function renderContent(data) {
   const footerVer = document.getElementById('footer-version');
   if (footerVer) footerVer.innerHTML = data.ui.footer.version;
 
-  const linkifiedPubSummary = linkifyTabs(data.publications.summary);
+  const linkifySummary = data.publications?.summary ? linkifyTabs(data.publications.summary) : '';
 
   const totalPubs = (data.publications.articles?.length || 0) +
     (data.publications.datasets?.length || 0) +
@@ -408,6 +409,7 @@ function renderContent(data) {
     const badges = [];
     if (hasVideo) badges.push({ icon: '🎬', label: data.ui.sections.videoBadge || 'Video' });
     if (isScript) badges.push({ icon: '🐍', label: data.ui.sections.pythonBadge || 'Python' });
+    if (demo.isDesktopOnly) badges.push({ icon: '🖥️', label: 'Desktop Only' });
     if (hasImage) badges.push({ icon: '🖼️', label: data.ui.sections.imageBadge || 'Image' });
     if (badges.length === 0) badges.push({ icon: '📁', label: 'Demo' });
 
@@ -723,7 +725,12 @@ function updatePubList(typeFilter, categoryFilter) {
         ${item.category && item.category !== 'Unknown' ? `<span class="pill" style="font-size:10px;">${item.category}</span>` : ''}
       </div>
       
-      ${(item.venue || item.year) ? `<div class="muted" style="font-size:13px; margin-bottom:8px;">${item.venue || (item.type === 'patent' ? globalData.ui.fallbacks.patentOffice : '')} ${item.year ? '• ' + item.year : ''}</div>` : ''}
+      ${(item.venue || item.year || item.id) ? `
+        <div class="muted" style="font-size:13px; margin-bottom:8px;">
+          ${item.id ? `<span style="color:var(--accent); font-weight:600;">${item.id}</span> • ` : ''}
+          ${item.venue || (item.type === 'patent' ? globalData.ui.fallbacks.patentOffice : '')} 
+          ${item.year ? '• ' + item.year : ''}
+        </div>` : ''}
       ${item.description ? `<p class="muted" style="font-size:14px; margin-bottom:12px;">${parseMarkdown(item.description)}</p>` : ''}
       
       <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:8px;">
