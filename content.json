@@ -117,7 +117,8 @@
     "loading": "Initializing Experience..."
   },
   "basics": {
-    "name": "Yasser El-Sayed M. El-Alfy",
+    "longName": "Yasser El-Sayed M. El-Alfy",
+    "shortName": "Yasser El-Alfy",
     "role": "Researcher",
     "affiliation": "KFUPM",
     "affiliationRole": "PhD Student",

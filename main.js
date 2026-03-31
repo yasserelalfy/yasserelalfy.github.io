@@ -215,7 +215,7 @@ function renderContent(data) {
   const metaDesc = document.getElementById('meta-description');
   if (metaDesc) metaDesc.setAttribute('content', data.ui.meta.description);
 
-  document.getElementById('nav-name').innerHTML = data.basics.name;
+  document.getElementById('nav-name').innerHTML = data.basics.longName;
   document.getElementById('nav-avatar').innerHTML = data.basics.navbarInitials;
   document.getElementById('footer-name').innerHTML = data.basics.name;
   document.getElementById('footer-affiliation').innerHTML = data.basics.affiliation;
