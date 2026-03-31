@@ -215,9 +215,9 @@ function renderContent(data) {
   const metaDesc = document.getElementById('meta-description');
   if (metaDesc) metaDesc.setAttribute('content', data.ui.meta.description);
 
-  document.getElementById('nav-name').innerHTML = data.basics.longName;
+  document.getElementById('nav-name').innerHTML = data.basics.shortName;
   document.getElementById('nav-avatar').innerHTML = data.basics.navbarInitials;
-  document.getElementById('footer-name').innerHTML = data.basics.name;
+  document.getElementById('footer-name').innerHTML = data.basics.longName;
   document.getElementById('footer-affiliation').innerHTML = data.basics.affiliation;
 
   // Populate nav labels from content.json
@@ -269,9 +269,9 @@ function renderContent(data) {
             </div>
           </div>
           <div class="card" style="padding:0; overflow:hidden;" data-reveal>
-            <img class="photo" src="${data.basics.photoUrl}" alt="${data.basics.name}" style="width:100%; height:400px; object-fit:cover;" />
+            <img class="photo" src="${data.basics.photoUrl}" alt="${data.basics.longName}" style="width:100%; height:400px; object-fit:cover;" />
             <div style="padding:32px;">
-              <h3 style="margin-bottom:12px;">${data.basics.name}</h3>
+              <h3 style="margin-bottom:12px;">${data.basics.longName}</h3>
               <p class="muted" style="font-size:14px;">${data.ui.hero.photoCaption.replace('{totalPubs}', totalPubs)}</p>
             </div>
           </div>

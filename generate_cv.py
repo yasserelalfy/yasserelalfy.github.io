@@ -34,7 +34,7 @@ class ClassicCV(FPDF):
         self.set_y(-15)
         self.set_font('Roboto', 'I', 8)
         self.set_text_color(*COL_DIM)
-        name = self.data['basics'].get('name', '')
+        name = self.data['basics'].get('longName', '')
         title = self.data.get('ui', {}).get('sections', {}).get('cvTitle', 'Curriculum Vitae')
         page_word = self.data.get('ui', {}).get('sections', {}).get('cvPage', 'Page')
         self.cell(0, 10, f'{name} - {title} - {page_word} {self.page_no()}/{{nb}}', align='C')
@@ -195,7 +195,7 @@ def generate_cv():
     pdf.set_xy(MARGIN, MARGIN)
     pdf.set_font('Roboto', 'B', 24)
     pdf.set_text_color(*COL_TEXT)
-    pdf.multi_cell(max_w, 10, basics.get('name', '').upper())
+    pdf.multi_cell(max_w, 10, basics.get('longName', '').upper())
     
     # Role & Affiliation
     current_y = pdf.get_y()
