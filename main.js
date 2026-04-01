@@ -576,10 +576,10 @@ function renderContent(data) {
            <div class="card" data-reveal>
               <h2>${data.ui.sections.scholarlyProfiles}</h2>
               <div class="stack" style="margin-top:24px;">
+                <a class="link-ext" href="${data.basics.linkedinUrl}" target="_blank">${data.ui.links.linkedin}</a>
                 <a class="link-ext" href="${data.basics.scholarUrl}" target="_blank">${data.ui.links.googleScholar}</a>
                 <a class="link-ext" href="${data.basics.orcidUrl}" target="_blank">${data.ui.links.orcid}</a>
                 <a class="link-ext" href="${data.basics.researchGateUrl}" target="_blank">${data.ui.links.researchGate}</a>
-                <a class="link-ext" href="${data.basics.linkedinUrl}" target="_blank">${data.ui.links.linkedin}</a>
                 ${data.basics.kfupmPureUrl ? `<a class="link-ext" href="${data.basics.kfupmPureUrl}" target="_blank">KFUPM Pure</a>` : ''}
               </div>
            </div>
