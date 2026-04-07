@@ -97,7 +97,7 @@
       "reference": "Reference ↗"
     },
     "footer": {
-      "version": "VERSION 11 — THE SCIENTIFIC GLASS EDITION"
+      "version": "VERSION 11 — THE GLASS EDITION"
     },
     "errors": {
       "loadFailed": "System failure.",
@@ -169,9 +169,9 @@
       "Federated Learning"
     ],
     "quickFactsMetrics": {
-      "citations": "21",
-      "hIndex": "2",
-      "hIndex5y": "2",
+      "citations": "22",
+      "hIndex": "3",
+      "hIndex5y": "3",
       "i10Index": "1",
       "i10Index5y": "1"
     }
