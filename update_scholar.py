@@ -83,6 +83,13 @@ def sync_scholar():
                 
             year = safe_get(bib, 'pub_year', 'Unknown')
             
+            norm_title = title.lower().strip()
+            art = article_by_title.get(norm_title)
+            
+            # Optimization: Skip expensive HTTP request if we already have the URL
+            if art and art.get('linkUrl') and art.get('linkUrl') != '#':
+                continue
+            
             try:
                 scholarly.fill(pub)
             except Exception as e:
