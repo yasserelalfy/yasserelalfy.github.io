@@ -8,7 +8,7 @@ from scholarly import scholarly, ProxyGenerator
 # Timeout handler
 def timeout_handler(signum, frame):
     print("\nTimeout Error: Fetching from Google Scholar took too long.")
-    print("This usually means your IP is temporarily rate-limited. Skipping update to avoid freezing the sync.")
+    print("This usually means your IP is temporarily rate-limited. \nSkipping update to avoid freezing the sync!!!!!!!!")
     sys.exit(1)
 
 # Set a stricter 30-second timeout to prevent the script from freezing sync.sh
