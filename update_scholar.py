@@ -1,7 +1,19 @@
 import json
 import os
 import traceback
-from scholarly import scholarly
+from scholarly import scholarly, ProxyGenerator
+
+# Set up Proxy Generator to avoid GitHub Actions IP blocking
+pg = ProxyGenerator()
+try:
+    print("Setting up free proxy for Google Scholar...")
+    if pg.FreeProxies():
+        scholarly.use_proxy(pg)
+        print("Proxy setup successful.")
+    else:
+        print("Failed to find a working FreeProxy. Proceeding without proxy (might get blocked).")
+except Exception as e:
+    print(f"Proxy setup encountered an error: {e}")
 
 # Configuration
 CONTENT_PATH = 'content.json'
