@@ -1,19 +1,23 @@
 import json
 import os
+import sys
 import traceback
 from scholarly import scholarly, ProxyGenerator
 
 # Set up Proxy Generator to avoid GitHub Actions IP blocking
-pg = ProxyGenerator()
-try:
-    print("Setting up free proxy for Google Scholar...")
-    if pg.FreeProxies():
-        scholarly.use_proxy(pg)
-        print("Proxy setup successful.")
-    else:
-        print("Failed to find a working FreeProxy. Proceeding without proxy (might get blocked).")
-except Exception as e:
-    print(f"Proxy setup encountered an error: {e}")
+if os.getenv('GITHUB_ACTIONS'):
+    pg = ProxyGenerator()
+    try:
+        print("Running in GitHub Actions. Setting up free proxy for Google Scholar...")
+        if pg.FreeProxies():
+            scholarly.use_proxy(pg)
+            print("Proxy setup successful.")
+        else:
+            print("Failed to find a working FreeProxy. Proceeding without proxy (might get blocked).")
+    except Exception as e:
+        print(f"Proxy setup encountered an error: {e}")
+else:
+    print("Running locally. Skipping proxy to avoid slow execution and connection issues.")
 
 # Configuration
 CONTENT_PATH = 'content.json'
@@ -132,9 +136,11 @@ def sync_scholar():
         print("Note: An AttributeError in 'scholarly' often means Google Scholar blocked the request ")
         print("(e.g., returned a CAPTCHA page) causing parsing to fail. Try again later or use proxies.")
         traceback.print_exc()
+        sys.exit(1)
     except Exception as e:
         print(f"\nError during sync: {e}")
         traceback.print_exc()
+        sys.exit(1)
 
 if __name__ == "__main__":
     sync_scholar()
