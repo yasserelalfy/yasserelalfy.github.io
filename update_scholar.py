@@ -2,7 +2,18 @@ import json
 import os
 import sys
 import traceback
+import signal
 from scholarly import scholarly, ProxyGenerator
+
+# Timeout handler
+def timeout_handler(signum, frame):
+    print("\nTimeout Error: Fetching from Google Scholar took too long.")
+    print("This usually means your IP is temporarily rate-limited. Skipping update to avoid freezing the sync.")
+    sys.exit(1)
+
+# Set a stricter 30-second timeout to prevent the script from freezing sync.sh
+signal.signal(signal.SIGALRM, timeout_handler)
+signal.alarm(30)
 
 # Set up Proxy Generator to avoid GitHub Actions IP blocking
 if os.getenv('GITHUB_ACTIONS'):
@@ -148,6 +159,9 @@ def sync_scholar():
         print(f"\nError during sync: {e}")
         traceback.print_exc()
         sys.exit(1)
+    finally:
+        # Disable the alarm
+        signal.alarm(0)
 
 if __name__ == "__main__":
     sync_scholar()
