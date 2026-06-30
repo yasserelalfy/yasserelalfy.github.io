@@ -169,7 +169,7 @@
       "Federated Learning"
     ],
     "quickFactsMetrics": {
-      "citations": "32",
+      "citations": "33",
       "hIndex": "3",
       "hIndex5y": "3",
       "i10Index": "1",
@@ -622,6 +622,15 @@
         "linkUrl": "https://link.springer.com/article/10.1007/s00521-025-11566-y",
         "type": "article",
         "category": "Depth Estimation"
+      },
+      {
+        "title": "Pothole detection and characterization: integrated segmentation and depth estimation in road anomaly systems",
+        "venue": "Neural Computing and Applications 38 (13), 540, 2026",
+        "year": "2026",
+        "linkText": "Full Text",
+        "linkUrl": "https://link.springer.com/article/10.1007/s00521-026-12286-7",
+        "type": "article",
+        "category": "Unknown"
       }
     ],
     "datasets": [
