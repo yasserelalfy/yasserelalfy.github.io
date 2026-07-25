@@ -631,6 +631,15 @@
         "linkUrl": "https://link.springer.com/article/10.1007/s00521-026-12286-7",
         "type": "article",
         "category": "Unknown"
+      },
+      {
+        "title": "System and method for detecting and counting road anomalies",
+        "venue": "US Patent 12,445,815, 2025",
+        "year": "2025",
+        "linkText": "Full Text",
+        "linkUrl": "https://patents.google.com/patent/US12445815B1/en",
+        "type": "article",
+        "category": "Unknown"
       }
     ],
     "datasets": [
